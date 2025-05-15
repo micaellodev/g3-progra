@@ -6,6 +6,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
 import Page from './components/Page';
+import Lista from './components/Lista';
+
 
 import {Link, Route, Routes} from "react-router-dom";
 
@@ -33,7 +35,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login users={users} />} />
         <Route path="/Register" element={<Register users={users} setUsers={setUsers} />} />
-        <Route path="/Page" element={<Page />} />
+        <Route path="/Page" element=  {<Page />} />
+        
+        <Route path="/admin/lista" element={<Lista />} />
       </Routes>
       
     </>

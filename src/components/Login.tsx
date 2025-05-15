@@ -14,11 +14,11 @@ function Login({ users }: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+ 
   const handleLogin = () => {
     const match = users.find(user => user.username === username && user.password === password);
     if (match) {
-      navigate('/Page');
+      navigate('/admin/lista');
     } else {
       alert('Usuario o contraseña incorrectos');
     }
