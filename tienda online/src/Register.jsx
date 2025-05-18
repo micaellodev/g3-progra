@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './Register.css'; // Asegúrate de importar el CSS
 
 function Register() {
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     username: '',
     password: '',
     email: '',
@@ -14,32 +15,50 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('http://localhost:3000/register', form);
-      alert(res.data.message);
-      navigate('/login'); // Redirige al login después de registrar
-    } catch (err) {
-      alert(err.response?.data?.error || 'Error en el registro');
-    }
+  
+  
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleRegister = async (e) => {
+  e.preventDefault();
+
+  // Validación: verificar que ningún campo esté vacío
+  const emptyField = Object.values(formData).some(value => value.trim() === '');
+  if (emptyField) {
+    alert('Por favor, completa todos los campos.');
+    return;
+  }
+
+  try {
+    await axios.post('http://localhost:3000/register', formData);
+    alert('Usuario registrado correctamente');
+    navigate('/login');
+  } catch (err) {
+    alert(err.response?.data?.error || 'Error al registrar');
+  }
+};
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Registrarse</h2>
-      <input name="firstname" placeholder="Nombre" onChange={handleChange} />
-      <input name="lastname" placeholder="Apellido" onChange={handleChange} />
-      <input name="email" placeholder="Correo" onChange={handleChange} />
-      <input name="username" placeholder="Usuario" onChange={handleChange} />
-      <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} />
-      <input name="country" placeholder="País" onChange={handleChange} />
-      <button type="submit">Registrar</button>
-    </form>
+    <div className="register-container">
+      <form onSubmit={handleRegister} className="register-form">
+        <h2>Registrarse</h2>
+        <input placeholder="Usuario" name="username" value={formData.username} onChange={handleChange} />
+        <input placeholder="Correo" name="email" type="email" value={formData.email} onChange={handleChange} />
+        <input placeholder="Contraseña" name="password" type="password" value={formData.password} onChange={handleChange} />
+        <div className="name-row">
+          <input placeholder="Nombre" name="firstname" value={formData.firstname} onChange={handleChange} />
+          <input placeholder="Apellido" name="lastname" value={formData.lastname} onChange={handleChange} />
+        </div>
+        <input placeholder="País" name="country" value={formData.country} onChange={handleChange} />
+        <button type="submit">Registrarse</button>
+        <p>¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link></p>
+      </form>
+    </div>
   );
 }
 

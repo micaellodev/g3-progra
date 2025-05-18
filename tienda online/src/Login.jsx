@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './Login.css'; 
 
 function Login() {
-  const [email, setEmail] = useState(''); // Cambiado de username a email
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -11,7 +12,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/login', {
-        email, // También se actualiza aquí
+        email,
         password,
       });
       alert(res.data.message);
@@ -28,15 +29,18 @@ function Login() {
         placeholder="Correo"
         type="email"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input
         placeholder="Contraseña"
         type="password"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Ingresar</button>
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <button type="submit">Ingresar</button>
+        <Link to="/register">Registrarse</Link>
+      </div>
     </form>
   );
 }
