@@ -13,8 +13,8 @@ const admins = [
   ['admin2', 'admin123', 'admin2@tienda.com', 'Admin', 'Dos', 'México', 'admin'],
   ['admin3', 'admin123', 'admin3@tienda.com', 'Admin', 'Tres', 'Chile', 'admin']
 ];
-/* Ejecutar comando: node crearAdmin.js */
 
+/* Ejecutar comando: node crearAdmin.js */
 async function crearAdmins() {
   try {
     for (const a of admins) {

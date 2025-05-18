@@ -1,43 +1,45 @@
-/* Estilos globales */
-body {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-/* Ajuste para inputs y botones */
-input, button {
-  font-family: inherit;
-  font-size: 1rem;
-}
-
-/* Input básico */
-input {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 10px;
-}
-
-/* Botón básico */
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333;
   color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 15px 25px;
+  font-family: Arial, sans-serif;
+  height: 70px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-button:hover {
-  background-color: #45a049;
+.nav-search {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  width: 200px;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 10px;
+}
+
+.main-content {
+  padding: 20px;
+  font-family: Arial;
+  margin-top: 90px;
 }

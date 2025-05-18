@@ -1,0 +1,28 @@
+.usuario-menu-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #444;
+  border: 1px solid #888;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.dropdown-menu button {
+  width: 150px;
+  padding: 10px;
+  border: none;
+  background-color: #444;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #666;
+}

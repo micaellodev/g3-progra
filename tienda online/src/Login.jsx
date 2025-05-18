@@ -15,13 +15,21 @@ function Login() {
         email,
         password,
       });
+
       alert(res.data.message);
-      navigate('/inicio');
+
+      // ✅ Guardar el email en localStorage si el login fue exitoso
+      if (res.data.message === 'Login correcto') {
+        localStorage.setItem('email', email);
+        navigate('/inicio');
+      }
+
     } catch (err) {
       alert(err.response?.data?.message || 'Error al iniciar sesión');
     }
   };
 
+  
   return (
     <form onSubmit={handleLogin}>
       <h2>Iniciar Sesión</h2>
