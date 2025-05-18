@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [form, setForm] = useState({
@@ -11,13 +12,16 @@ function Register() {
     country: ''
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/register', form);
       alert(res.data.message);
+      navigate('/login'); // Redirige al login después de registrar
     } catch (err) {
-      alert(err.response.data.error);
+      alert(err.response?.data?.error || 'Error en el registro');
     }
   };
 

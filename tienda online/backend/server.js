@@ -35,24 +35,31 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
-// Login
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
     const result = await pool.query(
-      'SELECT * FROM usuarios WHERE username = $1 AND password = $2',
-      [username, password]
+      'SELECT * FROM usuarios WHERE email = $1',
+      [email]
     );
+
     if (result.rows.length > 0) {
-      res.status(200).json({ message: 'Login correcto' });
+      const usuario = result.rows[0];
+      if (password === usuario.password) {
+        res.status(200).json({ message: 'Login correcto' });
+      } else {
+        res.status(401).json({ message: 'contraseña incorrecta' });
+      }
     } else {
-      res.status(401).json({ message: 'Credenciales incorrectas' });
+      res.status(401).json({ message: 'no se encontró ningún correo registrado' });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+
 
 app.listen(3000, () => {
   console.log('Servidor en http://localhost:3000');

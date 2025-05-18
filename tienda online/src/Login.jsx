@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // Cambiado de username a email
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -11,21 +11,31 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/login', {
-        username,
+        email, // También se actualiza aquí
         password,
       });
       alert(res.data.message);
       navigate('/inicio');
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response?.data?.message || 'Error al iniciar sesión');
     }
   };
 
   return (
     <form onSubmit={handleLogin}>
       <h2>Iniciar Sesión</h2>
-      <input placeholder="Usuario" value={username} onChange={e => setUsername(e.target.value)} />
-      <input placeholder="Contraseña" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+      <input
+        placeholder="Correo"
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+      />
+      <input
+        placeholder="Contraseña"
+        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
       <button type="submit">Ingresar</button>
     </form>
   );
