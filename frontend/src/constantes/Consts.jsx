@@ -44,9 +44,9 @@ export const carritoInicial = [
   }
 ]
 
-const User = {
+export const User = {
   email: '123@demo.com',
   password: '123',
 };
 
-export default User;
+ 
