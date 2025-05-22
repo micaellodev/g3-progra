@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from '../../styles/TopBar.module.css';
 
-const TopBar = ({handleSearch, busqueda, setBusqueda}) => (
+const TopBar = ({ handleSearch, busqueda, setBusqueda }) => (
     <nav className={styles.navbar}>
         <div className={styles.navContainer}>
             <form onSubmit={handleSearch} className={styles.searchForm}>

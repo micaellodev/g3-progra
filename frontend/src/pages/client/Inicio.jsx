@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 
-export const Inicio = ({ handleSearch, busqueda, setBusqueda }) => {
+export const Inicio = () => {
+  const [busqueda, setBusqueda] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('Buscando:', busqueda);
+    // Aquí puedes hacer algo con el valor de búsqueda
+  };
+  
   return (
     <>
       <TopBar

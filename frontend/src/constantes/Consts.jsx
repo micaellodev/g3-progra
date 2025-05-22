@@ -49,4 +49,4 @@ export const User = {
   password: '123',
 };
 
- 
+export default User;
