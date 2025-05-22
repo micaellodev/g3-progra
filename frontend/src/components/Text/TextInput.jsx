@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/Inicio/TextInput.module.css';
+import styles from '../../styles/TextInput.module.css';
 
 function TextInput({ placeholder, type = 'text', value, onChange,name}) {
   return (

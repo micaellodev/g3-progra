@@ -1,8 +1,8 @@
 // RegisterForm.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import TextInput from '../../components/LoginText/TextInput';
-import styles from '../../styles/Inicio/TextInput.module.css';
+import TextInput from '../../components/Text/TextInput';
+import styles from '../../styles/TextInput.module.css';
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ function RegisterForm() {
     firstname: '',
     lastname: '',
     country: '',
+    securityQuestion: '',
   });
 
   const handleChange = (e) => {
@@ -72,6 +73,13 @@ function RegisterForm() {
           placeholder="País"
           name="country"
           value={formData.country}
+          onChange={handleChange}
+        />
+        
+        <TextInput
+          placeholder="¿En qué clínica naciste?"
+          name="securityQuestion"
+          value={formData.securityQuestion}
           onChange={handleChange}
         />
 

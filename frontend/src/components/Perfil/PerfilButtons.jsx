@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/Inicio/Perfil.module.css';
+import styles from '../../styles/Perfil.module.css';
 
 function PerfilButtons({ navigate }) {
   return (

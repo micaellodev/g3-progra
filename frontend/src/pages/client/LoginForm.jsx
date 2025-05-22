@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
-import TextInput from '../../components/LoginText/TextInput';
-import styles from '../../styles/Inicio/TextInput.module.css';
+import TextInput from '../../components/Text/TextInput';
+import styles from '../../styles/TextInput.module.css';
 import User from '../../constantes/Consts';
 
 export function LoginForm() {

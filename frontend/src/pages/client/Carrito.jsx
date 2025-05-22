@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CarritoItems from '../../components/Carrito/CarritoItems';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
-import styles from '../../styles/Carrito/Carrito.module.css';
+import styles from '../../styles/Carrito.module.css';
 
 import { carritoInicial } from '../../constantes/Consts';
 

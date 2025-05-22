@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { usuarioP } from '../../constantes/Consts';
 import PerfilInfo from '../../components/Perfil/PerfilInfo';
 import PerfilButtons from '../../components/Perfil/PerfilButtons';
-import styles from '../../styles/Inicio/Perfil.module.css';
+import styles from '../../styles/Perfil.module.css';
 
 function Perfil() {
   const navigate = useNavigate();
