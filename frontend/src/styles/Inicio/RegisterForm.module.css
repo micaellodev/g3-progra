@@ -1,0 +1,41 @@
+/* styles/RegisterForm.module.css */
+.registerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.registerForm {
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nameRow {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 16px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.loginLink {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}

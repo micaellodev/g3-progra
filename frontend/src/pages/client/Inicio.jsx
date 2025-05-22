@@ -1,8 +1,9 @@
-import { useState } from 'react';
 
+export const Inicio = () => {
 
-function Inicio() {
-
+    return (
+        <h1>Inicio</h1>
+    );
 }
 
 export default Inicio;

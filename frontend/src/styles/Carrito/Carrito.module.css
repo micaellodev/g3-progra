@@ -1,0 +1,58 @@
+.carritoWrapper {
+  display: flex;
+  gap: 40px;
+  margin: 30px;
+}
+
+.carritoContenido {
+  flex: 3;
+}
+
+.itemsBox {
+  border: 1px solid #ccc;
+  height: 300px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.juegoItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.resumenBox {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  min-width: 250px;
+  height: fit-content;
+}
+
+.resumenFila {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.totalFila {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin: 8px 0 20px;
+}
+
+.botonCompra {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

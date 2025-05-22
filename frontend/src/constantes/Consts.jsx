@@ -1,3 +1,46 @@
+// consts.jsx
+
 export const juegos = [
-    { id: 1, nombre: 'Pokemon-FireRed'},
+  {
+    id: 1,
+    nombre: 'Pokemon FireRed',
+    presentacion: 'Cartucho GBA',
+    descripcion: 'Aventura clásica en la región de Kanto.',
+    categoria: 'RPG',
+    stock: 5,
+    precio: 60.0,
+    imagen: '../../../public/pokemon-firered.jpg',
+  },
+  {
+    id: 2,
+    nombre: 'Mario Kart DS',
+    presentacion: 'Cartucho DS',
+    descripcion: 'Juego de carreras con personajes de Mario.',
+    categoria: 'Carreras',
+    stock: 3,
+    precio: 40.0,
+    imagen: '../../../public//mario-kart-ds.jpg',
+  }
 ];
+
+export const usuario = {
+  username: 'usuario123',
+  email: 'usuario@ejemplo.com',
+  firstname: 'Juan',
+  lastname: 'Pérez',
+  country: 'Perú',
+};
+
+export const carritoInicial = [
+  {
+    id: 1,
+    nombre: 'Pokemon FireRed',
+    presentacion: 'Cartucho GBA',
+    descripcion: 'Aventura clásica en la región de Kanto.',
+    categoria: 'RPG',
+    stock: 5,
+    precio: 60.0,
+    imagen: '../../../public/pokemon-firered.jpg',
+  }
+]
+
