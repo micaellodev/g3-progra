@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import TextInput from '../../components/LoginText/TextInput';
 import styles from '../../styles/Inicio/TextInput.module.css';
+import User from '../../constantes/Consts';
 
-
-function LoginForm() {
+export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('Iniciando sesión con:', { email, password });
+
+    if (email === User.email && password === User.password) {
+      console.log('Login exitoso');
+      // Redirigir a /inicio
+      navigate('/inicio');
+    } else {
+      alert('Correo o contraseña incorrectos');
+    }
   };
 
   return (

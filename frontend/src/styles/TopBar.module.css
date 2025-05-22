@@ -1,0 +1,41 @@
+.navbar {
+  background: #003366;
+  padding: 1rem;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.searchButton {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  background: #fff;
+  color: #003366;
+  cursor: pointer;
+}
+
+.loginLink {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: #0055aa;
+  border-radius: 4px;
+  margin-left: 1rem;
+}

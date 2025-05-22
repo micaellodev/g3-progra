@@ -5,7 +5,7 @@ import styles from '../../styles/Carrito/Carrito.module.css';
 
 import { carritoInicial } from '../../constantes/Consts';
 
-function Carrito() {
+export const Carrito = () => {
   const [juegosEnCarrito, setJuegosEnCarrito] = useState(carritoInicial);
 
   return (
@@ -16,7 +16,7 @@ function Carrito() {
       </div>
       <CarritoResumen juegos={juegosEnCarrito} />
     </div>
-  );
+  )
 }
 
 export default Carrito;

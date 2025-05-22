@@ -23,7 +23,7 @@ export const juegos = [
   }
 ];
 
-export const usuario = {
+export const usuarioP = {
   username: 'usuario123',
   email: 'usuario@ejemplo.com',
   firstname: 'Juan',
@@ -44,3 +44,9 @@ export const carritoInicial = [
   }
 ]
 
+const User = {
+  email: '123@demo.com',
+  password: '123',
+};
+
+export default User;
