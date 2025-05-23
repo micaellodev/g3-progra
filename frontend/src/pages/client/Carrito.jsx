@@ -11,12 +11,14 @@ export const Carrito = () => {
   return (
     <div className={styles.carritoWrapper}>
       <div className={styles.carritoContenido}>
-        <h1>Carrito</h1>
+        <h1>Carrito 2</h1>
         <CarritoItems juegos={juegosEnCarrito} />
       </div>
       <CarritoResumen juegos={juegosEnCarrito} />
     </div>
   )
 }
+
+
 
 export default Carrito;
