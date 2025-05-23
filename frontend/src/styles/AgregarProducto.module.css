@@ -1,62 +1,58 @@
-.container {
+.searchActionsContainer {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-}
-
-.leftSection,
-.rightSection {
-  width: 48%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.categoriaGroup {
-  display: flex;
-  gap: 10px;
   align-items: center;
+  margin: 0 30px 20px 30px;
+  /* flex-wrap: wrap;  -- quitar para evitar que se rompan en varias filas */
 }
 
-.select {
-  padding: 8px;
-  font-size: 1rem;
+.searchForm {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 10px;
+  margin-bottom: 0; /* eliminar margen inferior para mejor alineación */
 }
 
-.agregarBtn {
-  padding: 8px 12px;
-  font-size: 1.2rem;
-  cursor: pointer;
+.searchInput, .buscarBtn, .categoriasBtn, .agregarBtn {
+  height: 40px; /* o la altura que mejor se adapte */
 }
 
-.textarea {
-  min-height: 100px;
+.searchInput {
+  flex: 1;
   padding: 10px;
-  resize: vertical;
-  font-size: 1rem;
-}
-
-.imageUploadBox input {
   border: 1px solid #ccc;
-  padding: 10px;
+  border-radius: 8px;
+  box-sizing: border-box; /* para evitar que padding afecte al tamaño total */
 }
 
-.stockGroup {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.stockInput {
-  width: 80px;
-  padding: 8px;
-  font-size: 1rem;
-}
-
-.crearBtn {
-  padding: 10px 15px;
-  background-color: #4caf50;
+.buscarBtn {
+  background-color: #4c36f4;
   color: white;
   border: none;
+  padding: 0 20px; /* solo horizontal, para mantener altura fija */
+  border-radius: 8px;
   cursor: pointer;
+}
+
+.actionsGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.categoriasBtn, .agregarBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: white;
+  color: #4c36f4;
+  border: 1px solid #4c36f4;
+  padding: 0 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.actionsGroup {
+  display: flex;
+  gap: 10px;
+  margin-left: 10px; /* separa más el grupo de botones del botón buscar */
 }
