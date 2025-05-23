@@ -11,15 +11,14 @@ const TopBar = ({ handleSearch, busqueda, setBusqueda }) => (
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
                     className={styles.searchInput}
-                    />
-                    <button type="submit" className={styles.searchButton}>
-                        Buscar
-                    </button>
+                />
+                <button type="submit" className={styles.searchButton}>
+                    Buscar
+                </button>
             </form>
             <Link to="/login" className={styles.loginLink}>Login</Link>
         </div>
     </nav>
-
 );
 
 export default TopBar;

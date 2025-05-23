@@ -4,11 +4,10 @@ import TopBar from '../../components/TopBar/TopBar';
 export const Inicio = () => {
   const [busqueda, setBusqueda] = useState('');
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Buscando:', busqueda);
-    // Aquí puedes hacer algo con el valor de búsqueda
-  };
+    const handleSearch = (e) => {
+      e.preventDefault();
+      console.log('Buscando:', busqueda);
+    };
   
   return (
     <>
