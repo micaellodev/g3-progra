@@ -1,7 +1,10 @@
 .carritoWrapper {
   display: flex;
   gap: 40px;
-  margin: 30px;
+  margin: 40px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .carritoContenido {
@@ -9,50 +12,106 @@
 }
 
 .itemsBox {
-  border: 1px solid #ccc;
-  height: 300px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .juegoItem {
   display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid #e0e0e0;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 20px 0;
+}
+
+.juegoItem span:first-child {
+  font-weight: 600;
+  font-size: 18px;
+  color: #111;
+}
+
+.juegoItem span:last-child {
+  font-size: 16px;
+  color: #555;
+}
+
+.juegoItem select,
+.juegoItem input[type="number"] {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.juegoItem label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  color: #333;
 }
 
 .resumenBox {
   flex: 1;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  min-width: 250px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  min-width: 280px;
   height: fit-content;
 }
 
 .resumenFila {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #333;
 }
 
 .totalFila {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  margin: 8px 0 20px;
+  font-size: 18px;
+  margin: 16px 0 24px;
+  color: #000;
 }
 
 .botonCompra {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+  padding: 14px;
+  background-color: #111;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.botonCompra:hover {
+  background-color: #333;
+}
+
+.botonSeguirComprando {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: transparent;
+  color: #111;
+  border: 2px solid #111;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.botonSeguirComprando:hover {
+  background-color: #111;
+  color: #fff;
 }
