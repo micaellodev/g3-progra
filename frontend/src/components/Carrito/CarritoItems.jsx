@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../styles/Carrito.module.css';
+import CarritoItemCard from './CarritoItemCard';
 
 function CarritoItems({ juegos }) {
   return (
@@ -8,11 +9,7 @@ function CarritoItems({ juegos }) {
         <p>El carrito está vacío.</p>
       ) : (
         juegos.map((juego) => (
-          <div key={juego.id} className={styles.juegoItem}>
-            <img src={juego.imagen} alt={juego.nombre} className={styles.juegoImagen} />
-            <span>{juego.nombre}</span>
-            <span>S/. {juego.precio.toFixed(2)}</span>
-          </div>
+          <CarritoItemCard key={juego.id} juego={juego} />
         ))
       )}
     </div>
@@ -20,3 +17,4 @@ function CarritoItems({ juegos }) {
 }
 
 export default CarritoItems;
+

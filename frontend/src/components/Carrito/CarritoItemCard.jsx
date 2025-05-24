@@ -1,0 +1,37 @@
+// src/components/Carrito/CarritoItemCard.jsx
+import React from 'react';
+import styles from '../../styles/Carrito.module.css';
+
+const CarritoItemCard = ({ juego }) => {
+  return (
+    <div className={styles.juegoItem}>
+      <img src={juego.imagen} alt={juego.nombre} className={styles.juegoImagen} />
+
+      <div className={styles.juegoInfo}>
+        <div className={styles.juegoNombre}>{juego.nombre}</div>
+
+        <div className={styles.juegoOpciones}>
+          <div>
+            <label>Formato:</label>
+            <select defaultValue="digital">
+              <option value="digital">Digital</option>
+              <option value="físico">Físico</option>
+            </select>
+          </div>
+
+          {/* Si quisieras hacer condicional la cantidad, puedes hacerlo luego con estado */}
+          <div>
+            <label>Cantidad:</label>
+            <input type="number" min="0" defaultValue={1} />
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.juegoPrecio}>
+        S/ {juego.precio.toFixed(2)}
+      </div>
+    </div>
+  );
+};
+
+export default CarritoItemCard;
