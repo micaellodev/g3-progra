@@ -21,6 +21,17 @@ export const juegos = [
     stock: 3,
     precio: 40.0,
     imagen: '/mario-kart-ds.jpg',
+  },
+
+  {
+    id: 3,
+    nombre: 'Half-Life',
+    presentacion: 'Cartucho DS',
+    descripcion: 'Juego de disparos en primera persona.',
+    categoria: 'Acción',
+    stock: 0,
+    precio: 23.0,
+    imagen: '/half-life.jpg',
   }
 ];
 
