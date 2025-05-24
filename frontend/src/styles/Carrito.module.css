@@ -20,8 +20,8 @@
 
 .juegoItem {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  gap: 24px;
   border-bottom: 1px solid #e5e5e5;
   padding: 20px 0;
 }
@@ -117,9 +117,63 @@
 }
 
 .juegoImagen {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 8px;
+  flex-shrink: 0; 
 }
 
+.juegoInfo {
+  flex: 1;             /* Ocupa el espacio central */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.juegoPrecio {
+  min-width: 90px;  
+  text-align: right;
+  font-weight: bold;
+  font-size: 18px;
+  color: #111;
+}
+
+.juegoPresentacion {
+  margin-top: 1%;
+  font-size: 13px;
+  color: #aaa;
+}
+
+
+.infoCantidad input[type="number"] {
+  width: 48px;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+}
+
+.infoBotones {
+  display: flex;
+  justify-content: flex-end; /* Botón a la derecha */
+}
+
+.botonEliminar {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+  margin-top: auto; 
+  
+}
+
+.botonEliminar:hover {
+  background: #c0392b;
+}

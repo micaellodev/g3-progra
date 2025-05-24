@@ -5,21 +5,18 @@ import styles from '../../styles/Carrito.module.css';
 const CarritoItemCard = ({ juego }) => {
   return (
     <div className={styles.juegoItem}>
-      // Portada del juego
-      <div>
+      <div className={styles.juegoImagen}>
         <img src={juego.imagen} alt={juego.nombre} className={styles.juegoImagen} />
       </div>
       
       <div className={styles.juegoInfo}>
-        <div className={styles.juegoNombre}>{juego.nombre}</div>
-        <div className={styles.juegoDetalles}>
-          <div> {juego.descripcion}</div>
-          <div> {juego.categoria}</div>
-          {/* Si quisieras hacer condicional la cantidad, puedes hacerlo luego con estado */}
-          <div>
-            <label>Cantidad:</label>
-            <input type="number" min="0" defaultValue={1} />
-          </div>
+        <div className={styles.infoNombre}>
+          <div className={styles.juegoNombre}>{juego.nombre}</div>
+          <div className={styles.juegoPresentacion}>{juego.presentacion}</div>
+        </div>
+        <div className={styles.infoCantidad}>
+          <label>Cantidad:</label>
+          <input type="number" min="0" defaultValue={1} max='3'/>
         </div>
       </div>
 
