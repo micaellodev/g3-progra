@@ -22,10 +22,6 @@ import Cambio from '../pages/client/Cambio';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
-  // 'busqueda' y 'handleSearch' ya no son necesarios en App.jsx
-  // si TopBar solo se usa en Inicio.jsx
-  // const [busqueda, setBusqueda] = useState('');
-  // const handleSearch = (e) => { /* ... */ };
 
   useEffect(() => {
     try {
@@ -38,13 +34,12 @@ function App() {
       localStorage.removeItem('currentUser');
     }
   }, []);
-
+  
   const handleLogin = (userData) => {
     setCurrentUser(userData);
     localStorage.setItem('currentUser', JSON.stringify(userData));
   };
 
-  // Puedes mantener handleLogout si lo usas en algún otro lugar
   const handleLogout = () => {
     setCurrentUser(null);
     localStorage.removeItem('currentUser');

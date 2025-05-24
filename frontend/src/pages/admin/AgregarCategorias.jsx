@@ -1,0 +1,54 @@
+import { useState } from 'react';
+
+function AgregarCategoria({ onAgregar }) {
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+
+  const manejarEnvio = (e) => {
+    e.preventDefault();
+
+    const nuevaCategoria = {
+      id: Date.now(), // ID simulado
+      nombre,
+      descripcion,
+    };
+
+    onAgregar(nuevaCategoria); // Enviamos la categoría al padre
+
+    // Limpiar el formulario
+    setNombre('');
+    setDescripcion('');
+  };
+
+  return (
+    <form onSubmit={manejarEnvio} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium">Nombre</label>
+        <input
+          type="text"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Descripción</label>
+        <textarea
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded"
+      >
+        ➕ Crear categoría
+      </button>
+    </form>
+  );
+}
+
+export default AgregarCategoria;
