@@ -16,7 +16,7 @@ function LoginForm() {
     localStorage.setItem('loggedInUser', JSON.stringify(user));
     // Puedes actualizar estado global o contexto aquí si lo estás usando
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 

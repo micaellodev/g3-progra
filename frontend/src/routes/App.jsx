@@ -16,7 +16,9 @@ import ListaProducto from '../pages/admin/ListaProducto';
 import AgregarProducto from '../pages/admin/AgregarProducto';
 import DetalleProducto from '../pages/admin/DetalleProducto';
 import AdminForm from '../pages/client/AdminForm';
-
+import AgregarCategoria from '../pages/admin/AgregarCategorias';
+import ListaCategoria from '../pages/admin/ListaCategorias';
+import Cambio from '../pages/client/Cambio';
 
 DetalleProducto
 function App() {
@@ -55,17 +57,20 @@ function App() {
         <Route path="/"                element={<Inicio   />}/>
         <Route path="/login"           element={<Login    />}/>
         <Route path="/register"        element={<Register />}/>
-        <Route path="/perfil" element={<Perfil currentUser={currentUser} />} />
+        <Route path="/perfil"          element={<Perfil currentUser={currentUser} />} />
         <Route path="/inicio"          element={<Inicio   />}/>
         <Route path="/nosotros"        element={<Nosotros />}/>
         <Route path="/carrito"         element={<Carrito  />}/>
         <Route path="/cambiocontra"    element={<CambioContra/>}/>
         <Route path="/recuperarcontra" element={<RecuperarContra/>}/>
         <Route path="/dashboard"       element={<Dashboard/>}/>
-        <Route path="/listaproducto"       element={<ListaProducto/>}/>
-        <Route path="/agregarproducto"       element={<AgregarProducto/>}/>
-        <Route path="/detalleproducto"       element={<DetalleProducto/>}/>
-        <Route path="/adminf" element={<AdminForm />} />
+        <Route path="/listaproducto"   element={<ListaProducto/>}/>
+        <Route path="/agregarproducto" element={<AgregarProducto/>}/>
+        <Route path="/detalleproducto" element={<DetalleProducto/>}/>
+        <Route path="/adminf"          element={<AdminForm />} />
+        <Route path="/agregarcategoria"element={<AgregarCategoria />}/>
+        <Route path="/listacategoria"  element={<ListaCategoria />} />
+        <Route path="/cambio"          element={<Cambio handleLogin={handleLogin} />} />
       </Routes>
     </Router>
   );
