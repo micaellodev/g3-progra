@@ -15,7 +15,7 @@ export const juegos = [
   {
     id: 2,
     nombre: 'Mario Kart DS',
-    presentacion: 'Cartucho DS',
+    presentacion: 'CD-ROM',
     descripcion: 'Juego de carreras con personajes de Mario.',
     categoria: 'Carreras',
     stock: 3,
@@ -58,7 +58,7 @@ export const carritoInicial = [
   {
     id: 3,
     nombre: 'Half-Life',
-    presentacion: 'Cartucho DS',
+    presentacion: 'CD-ROM',
     descripcion: 'Disparos en primera persona.',
     categoria: 'Acción',
     stock: 0,

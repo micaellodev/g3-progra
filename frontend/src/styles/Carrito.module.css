@@ -7,8 +7,23 @@
   font-family: 'Helvetica Neue', sans-serif;
 }
 
-.carritoContenido {
+
+.carritoContenido, .direccionEnvioContenido {
+  background-color: #fff;
   flex: 3;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.carritoContenido h1, .direccionEnvioContenido h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #222;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
 }
 
 .itemsBox {
@@ -158,7 +173,7 @@
 
 .infoBotones {
   display: flex;
-  justify-content: flex-end; /* Botón a la derecha */
+  justify-content: flex-end;
 }
 
 .botonEliminar {
@@ -171,9 +186,96 @@
   font-size: 14px;
   transition: background 0.2s;
   margin-top: auto; 
-  
 }
 
 .botonEliminar:hover {
   background: #c0392b;
+}
+
+.checkoutWrapper {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.checkoutForm {
+  flex: 2;
+}
+
+.checkoutResumen {
+  flex: 1;
+}
+
+/* Formulario de dirección de envío */
+.direccion-envio-form {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 28px 24px 24px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.direccion-envio-titulo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #222;
+}
+
+.direccion-envio-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.direccion-envio-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.direccion-envio-col-full {
+  flex: 2;
+}
+
+.direccion-envio-form label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.direccion-envio-form input[type="text"] {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  background: #fafbfc;
+  margin-bottom: 0;
+  margin-top: 2px;
+  transition: border 0.2s;
+}
+
+.direccion-envio-form input[type="text"]:focus {
+  border: 1.5px solid #111;
+  outline: none;
+  background: #fff;
+}
+
+.direccion-envio-form select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  background: #fafbfc;
+  margin-bottom: 0;
+  margin-top: 2px;
+  transition: border 0.2s;
+}
+
+.direccion-envio-form select:focus {
+  border: 1.5px solid #111;
+  outline: none;
+  background: #fff;
 }

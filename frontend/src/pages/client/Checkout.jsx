@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
+import CarritoResumen from '../../components/Carrito/CarritoResumen';
+import DireccionEnvioForm from '../../components/Form/DireccionEnvioForm';
+import styles from '../../styles/Carrito.module.css';
+import { carritoInicial } from '../../constantes/Consts';
 
 export const Checkout = () => {
-    const [busqueda, setBusqueda] = useState('');
+  const [juegosEnCarrito] = useState(carritoInicial);
+  const [form, setForm] = useState({
+    nombre: '',
+    apellido: '',
+    ciudad: '',
+    departamento: '',
+    direccion: '',
+    codigoPostal: '',
+    telefono: ''
+  });
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        console.log('Buscando:', busqueda);
-    };
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    return (
-        <>
-            <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
-            
-            <h1>Dashboard</h1>
-        </>
-    );
+  return (
+    <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
+      <div style={{ flex: 2 }}>
+        <DireccionEnvioForm form={form} onChange={handleChange} />
+      </div>
+      <div style={{ flex: 1 }}>
+        <CarritoResumen juegos={juegosEnCarrito} />
+      </div>
+    </div>
+  );
 };
 
 export default Checkout;

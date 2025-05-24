@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../../styles/Carrito.module.css';
 
-function CarritoResumen({ juegos }) {
+function CarritoResumen({ juegos, botonTexto = "Continuar compra", botonRuta = "/checkout" }) {
   const total = juegos.reduce((acc, j) => acc + j.precio, 0);
-  const descuento = 0; // Puedes aplicar lógica si deseas
+  const descuento = 0;
   const totalFinal = total - descuento;
 
   return (
@@ -22,9 +23,9 @@ function CarritoResumen({ juegos }) {
         <span>Total</span>
         <span>S/. {totalFinal.toFixed(2)}</span>
       </div>
-      <button className={styles.botonCompra} onClick={() => alert('Continuar compra')}>
-        Continuar compra
-      </button>
+      <Link to={botonRuta} className={styles.botonSeguirComprando}>
+        {botonTexto}
+      </Link>
     </div>
   );
 }

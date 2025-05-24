@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import CarritoItems from '../../components/Carrito/CarritoItems';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
 import styles from '../../styles/Carrito.module.css';
-
 import { carritoInicial } from '../../constantes/Consts'; 
 
 export const Carrito = () => {
