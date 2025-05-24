@@ -44,12 +44,9 @@ export const carritoInicial = [
   }
 ]
 
-// AQUÍ ESTÁ EL CAMBIO PRINCIPAL
 export const User = {
-  // Datos de login
   email: '123@demo.com',
   password: '123',
-  // Datos del perfil completo
   username: 'gamer_pro',
   firstname: 'Carlos',
   lastname: 'Rodriguez',

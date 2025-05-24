@@ -5,22 +5,25 @@ import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
 import User from '../../constantes/consts';
 
-// Asegúrate de que LoginForm reciba 'handleLogin' como prop
-function LoginForm({ handleLogin }) {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const handleLogin = (user) => {
+    console.log('Usuario autenticado:', user);
+    // Guardar sesión
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    // Puedes actualizar estado global o contexto aquí si lo estás usando
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Obtener la información del usuario MÁS RECIENTE de localStorage
     const savedUser = JSON.parse(localStorage.getItem('registeredUser'));
 
-    // Verificar si el usuario existe y si el email y la contraseña coinciden
     if (savedUser && email === savedUser.email && password === savedUser.password) {
       console.log('Login exitoso');
-      // Llama a la función handleLogin del App.jsx con los datos del usuario completo
       handleLogin(savedUser); 
       navigate('/inicio');
     } else {
