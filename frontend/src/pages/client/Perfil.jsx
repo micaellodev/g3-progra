@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { usuarioP } from '../../constantes/consts';
-=======
-// Perfil.jsx
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Asegúrate de importar 'Link'
-// Ya no necesitamos importar 'usuarioP' directamente aquí
-// import { usuarioP } from '../../constantes/Consts';
->>>>>>> b18c9d8 (commit Marcelo)
 import PerfilInfo from '../../components/Perfil/PerfilInfo';
 import PerfilButtons from '../../components/Perfil/PerfilButtons';
 import styles from '../../styles/Perfil.module.css';

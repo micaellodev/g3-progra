@@ -13,17 +13,8 @@ export const Inicio = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
       
-=======
-      {/* El TopBar se renderiza aquí, dentro de Inicio */}
-      <TopBar
-        handleSearch={handleSearch}
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-      />
->>>>>>> b18c9d8 (commit Marcelo)
       <h1>Inicio</h1>
       {/* Aquí irá el resto del contenido de tu página de inicio, como listados de productos, etc. */}
     </>

@@ -3,10 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
-<<<<<<< HEAD
 import User from '../../constantes/consts';
-=======
->>>>>>> b18c9d8 (commit Marcelo)
 
 // Asegúrate de que LoginForm reciba 'handleLogin' como prop
 function LoginForm({ handleLogin }) {
