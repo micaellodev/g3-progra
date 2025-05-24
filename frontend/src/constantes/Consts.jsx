@@ -27,7 +27,7 @@ export const juegos = [
     id: 3,
     nombre: 'Half-Life',
     presentacion: 'Cartucho DS',
-    descripcion: 'Juego de disparos en primera persona.',
+    descripcion: 'Disparos en primera persona.',
     categoria: 'Acción',
     stock: 0,
     precio: 23.0,
