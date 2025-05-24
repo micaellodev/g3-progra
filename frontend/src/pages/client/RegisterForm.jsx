@@ -1,6 +1,6 @@
 // RegisterForm.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
 
@@ -15,15 +15,21 @@ function RegisterForm() {
     securityQuestion: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log('Datos de registro:', formData);
-    // Lógica de envío aquí
+
+    // Guarda el objeto formData COMPLETO en localStorage
+    localStorage.setItem('registeredUser', JSON.stringify(formData));
+
+    alert('¡Registro exitoso!');
+    navigate('/login');
   };
 
   return (
@@ -75,7 +81,7 @@ function RegisterForm() {
           value={formData.country}
           onChange={handleChange}
         />
-        
+
         <TextInput
           placeholder="¿En qué clínica naciste?"
           name="securityQuestion"
@@ -87,6 +93,10 @@ function RegisterForm() {
 
         <p className={styles.loginLink}>
           ¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link>
+        </p>
+
+        <p className={styles.loginLink}>
+          ¿Eres Admin? <Link to="/admin">Inicia Sesión como admin</Link>
         </p>
       </form>
     </div>

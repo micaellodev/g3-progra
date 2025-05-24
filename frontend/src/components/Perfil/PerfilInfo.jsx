@@ -1,3 +1,4 @@
+// PerfilInfo.jsx
 import React from 'react';
 import styles from '../../styles/Perfil.module.css';
 
