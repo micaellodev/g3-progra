@@ -9,6 +9,7 @@ function CarritoItems({ juegos }) {
       ) : (
         juegos.map((juego) => (
           <div key={juego.id} className={styles.juegoItem}>
+            <img src={juego.imagen} alt={juego.nombre} className={styles.juegoImagen} />
             <span>{juego.nombre}</span>
             <span>S/. {juego.precio.toFixed(2)}</span>
           </div>

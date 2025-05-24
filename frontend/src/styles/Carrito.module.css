@@ -115,3 +115,11 @@
   background-color: #111;
   color: #fff;
 }
+
+.juegoImagen {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+

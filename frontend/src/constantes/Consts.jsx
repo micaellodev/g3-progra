@@ -11,6 +11,7 @@ export const juegos = [
     precio: 60.0,
     imagen: '/pokemon-firered.jpg',
   },
+
   {
     id: 2,
     nombre: 'Mario Kart DS',
