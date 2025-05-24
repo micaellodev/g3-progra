@@ -20,7 +20,6 @@ import AgregarCategoria from '../pages/admin/AgregarCategorias';
 import ListaCategoria from '../pages/admin/ListaCategorias';
 import Cambio from '../pages/client/Cambio';
 
-DetalleProducto
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   // 'busqueda' y 'handleSearch' ya no son necesarios en App.jsx
