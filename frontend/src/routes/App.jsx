@@ -7,7 +7,7 @@ import Login from '../pages/client/LoginForm';
 import Inicio from '../pages/client/inicio'; // Asegúrate de que esta ruta sea correcta
 import Register from '../pages/client/RegisterForm';
 import Perfil from '../pages/client/Perfil';
-import Carrito from '../pages/client/carrito';
+import Carrito from '../pages/client/Carrito';
 import Nosotros from '../pages/client/Nosotros';
 import CambioContra from '../pages/cliente-admin/CambioContra';
 import RecuperarContra from '../pages/cliente-admin/RecuperarContra';
@@ -19,6 +19,10 @@ import AdminForm from '../pages/client/AdminForm';
 import AgregarCategoria from '../pages/admin/AgregarCategorias';
 import ListaCategoria from '../pages/admin/ListaCategorias';
 import Cambio from '../pages/client/Cambio';
+import Checkout from '../pages/client/Checkout';
+import MetodoDePago from '../pages/client/MetodoDePago';
+import OrdenCompletada from '../pages/client/OrdenCompletada';
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -65,6 +69,9 @@ function App() {
         <Route path="/agregarcategoria"element={<AgregarCategoria />}/>
         <Route path="/listacategoria"  element={<ListaCategoria />} />
         <Route path="/cambio"          element={<Cambio handleLogin={handleLogin} />} />
+        <Route path="/checkout"        element={<Checkout />} />
+        <Route path="/metododepago"    element={<MetodoDePago />} />  
+        <Route path="/ordencompletada" element={<OrdenCompletada />} />
       </Routes>
     </Router>
   );

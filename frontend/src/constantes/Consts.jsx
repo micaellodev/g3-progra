@@ -32,7 +32,7 @@ export const juegos = [
     stock: 0,
     precio: 23.0,
     imagen: '/half-life.jpg',
-  }
+  },
 ];
 
 export const usuarioP = {
@@ -53,6 +53,17 @@ export const carritoInicial = [
     stock: 5,
     precio: 60.0,
     imagen: '/pokemon-firered.jpg',
+  },
+  
+  {
+    id: 3,
+    nombre: 'Half-Life',
+    presentacion: 'Cartucho DS',
+    descripcion: 'Disparos en primera persona.',
+    categoria: 'Acción',
+    stock: 0,
+    precio: 23.0,
+    imagen: '/half-life.jpg',
   }
 ]
 
