@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usuarioP } from '../../constantes/Consts';
+import { usuarioP } from '../../constantes/consts';
 import PerfilInfo from '../../components/Perfil/PerfilInfo';
 import PerfilButtons from '../../components/Perfil/PerfilButtons';
 import styles from '../../styles/Perfil.module.css';

@@ -10,7 +10,9 @@ import RecuperarContra from '../pages/cliente-admin/RecuperarContra';
 import Dashboard from '../pages/admin/Dashboard';
 import ListaProducto from '../pages/admin/ListaProducto';
 import AgregarProducto from '../pages/admin/AgregarProducto';
+import DetalleProducto from '../pages/admin/DetalleProducto';
 
+DetalleProducto
 function App() {
   return (
     <Router>
@@ -27,7 +29,7 @@ function App() {
         <Route path="/dashboard"       element={<Dashboard/>}/>
         <Route path="/listaproducto"       element={<ListaProducto/>}/>
         <Route path="/agregarproducto"       element={<AgregarProducto/>}/>
-
+        <Route path="/detalleproducto"       element={<DetalleProducto/>}/>
       </Routes>
     </Router>
   );

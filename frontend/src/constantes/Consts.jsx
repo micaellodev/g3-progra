@@ -9,7 +9,7 @@ export const juegos = [
     categoria: 'RPG',
     stock: 5,
     precio: 60.0,
-    imagen: '../../../public/pokemon-firered.jpg',
+    imagen: '/pokemon-firered.jpg',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const juegos = [
     categoria: 'Carreras',
     stock: 3,
     precio: 40.0,
-    imagen: '../../../public//mario-kart-ds.jpg',
+    imagen: '/mario-kart-ds.jpg',
   }
 ];
 
@@ -40,7 +40,7 @@ export const carritoInicial = [
     categoria: 'RPG',
     stock: 5,
     precio: 60.0,
-    imagen: '../../../public/pokemon-firered.jpg',
+    imagen: '/pokemon-firered.jpg',
   }
 ]
 

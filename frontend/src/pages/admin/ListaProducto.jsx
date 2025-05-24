@@ -15,11 +15,7 @@ export const ListaProducto = () => {
 
     return (
         <>
-            <TopBar
-                handleSearch={handleSearch}
-                busqueda={busqueda}
-                setBusqueda={setBusqueda}
-            />
+            <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
             <h1>Lista Producto</h1>
             <BuscadorConBotones
                 busqueda={busqueda}

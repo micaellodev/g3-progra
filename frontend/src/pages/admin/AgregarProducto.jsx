@@ -52,11 +52,8 @@ export const AgregarProducto = () => {
 
   return (
     <>
-      <TopBar
-        handleSearch={handleSearch}
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-      />
+      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
+
       <h1>Agregar un producto</h1>
       <ProductoForm
         producto={producto}

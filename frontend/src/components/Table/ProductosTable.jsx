@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { juegos } from '../../constantes/Consts'; // ajusta la ruta si la tienes en otro sitio
+import { juegos } from '../../constantes/consts'; // ajusta la ruta si la tienes en otro sitio
 import styles from '../../styles/ListaProducto.module.css';
 
 const ProductosTable = () => {

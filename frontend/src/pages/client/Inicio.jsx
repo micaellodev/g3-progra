@@ -11,11 +11,8 @@ export const Inicio = () => {
   
   return (
     <>
-      <TopBar
-        handleSearch={handleSearch}
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-      />
+      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
+      
       <h1>Inicio</h1>
     </>
   );
