@@ -77,3 +77,45 @@ export const User = {
 };
 
 export default User;
+
+export const UserDash = {
+  nombre: 'John Doe',
+  correo: 'john.doe@example.com',
+  fechaRegistro: '2023-01-01',
+  estado: 'Activo',
+  foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUcNdEFR29DXre9LTLKm6c4tVsc8hODLXlYg&s',
+  ordenes: [
+    { id: 1, fecha: '2023-01-02', total: 100 },
+    { id: 2, fecha: '2023-01-03', total: 200 },
+  ]
+};
+
+export const ordenes = [
+  { id: '#1234', usuario: 'Alejandro Ruiz', fecha: '20/01/2025', total: 199, estado: 'Entregado' },
+  { id: '#1235', usuario: 'Juan Perez', fecha: '19/01/2025', total: 99, estado: 'Pendiente' },
+];
+
+export const usuarios = [
+  { id: 1, nombre: 'Juan Perez', estado: 'Activo' },
+  { id: 2, nombre: 'María Gonzales', estado: 'Activo' },
+  { id: 3, nombre: 'Alejandro Ruiz', estado: 'Inactivo' },
+];
+
+
+export const categorias = [
+  { id: 1, nombre: 'RPG', descripcion: 'Juegos de rol' },
+  { id: 2, nombre: 'Acción', descripcion: 'Juegos de acción' },
+  { id: 3, nombre: 'Carreras', descripcion: 'Juegos de carreras' },
+  { id: 4, nombre: 'Aventura', descripcion: 'Juegos de aventura' },
+  { id: 5, nombre: 'Deportes', descripcion: 'Juegos deportivos' },
+  { id: 6, nombre: 'Puzzle', descripcion: 'Juegos de rompecabezas' },
+  { id: 7, nombre: 'Simulación', descripcion: 'Juegos de simulación' },
+  { id: 8, nombre: 'Estrategia', descripcion: 'Juegos de estrategia' },
+  { id: 9, nombre: 'Plataformas', descripcion: 'Juegos de plataformas' },
+  { id: 10, nombre: 'Tiro', descripcion: 'Juegos de disparos' },
+  { id: 11, nombre: 'Aventura gráfica', descripcion: 'Juegos de aventura gráfica' },
+  { id: 12, nombre: 'Survival Horror', descripcion: 'Juegos de terror y supervivencia' },
+  { id: 13, nombre: 'Multijugador', descripcion: 'Juegos multijugador' },
+  { id: 14, nombre: 'Indie', descripcion: 'Juegos independientes' },
+];
+

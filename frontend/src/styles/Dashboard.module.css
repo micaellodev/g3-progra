@@ -1,0 +1,18 @@
+.dashboard {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.seccionDoble {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}

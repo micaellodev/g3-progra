@@ -1,0 +1,22 @@
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+
+.tabla tr:hover {
+  background-color: #f9f9f9;
+}
