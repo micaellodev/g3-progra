@@ -19,7 +19,7 @@ const UsuariosTabla = ({ titulo }) => {
         <table>
           <thead>
             <tr>
-              <th>Nombre</th>
+              <th>Nombreee</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
