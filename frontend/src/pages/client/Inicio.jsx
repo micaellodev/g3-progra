@@ -1,6 +1,11 @@
-// pages/client/inicio.jsx
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar'; // ¡Esta importación está bien!
+import TopBar from '../../components/TopBar/TopBar';
+import CategoriasDestacadas from '../../components/inicio/CategoriasDestacadas';
+import ProductosMasVendidos from '../../components/inicio/ProductosMasVendidos';
+import SeriesNuevas from '../../components/inicio/SeriesNuevas';
+import ProductosNuevos from '../../components/inicio/ProductosNuevos';
+import BannerPublicidad from '../../components/inicio/BannerPublicidad';
+import Footer from '../../components/Footer/Footer'; // Importa el Footer
 
 export const Inicio = () => {
   const [busqueda, setBusqueda] = useState('');
@@ -8,15 +13,20 @@ export const Inicio = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
-    // Aquí es donde iría la lógica para filtrar productos o realizar la búsqueda
+    // Aquí podrías agregar la lógica para realizar la búsqueda o redireccionar a resultados
   };
 
   return (
     <>
-      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
-      
-      <h1>Inicio</h1>
-      {/* Aquí irá el resto del contenido de tu página de inicio, como listados de productos, etc. */}
+      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
+
+      <CategoriasDestacadas />
+      <ProductosMasVendidos />
+      <SeriesNuevas />
+      <ProductosNuevos />
+      <BannerPublicidad />
+
+      <Footer /> {/* Footer incluido aquí, siempre visible debajo */}
     </>
   );
 };

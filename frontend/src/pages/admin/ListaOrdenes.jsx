@@ -1,30 +1,30 @@
-// src/pages/admin/ListaUsuarios.jsx
+// src/pages/admin/ListaOrdenes.jsx
 
 import React, { useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
-import UsuariosTable from '../../components/Table/UsuariosTable';
+import OrdenesTable from '../../components/Table/OrdenesTable';
 
-export const ListaUsuarios = () => {
+export const ListaOrdenes = () => {
     const [busqueda, setBusqueda] = useState('');
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log('Buscando usuario:', busqueda);
+        console.log('Buscando orden:', busqueda);
     };
 
     return (
         <>
             <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
-            <h1>Lista de Usuarios</h1>
+            <h1>Lista de Órdenes</h1>
             <BuscadorConBotones
                 busqueda={busqueda}
                 setBusqueda={setBusqueda}
                 handleSearch={handleSearch}
             />
-            <UsuariosTable busqueda={busqueda} />
+            <OrdenesTable busqueda={busqueda} />
         </>
     );
 };
 
-export default ListaUsuarios;
+export default ListaOrdenes;

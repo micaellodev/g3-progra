@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
+import Footer from '../../components/Footer/Footer';
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -99,6 +100,7 @@ function RegisterForm() {
           ¿Eres Admin? <Link to="/admin">Inicia Sesión como admin</Link>
         </p>
       </form>
+        <Footer />
     </div>
   );
 }

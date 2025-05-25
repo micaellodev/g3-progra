@@ -1,0 +1,43 @@
+.tableWrapper {
+  margin: 0 30px 30px;
+  overflow-x: auto;
+}
+
+.ordenesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ordenesTable th,
+.ordenesTable td {
+  padding: 12px 8px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.estadoPendiente {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.estadoCompletado {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.estadoCancelado {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #007bff;
+}
+
+.editBtn:hover {
+  text-decoration: underline;
+}

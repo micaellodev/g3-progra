@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
 import User from '../../constantes/consts';
+import Footer from '../../components/Footer/Footer';
+
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -54,6 +56,7 @@ function LoginForm() {
         <Link to="/register" className={styles.link}>Registrarse</Link>
         <span> | </span>
         <Link to="/recuperarcontra" className={styles.link}>¿Olvidaste tu contraseña?</Link>
+        <Footer />
       </div>
     </form>
   );

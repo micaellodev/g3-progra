@@ -22,6 +22,11 @@ import Cambio from '../pages/client/Cambio';
 import Checkout from '../pages/client/Checkout';
 import MetodoDePago from '../pages/client/MetodoDePago';
 import OrdenCompletada from '../pages/client/OrdenCompletada';
+import Resultados from '../components/Resultados/Resultados';
+import ListaUsuarios from '../pages/admin/ListaUsuarios';
+import DetalleUsuario from '../pages/admin/DetalleUsuario';
+import ListaOrdenes from '../pages/admin/ListaOrdenes';
+import DetalleOrden from '../pages/admin/DetalleOrden';
 
 
 function App() {
@@ -72,6 +77,11 @@ function App() {
         <Route path="/checkout"        element={<Checkout />} />
         <Route path="/metododepago"    element={<MetodoDePago />} />  
         <Route path="/ordencompletada" element={<OrdenCompletada />} />
+        <Route path="/resultados"      element={<Resultados />} />
+        <Route path="/listausuarios" element={<ListaUsuarios />} />
+        <Route path="/detalleusuario/:id" element={<DetalleUsuario />} />
+        <Route path="/listaordenes" element={<ListaOrdenes />} />
+        <Route path="/detalleorden/:id" element={<DetalleOrden />} />
       </Routes>
     </Router>
   );
