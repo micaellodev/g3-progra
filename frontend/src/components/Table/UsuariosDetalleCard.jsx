@@ -1,7 +1,7 @@
 // src/components/UsuariosDetalleCard.jsx
 
 import React from 'react';
-import styles from '../../styles/UsuariosDetalleCard.module.css';
+import styles from './UsuariosDetalleCard.module.css';
 
 const UsuariosDetalleCard = ({ usuario }) => {
   return (

@@ -1,6 +1,6 @@
 // src/components/Modal/ModalNuevaCategoria.jsx
 import React, { useState } from 'react';
-import styles from '../../styles/ModalNuevaCategoria.module.css';
+import styles from './ModalNuevaCategoria.module.css';
 import LabeledInput from '../Form/LabeledInput';
 
 const ModalNuevaCategoria = ({ visible, onClose, onCreate }) => {

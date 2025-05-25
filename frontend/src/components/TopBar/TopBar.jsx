@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import styles from '../../styles/TopBar.module.css';
+import styles from './TopBar.module.css';
 
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();

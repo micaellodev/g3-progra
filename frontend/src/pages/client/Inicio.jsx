@@ -7,6 +7,7 @@ import ProductosNuevos from '../../components/inicio/ProductosNuevos';
 import BannerPublicidad from '../../components/inicio/BannerPublicidad';
 import Footer from '../../components/Footer/Footer'; // Importa el Footer
 
+
 export const Inicio = () => {
   const [busqueda, setBusqueda] = useState('');
 
@@ -19,14 +20,12 @@ export const Inicio = () => {
   return (
     <>
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
-
       <CategoriasDestacadas />
       <ProductosMasVendidos />
       <SeriesNuevas />
       <ProductosNuevos />
       <BannerPublicidad />
-
-      <Footer /> {/* Footer incluido aquí, siempre visible debajo */}
+      <Footer />
     </>
   );
 };

@@ -1,7 +1,7 @@
 // src/components/ProductoDetalleCard.jsx
 
 import React from 'react';
-import styles from '../../styles/ProductoDetalleCard.module.css';
+import styles from './ProductoDetalleCard.module.css';  
 
 const ProductoDetalleCard = ({ producto }) => {
   return (

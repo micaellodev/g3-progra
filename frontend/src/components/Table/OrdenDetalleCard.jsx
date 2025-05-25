@@ -1,7 +1,7 @@
 // src/components/OrdenDetalleCard.jsx
 
 import React from 'react';
-import styles from '../../styles/OrdenDetalleCard.module.css';
+import styles from './OrdenDetalleCard.module.css';
 
 const OrdenDetalleCard = ({ item }) => {
   // item: { producto: { nombre, imagen, precio }, cantidad }

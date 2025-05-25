@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
 import DireccionEnvioForm from '../../components/Form/DireccionEnvioForm';
 import styles from '../../styles/Carrito.module.css';
-import { carritoInicial } from '../../constantes/Consts';
+import { carritoInicial } from '../../constantes/consts';
 
 export const Checkout = () => {
   const [juegosEnCarrito] = useState(carritoInicial);

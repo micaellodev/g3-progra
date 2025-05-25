@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../../styles/ListaUsuario.module.css';
+import styles from './ListaUsuario.module.css';
 
 const UsuariosTable = ({ usuarios = [] }) => {
   const navigate = useNavigate();

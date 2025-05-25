@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../../styles/ListaOrden.module.css';
+import styles from './ListaOrden.module.css';
 
 
 const OrdenesTable = ({ ordenes = [] }) => {
