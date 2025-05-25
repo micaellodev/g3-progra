@@ -19,7 +19,8 @@ const OrdenDetalleCard = ({ item }) => {
         <p className={styles.total}><strong>Total:</strong> s/ {total.toFixed(2)}</p>
       </div>
     </div>
-  );
+  ); 
+  
 };
 
 export default OrdenDetalleCard;
