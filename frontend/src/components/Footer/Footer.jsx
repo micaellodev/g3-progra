@@ -38,7 +38,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-copy">
-        <p>© 2025 Mi Tienda. Todos los derechos reservados.</p>
+        <p>© 2025 PuntoGG. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

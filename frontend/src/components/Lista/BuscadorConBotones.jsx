@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // 👈 Asegúrate de importar esto
 import styles from '../../styles/AgregarProducto.module.css';
+
 const BuscadorConBotones = ({ busqueda, setBusqueda, handleSearch }) => {
     return (
         <div className={styles.searchActionsContainer}>
@@ -17,12 +19,12 @@ const BuscadorConBotones = ({ busqueda, setBusqueda, handleSearch }) => {
             </form>
 
             <div className={styles.actionsGroup}>
-                <button type="button" className={styles.categoriasBtn}>
+                <Link to="/listacategoria" className={styles.categoriasBtn}>
                     Categorías
-                </button>
-                <button type="button" className={styles.agregarBtn}>
+                </Link>
+                <Link to="/agregarproducto" className={styles.agregarBtn}>
                     Agregar producto
-                </button>
+                </Link>
             </div>
         </div>
     );

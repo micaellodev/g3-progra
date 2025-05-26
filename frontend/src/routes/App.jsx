@@ -49,7 +49,6 @@ function App() {
         <Route path="/dashboard"          element={<Dashboard />} />
         <Route path="/listaproducto"      element={<ListaProducto />} />
         <Route path="/listacategoria"     element={<ListaCategoria />} />
-        <Route path="/listausuarios"      element={<ListaUsuarios />} />
         <Route path="/listaordenes"       element={<ListaOrdenes />} />
         <Route path="/listausuarios"      element={<ListaUsuarios />} />
         <Route path="/agregarproducto"    element={<AgregarProducto />} />
@@ -60,7 +59,7 @@ function App() {
         <Route path="/checkout"           element={<Checkout />} />
         <Route path="/metododepago"       element={<MetodoDePago />} />  
         <Route path="/ordencompletada"    element={<OrdenCompletada />} />
-        <Route path="/detalleusuario/:id" element={<DetalleUsuario />} />
+        <Route path="/admin/usuarios/:id" element={<DetalleUsuario />} />
         <Route path="/detalleorden/:id"   element={<DetalleOrden />} />       
       </Routes>
     </Router>

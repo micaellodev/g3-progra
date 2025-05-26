@@ -96,9 +96,9 @@ export const ordenes = [
 ];
 
 export const usuarios = [
-  { id: 1, nombre: 'Juan Perez', estado: 'Activo' },
-  { id: 2, nombre: 'María Gonzales', estado: 'Activo' },
-  { id: 3, nombre: 'Alejandro Ruiz', estado: 'Inactivo' },
+  { id: 1, nombre: 'Juan Perez', fechaRegistro: '2024/05/01', estado: 'Activo' },
+  { id: 2, nombre: 'María Gonzales', fechaRegistro: '2024/04/15', estado: 'Activo' },
+  { id: 3, nombre: 'Alejandro Ruiz', fechaRegistro: '2024/03/20', estado: 'Inactivo' },
 ];
 
 

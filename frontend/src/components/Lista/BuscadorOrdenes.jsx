@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from '../../styles/BuscarUsuario.module.css';
+import styles from '../../styles/BuscadorOrdenes.module.css'; // Ajusta si tienes estilos
 
-const BuscadorUsuario = ({ busqueda, setBusqueda, handleSearch }) => {
+const BuscadorOrdenes = ({ busqueda, setBusqueda, handleSearch }) => {
   return (
     <div className={styles.searchActionsContainer}>
       <form onSubmit={handleSearch} className={styles.searchForm}>
         <input
           type="text"
-          placeholder="Buscar un usuario..."
+          placeholder="Buscar una orden..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
           className={styles.searchInput}
@@ -20,4 +20,4 @@ const BuscadorUsuario = ({ busqueda, setBusqueda, handleSearch }) => {
   );
 };
 
-export default BuscadorUsuario;
+export default BuscadorOrdenes;

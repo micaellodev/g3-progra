@@ -1,36 +1,35 @@
 .tableWrapper {
-  margin: 0 30px 30px;
+  margin: 0 auto 30px;
   overflow-x: auto;
+  max-width: 900px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
 }
 
-.ordenesTable {
+.productosTable {
   width: 100%;
   border-collapse: collapse;
+  margin: 0 auto;
 }
 
-.ordenesTable th,
-.ordenesTable td {
+.productosTable th,
+.productosTable td {
   padding: 12px 8px;
-  border: 1px solid #e0e0e0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #e0e0e0;
   text-align: left;
 }
 
-.estadoPendiente {
-  color: #ffc107;
-  font-weight: bold;
+.productosTable th {
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #f9f9f9;
 }
 
-.estadoCompletado {
-  color: #28a745;
-  font-weight: bold;
-}
-
-.estadoCancelado {
-  color: #dc3545;
-  font-weight: bold;
-}
-
-.editBtn {
+.verDetalleBtn {
   background: none;
   border: none;
   cursor: pointer;
@@ -38,6 +37,4 @@
   color: #007bff;
 }
 
-.editBtn:hover {
-  text-decoration: underline;
-}
+

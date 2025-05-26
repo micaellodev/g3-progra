@@ -6,7 +6,7 @@ import UsuariosTabla from '../../components/Dash/UsuariosTabla';
 import OrdenesListado from '../../components/Dash/OrdenesListado';
 import { UserDash } from '../../constantes/consts';
 import styles from '../../styles/Dashboard.module.css';
-
+import Footer from '../../components/Footer/Footer'; 
 export const Dashboard = () => {
   const [busqueda, setBusqueda] = useState('');
   const handleSearch = (e) => {
@@ -25,6 +25,7 @@ export const Dashboard = () => {
         </section>
         <OrdenesListado titulo="Listado de órdenes" />
       </main>
+      <Footer />
     </>
   );
 };

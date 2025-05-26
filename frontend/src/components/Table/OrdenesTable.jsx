@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ListaOrden.module.css';
 
-
 const OrdenesTable = ({ ordenes = [] }) => {
   const navigate = useNavigate();
 
@@ -11,9 +10,9 @@ const OrdenesTable = ({ ordenes = [] }) => {
       <table className={styles.productosTable}>
         <thead>
           <tr>
-            <th>Id</th>
+            <th>#ORDEN</th>
             <th>Usuario</th>
-            <th>Fecha</th>
+            <th>Fecha Orden</th>
             <th>Total</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -22,17 +21,17 @@ const OrdenesTable = ({ ordenes = [] }) => {
         <tbody>
           {ordenes.map((orden) => (
             <tr key={orden.id}>
-              <td>#{orden.id.toString().padStart(4, '0')}</td>
+              <td>{orden.id.toString().padStart(4, '0')}</td>
               <td>{orden.usuario}</td>
               <td>{orden.fecha}</td>
               <td>S/ {orden.total.toFixed(2)}</td>
               <td>{orden.estado}</td>
               <td>
                 <button
-                  className={styles.editBtn}
+                  className={styles.verDetalleBtn}
                   onClick={() => navigate(`/admin/ordenes/${orden.id}`)}
                 >
-                  🔍 Ver
+                  Ver Detalle
                 </button>
               </td>
             </tr>

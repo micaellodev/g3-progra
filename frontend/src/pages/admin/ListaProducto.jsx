@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
 import ProductosTable from '../../components/Table/ProductosTable';
-import categorias from '../../constantes/consts';
 
 export const ListaProducto = () => {
     const [busqueda, setBusqueda] = useState('');
