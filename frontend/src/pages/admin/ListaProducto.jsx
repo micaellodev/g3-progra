@@ -1,6 +1,6 @@
 //Renzo
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
+import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
 import ProductosTable from '../../components/Table/ProductosTable';
 import categorias from '../../constantes/consts';
@@ -15,7 +15,7 @@ export const ListaProducto = () => {
 
     return (
         <>
-            <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
+            <TopBarAdmin handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
             <h1>Lista Producto</h1>
             <BuscadorConBotones
                 busqueda={busqueda}

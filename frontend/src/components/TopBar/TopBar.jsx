@@ -5,7 +5,6 @@ import useLogin from '../../hooks/useLogin';
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();
   const { currentUser, logout } = useLogin();
-  const tipoUsuario = currentUser?.rol;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -27,17 +26,9 @@ const TopBar = ({ busqueda, setBusqueda }) => {
         </form>
 
         <div className={styles.linksContainer}>
-          <Link to="/categoria" className={styles.navLink}>Categoría</Link>
-          <Link to="/detalleproducto" className={styles.navLink}>Productos</Link>
-          <Link to="/nosotros" className={styles.navLink}>Nosotros</Link>
-
-          {tipoUsuario === 'admin' && (
-            <>
-              <Link to="/listaproducto" className={styles.navLink}>Lista de productos</Link>
-              <Link to="/listaordenes" className={styles.navLink}>Lista de órdenes</Link>
-              <Link to="/listausuarios" className={styles.navLink}>Lista de usuarios</Link>
-            </>
-          )}
+          <Link to="/categoria" className={styles.navLinkButton}>Categoría</Link>
+          <Link to="/detalleproducto" className={styles.navLinkButton}>Productos</Link>
+          <Link to="/nosotros" className={styles.navLinkButton}>Nosotros</Link>
 
           {currentUser ? (
             <>

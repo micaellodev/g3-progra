@@ -1,11 +1,11 @@
-// src/pages/DetalleUsuario.jsx
-
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
-import UsuarioDetalleCard from '../../components/Table/UsuariosDetalleCard';
-import { usuarios } from '../../constantes/consts'; // Suponiendo que tienes datos de usuarios
+import { useParams } from 'react-router-dom';
+import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
+import UsuariosDetalleCard from '../../components/Table/UsuariosDetalleCard';
+import { usuarios } from '../../constantes/Consts'; // verifica que el archivo tenga los datos
 
-export const DetalleUsuario = () => {
+const DetalleUsuario = () => {
+  const { id } = useParams();
   const [busqueda, setBusqueda] = useState('');
 
   const handleSearch = (e) => {
@@ -13,13 +13,17 @@ export const DetalleUsuario = () => {
     console.log('Buscando usuario:', busqueda);
   };
 
-  const usuario = usuarios[0]; // Solo para ejemplo, tomamos el primer usuario
+  const usuario = usuarios.find(u => u.id.toString() === id);
+
+  if (!usuario) {
+    return <p>Usuario no encontrado</p>;
+  }
 
   return (
     <>
-      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
+      <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} />
       <h1 style={{ margin: '20px 30px' }}>Detalle del Usuario</h1>
-      <UsuarioDetalleCard usuario={usuario} />
+      <UsuariosDetalleCard usuario={usuario} />
     </>
   );
 };

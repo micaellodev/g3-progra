@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AgregarCategoria from './AgregarCategorias';
+import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 
 function ListaCategorias() {
+  const [busqueda, setBusqueda] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [modoEdicion, setModoEdicion] = useState(null);
@@ -45,10 +47,15 @@ function ListaCategorias() {
     setNombreEditado('');
     setDescripcionEditada('');
   };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('Buscando:', busqueda);
+  };
 
   return (
+    
     <div className="p-6">
-      {/* Botón de volver */}
+      <TopBarAdmin handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
       <button
         onClick={() => navigate('/adminf')}
         className="mb-4 bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded"

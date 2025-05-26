@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import OrdenDetalleCard from '../../components/Table/OrdenDetalleCard';
-import { ordenes } from '../../constantes/consts'; 
+import { ordenes } from '../../constantes/Consts'; 
 
 export const DetalleOrden = () => {
   const [busqueda, setBusqueda] = useState('');

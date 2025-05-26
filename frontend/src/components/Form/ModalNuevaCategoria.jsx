@@ -1,4 +1,3 @@
-// src/components/Modal/ModalNuevaCategoria.jsx
 import React, { useState } from 'react';
 import styles from './ModalNuevaCategoria.module.css';
 import LabeledInput from '../Form/LabeledInput';
@@ -15,17 +14,27 @@ const ModalNuevaCategoria = ({ visible, onClose, onCreate }) => {
     onClose();
   };
 
+  const handleOverlayClick = (e) => {
+    // Si el clic fue directamente en el fondo (no dentro del modal), cerrar
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   if (!visible) return null;
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modal}>
+        <button className={styles.closeButton} onClick={onClose}>
+          ×
+        </button>
+
         <h2>Nueva categoría</h2>
         <LabeledInput
           label="Nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          placeholder="Ej. Bebidas"
           name="nombreCategoria"
         />
 
@@ -33,7 +42,6 @@ const ModalNuevaCategoria = ({ visible, onClose, onCreate }) => {
         <textarea
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          placeholder="Describe esta categoría..."
           className={styles.textarea}
         />
 

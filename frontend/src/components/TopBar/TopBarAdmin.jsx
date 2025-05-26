@@ -26,12 +26,12 @@ const TopBarAdmin = ({ busqueda, setBusqueda }) => {
         </form>
 
         <div className={styles.linksContainer}>
-          <Link to="/listacategoria" className={styles.navLink}>Lista Categorías</Link>
-          <Link to="/listaproducto" className={styles.navLink}>Lista Productos</Link>
-          <Link to="/listausuarios" className={styles.navLink}>Lista Usuarios</Link>
-          <Link to="/agregarproducto" className={styles.navLink}>Agregar Producto</Link>
-          <Link to="/agregarcategoria" className={styles.navLink}>Agregar Categoría</Link>
-
+          <Link to="/dashboard" className={styles.navLinkButton}>Dashboard</Link>
+          <Link to="/listaproducto" className={styles.navLinkButton}>Lista Productos</Link>
+          <Link to="/listaordenes" className={styles.navLinkButton}>Lista Ordenes</Link>
+          <Link to="/listausuarios" className={styles.navLinkButton}>Lista Usuarios</Link>
+          <Link to="/listacategoria" className={styles.navLinkButton}>Lista Categorías</Link>
+          <Link to="/agregarproducto" className={styles.navLinkButton}>Agregar Producto</Link>
           <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">👤</Link>
           <button onClick={logout} className={styles.loginLink}>Cerrar sesión</button>
         </div>

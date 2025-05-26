@@ -1,7 +1,7 @@
 // src/pages/admin/ListaOrdenes.jsx
 
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
+import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
 import OrdenesTable from '../../components/Table/OrdenesTable';
 
@@ -15,7 +15,7 @@ export const ListaOrdenes = () => {
 
     return (
         <>
-            <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
+            <TopBarAdmin handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
             <h1>Lista de Órdenes</h1>
             <BuscadorConBotones
                 busqueda={busqueda}
