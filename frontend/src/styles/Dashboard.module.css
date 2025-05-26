@@ -1,5 +1,6 @@
 .dashboard {
   padding: 2rem;
+  padding-bottom: 6rem; /* altura aproximada del footer */
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -16,3 +17,4 @@ h2 {
   font-size: 1.2rem;
   color: #333;
 }
+

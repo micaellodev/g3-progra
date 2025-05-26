@@ -1,0 +1,15 @@
+.titulo {
+  font-size: 2rem;
+  margin: 0 0 10px 0; /* Pegado a la izquierda y menos espacio abajo */
+  padding-left: 20px;
+  color: rgb(0, 0, 0);
+  text-align: left;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px; /* Menos separación entre cajas */
+  padding: 0 20px;
+  flex-wrap: wrap;
+}

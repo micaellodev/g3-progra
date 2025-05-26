@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './Resumen.module.css';
-import CardResumen from './CardResumen';
+import ResumenCaja from './ResumenCaja';
 
 const Resumen = () => {
   return (
     <>
       <h1 className={styles.titulo}>Dashboard</h1>
       <div className={styles.cardsContainer}>
-        <CardResumen titulo="Órdenes" valor="68" />
-        <CardResumen titulo="Usuarios registrados" valor="12" />
-        <CardResumen titulo="Ingresos totales" valor="S/2348.00" />
+        <ResumenCaja titulo="Órdenes" valor="68" />
+        <ResumenCaja titulo="Usuarios registrados" valor="12" />
+        <ResumenCaja titulo="Ingresos totales" valor="S/2348.00" />
       </div>
     </>
   );

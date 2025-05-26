@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './CardResumen.module.css';
+import styles from './ResumenCaja.module.css';
 
-const CardResumen = ({ titulo, valor }) => {
+const ResumenCaja = ({ titulo, valor }) => {
   return (
     <div className={styles.cardResumen}>
       <h4>{titulo}</h4>
@@ -9,5 +9,4 @@ const CardResumen = ({ titulo, valor }) => {
     </div>
   );
 };
-
-export default CardResumen;
+export default  ResumenCaja;

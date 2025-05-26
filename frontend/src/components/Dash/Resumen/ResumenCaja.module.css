@@ -1,0 +1,63 @@
+.cardResumen {
+  background-color: black;
+  border: 2px solid #ff003c;
+  border-radius: 10px;
+  padding: 20px;
+  color: #ff003c;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 4px #ff003c, 0 0 8px #ff003c inset;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  flex: 1 1 200px;  
+  max-width: 250px;
+  min-width: 200px;
+}
+
+.cardResumen h4 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+}
+
+.cardResumen span {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Brillo sutil al hacer hover */
+.cardResumen:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 6px #ff003c, 0 0 12px #ff003c inset;
+}
+
+.cardResumen::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 0, 60, 0.15), transparent 70%);
+  animation: pulse 4s linear infinite;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cardResumen:hover::before {
+  opacity: 0.5;
+}
+
+@keyframes pulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}

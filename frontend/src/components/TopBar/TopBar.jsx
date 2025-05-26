@@ -33,7 +33,7 @@ const TopBar = ({ busqueda, setBusqueda }) => {
           {currentUser ? (
             <>
               <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">👤</Link>
-              <button onClick={logout} className={styles.loginLink}>Cerrar sesión</button>
+              <button onClick={logout} className={styles.logoutButton}>Cerrar sesión</button>
             </>
           ) : (
             <Link to="/login" className={styles.loginLink}>Login</Link>

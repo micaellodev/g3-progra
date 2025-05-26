@@ -1,13 +1,13 @@
-/* src/components/Footer/Footer.css */
-
 .footer-container {
+  width: 100%;
   background-color: #222;
   color: #eee;
-  padding: 2rem 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 
 .footer-links {
   display: flex;
