@@ -118,3 +118,11 @@
   flex: 1;
   margin-bottom: 0;
 }
+
+.cardIcon {
+  height: 32px;
+  width: auto;
+  max-width: 48px;
+  object-fit: contain;
+  display: block;
+}

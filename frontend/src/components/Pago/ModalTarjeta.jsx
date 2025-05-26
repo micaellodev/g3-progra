@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import styles from './ModalPagos.module.css';
-import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDinersClub, FaCcDiscover } from 'react-icons/fa';
+
+// Importa tus imágenes
+import visaImg from '../../assets/Tarjetas/FaCcVisa.svg';
+import mastercardImg from '../../assets/Tarjetas/FaCcMastercard.png';
+import amexImg from '../../assets/Tarjetas/FaCcAmex.png';
+import dinersImg from '../../assets/Tarjetas/FaCcDiners.png';
+// Si tienes discover, impórtala también
+// import discoverImg from '../../assets/Tarjetas/FaCcDiscover.png';
 
 const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   const [form, setForm] = useState({
@@ -47,11 +54,11 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   // Detectar tipo de tarjeta
   const cardType = getCardType(form.numero.replace(/\s/g, ''));
   let CardIcon = null;
-  if (cardType === 'visa') CardIcon = <FaCcVisa size={32} color="#1a1f71" />;
-  if (cardType === 'mastercard') CardIcon = <FaCcMastercard size={32} color="#eb001b" />;
-  if (cardType === 'amex') CardIcon = <FaCcAmex size={32} color="#2e77bb" />;
-  if (cardType === 'diners') CardIcon = <FaCcDinersClub size={32} color="#0069aa" />;
-  if (cardType === 'discover') CardIcon = <FaCcDiscover size={32} color="#f76b1c" />;
+  if (cardType === 'visa') CardIcon = <img src={visaImg} alt="Visa" className={styles.cardIcon} />;
+  if (cardType === 'mastercard') CardIcon = <img src={mastercardImg} alt="Mastercard" className={styles.cardIcon} />;
+  if (cardType === 'amex') CardIcon = <img src={amexImg} alt="American Express" className={styles.cardIcon} />;
+  if (cardType === 'diners') CardIcon = <img src={dinersImg} alt="Diners Club" className={styles.cardIcon} />;
+  // if (cardType === 'discover') CardIcon = <img src={discoverImg} alt="Discover" className={styles.cardIcon} />;
 
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
