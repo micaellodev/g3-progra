@@ -13,7 +13,7 @@ export const MetodoDePago = () => {
         <>
             <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
             
-            <h1>Dashboard</h1>
+            
         </>
     );
 };

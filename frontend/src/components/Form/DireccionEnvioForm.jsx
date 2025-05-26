@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DireccionContext } from '../../hooks/DireccionContext';
 import styles from '../../styles/Carrito.module.css';
 
 const departamentosPeru = [
@@ -8,7 +9,8 @@ const departamentosPeru = [
   "Piura", "Puno", "San Martín", "Tacna", "Tumbes", "Ucayali"
 ];
 
-const DireccionEnvioForm = ({ onSubmit }) => {
+const DireccionEnvioForm = () => {
+  const { setDireccionEnvio } = useContext(DireccionContext);
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
@@ -26,11 +28,7 @@ const DireccionEnvioForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({
-      nombre: form.nombre,
-      direccion: form.direccion,
-      telefono: form.telefono
-    });
+    setDireccionEnvio(form); // Guarda en el context
   };
 
   return (

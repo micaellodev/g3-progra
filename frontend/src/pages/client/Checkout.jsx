@@ -2,37 +2,29 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
 import DireccionEnvioForm from '../../components/Form/DireccionEnvioForm';
+import DireccionResumen from '../../components/Direccion/DirecciónResumen';
+import { DireccionProvider } from '../../hooks/DireccionContext';
 import styles from '../../styles/Carrito.module.css';
 import { carritoInicial } from '../../constantes/consts';
 
 export const Checkout = () => {
   const [juegosEnCarrito] = useState(carritoInicial);
-  const [form, setForm] = useState({
-    nombre: '',
-    apellido: '',
-    ciudad: '',
-    departamento: '',
-    direccion: '',
-    codigoPostal: '',
-    telefono: ''
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   return (
-    <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
-      <div style={{ flex: 2 }}>
-        <DireccionEnvioForm form={form} onChange={handleChange} />
+    <DireccionProvider>
+      <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
+        <div style={{ flex: 2 }}>
+          <DireccionEnvioForm />
+        </div>
+        <div style={{ flex: 1 }}>
+          <CarritoResumen juegos={juegosEnCarrito} />
+          <DireccionResumen />
+          <Link to="/MetodoDePago" className={styles.botonSeguirComprando}>
+            Agregar Metodo De Pago
+          </Link>
+        </div>
       </div>
-      <div style={{ flex: 1 }}>
-        <CarritoResumen juegos={juegosEnCarrito} />
-        <Link to="/MetodoDePago" className={styles.botonSeguirComprando}>
-          Agregar Metodo De Pago
-        </Link>
-      </div>
-    </div>
+    </DireccionProvider>
   );
 };
 
