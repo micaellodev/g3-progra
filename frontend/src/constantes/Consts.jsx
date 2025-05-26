@@ -92,13 +92,13 @@ export const UserDash = {
 
 export const ordenes = [
   { id: '#1234', usuario: 'Alejandro Ruiz', fecha: '20/01/2025', total: 199, estado: 'Entregado' },
-  { id: '#1235', usuario: 'Juan Perez', fecha: '19/01/2025', total: 99, estado: 'Pendiente' },
+  { id: '#1235', usuario: 'Juan Perez', fecha: '19/01/2025', total: 99, estado: 'Por Entregar' },
 ];
 
 export const usuarios = [
-  { id: 1, nombre: 'Juan Perez', fechaRegistro: '2024/05/01', estado: 'Activo' },
-  { id: 2, nombre: 'María Gonzales', fechaRegistro: '2024/04/15', estado: 'Activo' },
-  { id: 3, nombre: 'Alejandro Ruiz', fechaRegistro: '2024/03/20', estado: 'Inactivo' },
+  { id: 1, nombre: 'Juan Perez', fechaRegistro: '01/05/2024', estado: 'Activo', foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUcNdEFR29DXre9LTLKm6c4tVsc8hODLXlYg&s' },
+  { id: 2, nombre: 'María Gonzales', fechaRegistro: '15/04/2024', estado: 'Activo' },
+  { id: 3, nombre: 'Alejandro Ruiz', fechaRegistro: '20/03/2024', estado: 'Inactivo' },
 ];
 
 

@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../styles/BuscarUsuario.module.css';
 
-const BuscadorUsuario = ({ busqueda, setBusqueda, handleSearch }) => {
+const BuscadorUsuario = ({ handleSearch }) => {
+  const [localBusqueda, setLocalBusqueda] = useState('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(localBusqueda);  // Pasar localBusqueda al handler
+  };
+
   return (
     <div className={styles.searchActionsContainer}>
-      <form onSubmit={handleSearch} className={styles.searchForm}>
+      <form onSubmit={onSubmit} className={styles.searchForm}>
         <input
           type="text"
           placeholder="Buscar un usuario..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+          value={localBusqueda}
+          onChange={(e) => setLocalBusqueda(e.target.value)}
           className={styles.searchInput}
         />
         <button type="submit" className={styles.buscarBtn}>

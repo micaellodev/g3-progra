@@ -2,23 +2,20 @@ import React, { useState } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorOrdenes from '../../components/Lista/BuscadorOrdenes';
 import OrdenesTable from '../../components/Table/OrdenesTable';
-import { ordenes } from '../../constantes/consts'; // Importa tu lista de órdenes reales o simuladas
-// No importamos Footer si no quieres mostrarlo
+import { ordenes } from '../../constantes/consts';
 
 const ListaOrdenes = () => {
   const [busqueda, setBusqueda] = useState('');
+  const [ordenesFiltradas, setOrdenesFiltradas] = useState(ordenes); // estado separado
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log('Buscando orden:', busqueda);
-  };
-
-  // Filtrar órdenes por algún campo, por ejemplo, número o cliente
-    const ordenesFiltradas = ordenes.filter(o =>
-    o.id?.toString().includes(busqueda.toLowerCase()) ||  // El signo ? evita error si es undefined
-    o.usuario?.toLowerCase().includes(busqueda.toLowerCase())
+    const resultado = ordenes.filter((o) =>
+      o.id?.toString().includes(busqueda.toLowerCase()) ||
+      o.usuario?.toLowerCase().includes(busqueda.toLowerCase())
     );
-
+    setOrdenesFiltradas(resultado); // solo se actualiza al presionar "Buscar"
+  };
 
   return (
     <>

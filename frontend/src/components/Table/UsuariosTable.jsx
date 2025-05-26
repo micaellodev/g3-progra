@@ -12,7 +12,7 @@ const UsuariosTable = ({ usuarios = [] }) => {
 
   return (
     <div className={styles.tableWrapper}>
-      <table className={styles.productosTable}>
+      <table className={styles.usuarioTable}>
         <thead>
           <tr>
             <th>Nombre Completo</th>
@@ -24,21 +24,26 @@ const UsuariosTable = ({ usuarios = [] }) => {
         <tbody>
           {usuarios.map((usuario) => (
             <tr key={usuario.id}>
-              <td>{usuario.nombre}</td>
+              <td className={styles.nombreCelda}>
+                <div className={styles.nombreContenido}>
+                  <img src={usuario.foto} alt="Foto" className={styles.usuarioFoto} />
+                  {usuario.nombre}
+                </div>
+              </td>
               <td>{usuario.fechaRegistro}</td>
-              <td>{usuario.estado}</td>
+              <td className={usuario.estado === 'Activo' ? styles.estadoActivo : styles.estadoInactivo}>{usuario.estado}</td>
               <td>
                 <button
-                  className={styles.editBtn}
+                  className={styles.verBtn}
                   onClick={() => navigate(`/admin/usuarios/${usuario.id}`)}
                 >
-                  🔍
+                  Ver Detalle
                 </button>
                 <button
-                  className={styles.deleteBtn}
+                  className={styles.desactivarBtn}
                   onClick={() => handleDesactivar(usuario.id)}
                 >
-                  🚫
+                  Desactivar
                 </button>
               </td>
             </tr>

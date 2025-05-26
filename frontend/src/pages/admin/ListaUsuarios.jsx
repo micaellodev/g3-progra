@@ -5,27 +5,20 @@ import UsuariosTable from '../../components/Table/UsuariosTable';
 import { usuarios } from '../../constantes/consts';
 
 const ListaUsuarios = () => {
-  const [busqueda, setBusqueda] = useState('');
+  const [usuariosFiltrados, setUsuariosFiltrados] = useState(usuarios);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Buscando usuario:', busqueda);
+  const handleSearch = (termino) => {
+    const resultado = usuarios.filter((u) =>
+      u.nombre.toLowerCase().includes(termino.toLowerCase())
+    );
+    setUsuariosFiltrados(resultado);
   };
-
-  const usuariosFiltrados = usuarios.filter(u =>
-    u.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    u.correo.toLowerCase().includes(busqueda.toLowerCase())
-  );
 
   return (
     <>
-      <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} />
+      <TopBarAdmin />
       <h1>Lista de Usuarios</h1>
-      <BuscadorUsuario
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-        handleSearch={handleSearch}
-      />
+      <BuscadorUsuario handleSearch={handleSearch} />
       <UsuariosTable usuarios={usuariosFiltrados} />
     </>
   );

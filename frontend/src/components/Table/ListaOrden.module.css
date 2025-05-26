@@ -1,40 +1,84 @@
+/* Contenedor general de la tabla */
 .tableWrapper {
   margin: 0 auto 30px;
   overflow-x: auto;
-  max-width: 900px;
+  width: 100%;
+  max-width: 1100px;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
   background-color: white;
   box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
-.productosTable {
+/* Tabla */
+.ordenesTable {
   width: 100%;
   border-collapse: collapse;
   margin: 0 auto;
 }
 
-.productosTable th,
-.productosTable td {
+/* Celdas */
+.ordenesTable th,
+.ordenesTable td {
   padding: 12px 8px;
   border-left: none;
   border-right: none;
   border-top: none;
   border-bottom: 1px solid #e0e0e0;
-  text-align: left;
+  text-align: center;
 }
 
-.productosTable th {
+/* Encabezados */
+.ordenesTable th {
   border-bottom: 2px solid #e0e0e0;
   background-color: #f9f9f9;
 }
 
+/* Botón detalle */
 .verDetalleBtn {
-  background: none;
+  background: #3884fd; /* azul pastel */
+  color: white;
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  color: #007bff;
+  margin-right: 8px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.verDetalleBtn:hover {
+  background: #1c6ce3; /* azul más oscuro */
+  color: white; /* mantiene letras blancas */
+}
+
+/* Estado Entregado en verde */
+.estadoEntregado {
+  color: green;
+  font-weight: 600;
+}
+
+/* Estado Por Entregar en rojo */
+.estadoPorEntregar {
+  color: red;
+  font-weight: 600;
 }
 
 
+/* Botón buscar */
+.buscarBtn {
+  padding: 8px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.buscarBtn:hover {
+  background-color: #0056b3;
+}
