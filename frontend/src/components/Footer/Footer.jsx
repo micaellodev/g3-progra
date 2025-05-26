@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Enlaces</h4>
           <ul>
-            <li><Link to="/inicio">Inicio</Link></li>
+            <li><Link to="/">Inicio</Link></li>
             <li><Link to="/nosotros">Nosotros</Link></li>
             <li><Link to="/carrito">Carrito</Link></li>
             <li><Link to="/perfil">Perfil</Link></li>

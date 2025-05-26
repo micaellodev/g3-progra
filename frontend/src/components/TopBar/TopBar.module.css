@@ -1,8 +1,10 @@
+/* Barra de navegación */
 .navbar {
   background: #003366;
   padding: 2rem;
 }
 
+/* Contenedor principal de navegación */
 .navContainer {
   display: flex;
   align-items: center;
@@ -10,6 +12,7 @@
   flex-wrap: wrap;
 }
 
+/* Formulario de búsqueda */
 .searchForm {
   display: flex;
   align-items: center;
@@ -31,11 +34,45 @@
   cursor: pointer;
 }
 
-.loginLink {
+/* Contenedor de enlaces */
+.linksContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Estilo común para cada botón/enlace */
+.navLinkButton,
+.loginLink,
+.iconButton {
+  background: #0055aa;
   color: #fff;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  background: #0055aa;
   border-radius: 4px;
-  margin-left: 1rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botón de icono de perfil */
+.iconButton {
+  background: transparent;
+  font-size: 1.2rem;
+}
+
+/* Botón de cerrar sesión */
+.loginLink {
+  background: #cc0000;
+}
+
+/* Transición suave para todos los botones */
+.navLinkButton:hover,
+.loginLink:hover,
+.searchButton:hover {
+  opacity: 0.85;
 }

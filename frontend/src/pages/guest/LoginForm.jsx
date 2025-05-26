@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css';
-import Footer from '../../components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 import useLogin from '../../hooks/useLogin';
+import LoginFields from '../../components/Login/LoginFields';
+import LoginActions from '../../components/Login/LoginActions';
+import styles from '../../styles/TextInput.module.css';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -27,17 +27,8 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h2 className={styles.title}>Iniciar Sesión</h2>
-
-      <TextInput placeholder="Correo" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <TextInput placeholder="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-      <div className={styles.actions}>
-        <button type="submit" className={styles.button}>Ingresar</button>
-        <Link to="/register" className={styles.link}>Registrarse</Link>
-        <span> | </span>
-        <Link to="/recuperarcontra" className={styles.link}>¿Olvidaste tu contraseña?</Link>
-        <Footer />
-      </div>
+      <LoginFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+      <LoginActions />
     </form>
   );
 }

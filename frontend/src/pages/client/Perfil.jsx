@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useLogin from '../../hooks/useLogin';
-import PerfilInfo from '../../components/Perfil/PerfilInfo';
-import PerfilButtons from '../../components/Perfil/PerfilButtons';
+import PerfilView from '../../components/Perfil/PerfilView';
+import PerfilForm from '../../components/Perfil/PerfilForm';
+import AtrasBoton from '../../components/Perfil/AtrasBoton';
 import styles from '../../styles/Perfil.module.css';
 
 function Perfil() {
-  const { currentUser } = useLogin();
+  const { currentUser, updateUser } = useLogin();
   const navigate = useNavigate();
+  const [editando, setEditando] = useState(false);
+
+  const handleGuardar = (data) => {
+    updateUser(data);
+    setEditando(false);
+    alert('Datos actualizados correctamente');
+  };
 
   if (!currentUser) {
     return (
@@ -21,8 +29,12 @@ function Perfil() {
   return (
     <div className={styles.perfilContainer}>
       <h2>Mi Perfil</h2>
-      <PerfilInfo usuario={currentUser} />
-      <PerfilButtons navigate={navigate} />
+      {editando ? (
+        <PerfilForm usuario={currentUser} onGuardar={handleGuardar} />
+      ) : (
+        <PerfilView usuario={currentUser} onEditar={() => setEditando(true)} />
+      )}
+      <AtrasBoton onClick={() => navigate('/')} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
+import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import ResumenCards from '../../components/Dash/Resumen';
 import UsuarioDetalleCard from '../../components/Dash/UsuarioDetalleCard';
 import UsuariosTabla from '../../components/Dash/UsuariosTabla';
@@ -9,10 +9,14 @@ import styles from '../../styles/Dashboard.module.css';
 
 export const Dashboard = () => {
   const [busqueda, setBusqueda] = useState('');
-  const handleSearch = (e) => {e.preventDefault();console.log('Buscando:', busqueda);};
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('Buscando:', busqueda);
+  };
+
   return (
     <>
-      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
+      <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} handleSearch={handleSearch} />
       <main className={styles.dashboard}>
         <ResumenCards />
         <section className={styles.seccionDoble}>

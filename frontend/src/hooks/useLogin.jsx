@@ -20,7 +20,14 @@ const useLogin = () => {
     localStorage.removeItem('currentUser');
   };
 
-  return { currentUser, login, logout };
+ const updateUser = (updatedData) => {
+  const updatedUser = { ...currentUser, ...updatedData };
+  setCurrentUser(updatedUser);
+  localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+  localStorage.setItem('registeredUser', JSON.stringify(updatedUser)); // <- Agregado
+};
+
+  return { currentUser, login, logout, updateUser };
 };
 
 export default useLogin;

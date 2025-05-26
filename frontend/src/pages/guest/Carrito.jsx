@@ -13,7 +13,7 @@ export const Carrito = () => {
       <div className={styles.carritoContenido}>
         <h1>Carrito</h1>
         <CarritoItems juegos={juegosEnCarrito} />
-        <Link to="/inicio" className={styles.botonSeguirComprando}>
+        <Link to="/" className={styles.botonSeguirComprando}>
           Seguir comprando
         </Link>
       </div>
