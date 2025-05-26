@@ -20,7 +20,7 @@ export const Carrito = () => {
       <div>
         <CarritoResumen juegos={juegosEnCarrito} />
         <Link to="/checkout" className={styles.botonSeguirComprando}>
-          Confirmar Compra
+          Continuar
         </Link>
       </div>
       
