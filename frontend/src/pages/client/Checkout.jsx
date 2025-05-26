@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
 import DireccionEnvioForm from '../../components/Form/DireccionEnvioForm';
 import styles from '../../styles/Carrito.module.css';
@@ -27,6 +28,9 @@ export const Checkout = () => {
       </div>
       <div style={{ flex: 1 }}>
         <CarritoResumen juegos={juegosEnCarrito} />
+        <Link to="/MetodoDePago" className={styles.botonSeguirComprando}>
+          Agregar Metodo De Pago
+        </Link>
       </div>
     </div>
   );

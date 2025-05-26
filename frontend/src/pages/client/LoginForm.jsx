@@ -1,33 +1,24 @@
-// LoginForm.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
-import User from '../../constantes/consts';
 import Footer from '../../components/Footer/Footer';
-
+import useLogin from '../../hooks/useLogin';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useLogin();
 
-  const handleLogin = (user) => {
-    console.log('Usuario autenticado:', user);
-    // Guardar sesión
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-    // Puedes actualizar estado global o contexto aquí si lo estás usando
-  };
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const savedUser = JSON.parse(localStorage.getItem('registeredUser'));
 
     if (savedUser && email === savedUser.email && password === savedUser.password) {
-      console.log('Login exitoso');
-      handleLogin(savedUser); 
-      navigate('/inicio');
+      login(savedUser);
+      alert('Login exitoso');
+      navigate('/');
     } else {
       alert('Correo o contraseña incorrectos');
     }
@@ -37,19 +28,8 @@ function LoginForm() {
     <form onSubmit={handleSubmit} className={styles.form}>
       <h2 className={styles.title}>Iniciar Sesión</h2>
 
-      <TextInput
-        placeholder="Correo"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <TextInput
-        placeholder="Contraseña"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <TextInput placeholder="Correo" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <TextInput placeholder="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
       <div className={styles.actions}>
         <button type="submit" className={styles.button}>Ingresar</button>

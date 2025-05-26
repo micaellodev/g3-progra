@@ -23,9 +23,6 @@ function CarritoResumen({ juegos, botonTexto = "Continuar compra", botonRuta = "
         <span>Total</span>
         <span>S/. {totalFinal.toFixed(2)}</span>
       </div>
-      <Link to={botonRuta} className={styles.botonSeguirComprando}>
-        {botonTexto}
-      </Link>
     </div>
   );
 }

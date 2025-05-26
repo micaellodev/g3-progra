@@ -8,7 +8,7 @@ function ListaCategorias() {
   const [modoEdicion, setModoEdicion] = useState(null);
   const [nombreEditado, setNombreEditado] = useState('');
   const [descripcionEditada, setDescripcionEditada] = useState('');
-
+  
   const navigate = useNavigate();
   
   const agregarCategoria = (nueva) => {

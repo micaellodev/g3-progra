@@ -17,7 +17,13 @@ export const Carrito = () => {
           Seguir comprando
         </Link>
       </div>
-      <CarritoResumen juegos={juegosEnCarrito} />
+      <div>
+        <CarritoResumen juegos={juegosEnCarrito} />
+        <Link to="/checkout" className={styles.botonSeguirComprando}>
+          Confirmar Compra
+        </Link>
+      </div>
+      
     </div>
   );
 };

@@ -9,10 +9,7 @@ import styles from '../../styles/Dashboard.module.css';
 
 export const Dashboard = () => {
   const [busqueda, setBusqueda] = useState('');
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Buscando:', busqueda);
-  };
+  const handleSearch = (e) => {e.preventDefault();console.log('Buscando:', busqueda);};
   return (
     <>
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />

@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './TopBar.module.css';
+import useLogin from '../../hooks/useLogin';
 
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();
+  const { currentUser, logout } = useLogin();
+  const tipoUsuario = currentUser?.rol;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -20,16 +23,30 @@ const TopBar = ({ busqueda, setBusqueda }) => {
             onChange={(e) => setBusqueda(e.target.value)}
             className={styles.searchInput}
           />
-          <button type="submit" className={styles.searchButton}>
-            Buscar
-          </button>
+          <button type="submit" className={styles.searchButton}>Buscar</button>
         </form>
 
         <div className={styles.linksContainer}>
-          <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">
-            👤
-          </Link>
-          <Link to="/login" className={styles.loginLink}>Login</Link>
+          <Link to="/categoria" className={styles.navLink}>Categoría</Link>
+          <Link to="/detalleproducto" className={styles.navLink}>Productos</Link>
+          <Link to="/nosotros" className={styles.navLink}>Nosotros</Link>
+
+          {tipoUsuario === 'admin' && (
+            <>
+              <Link to="/listaproducto" className={styles.navLink}>Lista de productos</Link>
+              <Link to="/listaordenes" className={styles.navLink}>Lista de órdenes</Link>
+              <Link to="/listausuarios" className={styles.navLink}>Lista de usuarios</Link>
+            </>
+          )}
+
+          {currentUser ? (
+            <>
+              <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">👤</Link>
+              <button onClick={logout} className={styles.loginLink}>Cerrar sesión</button>
+            </>
+          ) : (
+            <Link to="/login" className={styles.loginLink}>Login</Link>
+          )}
         </div>
       </div>
     </nav>

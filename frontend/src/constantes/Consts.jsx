@@ -112,10 +112,9 @@ export const categorias = [
   { id: 7, nombre: 'Simulación', descripcion: 'Juegos de simulación' },
   { id: 8, nombre: 'Estrategia', descripcion: 'Juegos de estrategia' },
   { id: 9, nombre: 'Plataformas', descripcion: 'Juegos de plataformas' },
-  { id: 10, nombre: 'Tiro', descripcion: 'Juegos de disparos' },
+  { id: 10, nombre: 'Shotter', descripcion: 'Juegos de disparos' },
   { id: 11, nombre: 'Aventura gráfica', descripcion: 'Juegos de aventura gráfica' },
   { id: 12, nombre: 'Survival Horror', descripcion: 'Juegos de terror y supervivencia' },
   { id: 13, nombre: 'Multijugador', descripcion: 'Juegos multijugador' },
   { id: 14, nombre: 'Indie', descripcion: 'Juegos independientes' },
 ];
-

@@ -1,42 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { juegos } from '../../constantes/consts'; // Asegúrate de que la ruta sea correcta
+import React, { useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { juegos } from '../../constantes/consts';
 
 const Resultados = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const queryParams = new URLSearchParams(location.search);
   const [busqueda, setBusqueda] = useState(queryParams.get('busqueda') || '');
-
-  const [resultados, setResultados] = useState([]);
   const [orden, setOrden] = useState('nombre');
   const [categoriaFiltro, setCategoriaFiltro] = useState('Todos');
 
-  const categorias = ['Todos', ...new Set(juegos.map(j => j.categoria))];
+  // Obtener categorías únicas
+  const categorias = useMemo(() => ['Todos', ...new Set(juegos.map(j => j.categoria))], []);
 
-  useEffect(() => {
-    let filtrados = juegos.filter(juego => {
-      const term = busqueda.toLowerCase();
-      return (
-        juego.nombre.toLowerCase().includes(term) ||
-        juego.presentacion.toLowerCase().includes(term) ||
-        juego.categoria.toLowerCase().includes(term)
-      );
-    });
+  // Filtrar y ordenar resultados
+  const resultados = useMemo(() => {
+    const term = busqueda.toLowerCase();
+
+    let filtrados = juegos.filter(({ nombre, presentacion, categoria }) =>
+      [nombre, presentacion, categoria].some((campo) =>
+        campo.toLowerCase().includes(term)
+      )
+    );
 
     if (categoriaFiltro !== 'Todos') {
       filtrados = filtrados.filter(j => j.categoria === categoriaFiltro);
     }
 
-    if (orden === 'precio') {
-      filtrados.sort((a, b) => a.precio - b.precio);
-    } else {
-      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    }
-
-    setResultados(filtrados);
+    return filtrados.sort((a, b) =>
+      orden === 'precio' ? a.precio - b.precio : a.nombre.localeCompare(b.nombre)
+    );
   }, [busqueda, orden, categoriaFiltro]);
 
+  // Enviar búsqueda
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/resultados?busqueda=${encodeURIComponent(busqueda)}`);
@@ -57,8 +54,8 @@ const Resultados = () => {
                   border: 'none',
                   cursor: 'pointer',
                   padding: '5px 10px',
-                  textAlign: 'left',
                   width: '100%',
+                  textAlign: 'left'
                 }}
               >
                 {cat}
@@ -80,7 +77,7 @@ const Resultados = () => {
 
       {/* Resultados */}
       <section style={{ flex: 1, padding: '10px' }}>
-        {/* 🔍 Barra de búsqueda */}
+        {/* Barra de búsqueda */}
         <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
           <input
             type="text"
@@ -95,32 +92,35 @@ const Resultados = () => {
         </form>
 
         <h2>Resultados para: "{busqueda}"</h2>
-        {resultados.length === 0 && <p>No se encontraron resultados.</p>}
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {resultados.map(j => (
-            <li
-              key={j.id}
-              style={{
-                border: '1px solid #ddd',
-                borderRadius: '5px',
-                marginBottom: '10px',
-                padding: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-            >
-              <img src={j.imagen} alt={j.nombre} width="80" />
-              <div>
-                <h3>{j.nombre}</h3>
-                <p>{j.presentacion}</p>
-                <p>{j.descripcion}</p>
-                <p>Precio: ${j.precio.toFixed(2)}</p>
-                <p>Stock: {j.stock > 0 ? j.stock : 'Agotado'}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {resultados.length === 0 ? (
+          <p>No se encontraron resultados.</p>
+        ) : (
+          <ul style={{ listStyle: 'none', padding: 0 }}>
+            {resultados.map(({ id, nombre, presentacion, descripcion, precio, stock, imagen }) => (
+              <li
+                key={id}
+                style={{
+                  border: '1px solid #ddd',
+                  borderRadius: '5px',
+                  marginBottom: '10px',
+                  padding: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <img src={imagen} alt={nombre} width="80" />
+                <div>
+                  <h3>{nombre}</h3>
+                  <p>{presentacion}</p>
+                  <p>{descripcion}</p>
+                  <p>Precio: ${precio.toFixed(2)}</p>
+                  <p>Stock: {stock > 0 ? stock : 'Agotado'}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
