@@ -60,7 +60,7 @@ function App() {
         <Route path="/metododepago"       element={<MetodoDePago />} />  
         <Route path="/ordencompletada"    element={<OrdenCompletada />} />
         <Route path="/admin/usuarios/:id" element={<DetalleUsuario />} />
-        <Route path="/detalleorden/:id"   element={<DetalleOrden />} />       
+        <Route path="/admin/ordenes/:id"   element={<DetalleOrden />} />       
       </Routes>
     </Router>
   );

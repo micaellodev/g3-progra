@@ -1,26 +1,38 @@
-// src/components/OrdenDetalleCard.jsx
-
 import React from 'react';
 import styles from './OrdenDetalleCard.module.css';
 
-const OrdenDetalleCard = ({ item }) => {
-  // item: { producto: { nombre, imagen, precio }, cantidad }
-
-  const total = item.cantidad * item.producto.precio;
-
+const OrdenDetalleCard = ({ orden }) => {
   return (
     <div className={styles.card}>
-      <img src={item.producto.imagen} alt={item.producto.nombre} className={styles.imagen} />
-      <div className={styles.info}>
-        <h2>{item.producto.nombre}</h2>
-        <hr />
-        <p><strong>Cantidad:</strong> {item.cantidad}</p>
-        <p><strong>Precio unitario:</strong> s/ {item.producto.precio.toFixed(2)}</p>
-        <p className={styles.total}><strong>Total:</strong> s/ {total.toFixed(2)}</p>
-      </div>
+      <h2>Orden #{orden.id}</h2>
+      <p><strong>Estado:</strong> {orden.estado}</p>
+      <p><strong>Total:</strong> S/ {orden.total.toFixed(2)}</p>
+
+      <h3>Productos ordenados</h3>
+      <table className={styles.productosTable}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Cantidad</th>
+            <th>Total (S/.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orden.productos.map(prod => (
+            <tr key={prod.id}>
+              <td>{prod.id}</td>
+              <td>{prod.nombre}</td>
+              <td>{prod.categoria}</td>
+              <td>{prod.cantidad}</td>
+              <td>{(prod.cantidad * prod.precio).toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  ); 
-  
+  );
 };
 
 export default OrdenDetalleCard;

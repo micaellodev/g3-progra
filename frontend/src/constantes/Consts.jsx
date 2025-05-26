@@ -73,15 +73,81 @@ export const UserDash = {
 };
 
 export const ordenes = [
-  { id: '#1234', usuario: 'Alejandro Ruiz', fecha: '20/01/2025', total: 199, estado: 'Entregado' },
-  { id: '#1235', usuario: 'Juan Perez', fecha: '19/01/2025', total: 99, estado: 'Por Entregar' },
+  {
+    id: 101,
+    usuario: 'Juan Perez',
+    fecha: '03/05/2024',
+    total: 150.5,
+    estado: 'Entregado',
+    productos: [
+      { id: 1, nombre: 'Producto A', categoria: 'Cat 1', cantidad: 2, precio: 30 },
+      { id: 2, nombre: 'Producto B', categoria: 'Cat 2', cantidad: 1, precio: 90.5 },
+    ],
+  },
+  {
+    id: 102,
+    usuario: 'Juan Perez',
+    fecha: '19/01/2025',
+    total: 99,
+    estado: 'Por Entregar',
+    productos: [
+      { id: 3, nombre: 'Producto C', categoria: 'Cat 3', cantidad: 1, precio: 45 },
+      { id: 4, nombre: 'Producto D', categoria: 'Cat 1', cantidad: 1, precio: 54 },
+    ],
+  },
+  {
+    id: 1236,
+    usuario: 'Lucía Ramírez',
+    fecha: '25/05/2025',
+    total: 210,
+    estado: 'Entregado',
+    productos: [
+      { id: 5, nombre: 'Producto E', categoria: 'Cat 2', cantidad: 3, precio: 50 },
+      { id: 6, nombre: 'Producto F', categoria: 'Cat 3', cantidad: 1, precio: 60 },
+    ],
+  },
 ];
 
+
 export const usuarios = [
-  { id: 1, nombre: 'Juan Perez', fechaRegistro: '01/05/2024', estado: 'Activo', foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUcNdEFR29DXre9LTLKm6c4tVsc8hODLXlYg&s' },
-  { id: 2, nombre: 'María Gonzales', fechaRegistro: '15/04/2024', estado: 'Activo' },
-  { id: 3, nombre: 'Alejandro Ruiz', fechaRegistro: '20/03/2024', estado: 'Inactivo' },
+  {
+    id: 1,
+    nombre: 'Juan Perez',
+    correo: 'juanperez@gmail.com',
+    fechaRegistro: '01/05/2024',
+    estado: 'Activo',
+    foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUcNdEFR29DXre9LTLKm6c4tVsc8hODLXlYg&s',
+    ordenes: [
+      { id: 101, fecha: '03/05/2024', total: 150.5 },
+      { id: 102, fecha: '10/05/2024', total: 245.0 },
+    ],
+  },
+  {
+    id: 2,
+    nombre: 'María Gonzales',
+    correo: 'mariagonzales@gmail.com',
+    fechaRegistro: '15/04/2024',
+    estado: 'Activo',
+    foto: 'https://randomuser.me/api/portraits/women/44.jpg',
+    ordenes: [
+      { id: 103, fecha: '16/04/2024', total: 99.99 },
+      { id: 104, fecha: '22/04/2024', total: 180.0 },
+    ],
+  },
+  {
+    id: 3,
+    nombre: 'Alejandro Ruiz',
+    correo: 'alejandroruiz@gmail.com',
+    fechaRegistro: '20/03/2024',
+    estado: 'Inactivo',
+    foto: 'https://randomuser.me/api/portraits/men/46.jpg',
+    ordenes: [
+      { id: 105, fecha: '21/03/2024', total: 75.0 },
+    ],
+  },
 ];
+
+
 
 
 export const categorias = [
