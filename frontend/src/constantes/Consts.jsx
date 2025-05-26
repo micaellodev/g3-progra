@@ -1,38 +1,20 @@
 // consts.jsx
 
 export const juegos = [
-  {
-    id: 1,
-    nombre: 'Pokemon FireRed',
-    presentacion: 'Cartucho GBA',
-    descripcion: 'Aventura clásica en la región de Kanto.',
-    categoria: 'RPG',
-    stock: 5,
-    precio: 60.0,
-    imagen: '/pokemon-firered.jpg',
-  },
-
-  {
-    id: 2,
-    nombre: 'Mario Kart DS',
-    presentacion: 'CD-ROM',
-    descripcion: 'Juego de carreras con personajes de Mario.',
-    categoria: 'Carreras',
-    stock: 3,
-    precio: 40.0,
-    imagen: '/mario-kart-ds.jpg',
-  },
-
-  {
-    id: 3,
-    nombre: 'Half-Life',
-    presentacion: 'Cartucho DS',
-    descripcion: 'Disparos en primera persona.',
-    categoria: 'Acción',
-    stock: 0,
-    precio: 23.0,
-    imagen: '/half-life.jpg',
-  },
+  { id: 1, nombre: 'Pokemon FireRed', presentacion: 'Cartucho GBA', descripcion: 'Aventura clásica en la región de Kanto.', categoria: 'RPG', stock: 5, precio: 60.0, imagen: '/pokemon-firered.jpg' },
+  { id: 2, nombre: 'Mario Kart DS', presentacion: 'CD-ROM', descripcion: 'Juego de carreras con personajes de Mario.', categoria: 'Carreras', stock: 3, precio: 40.0, imagen: '/mario-kart-ds.jpg' },
+  { id: 3, nombre: 'Half-Life', presentacion: 'Cartucho DS', descripcion: 'Disparos en primera persona.', categoria: 'Acción', stock: 10, precio: 23.0, imagen: '/half-life.jpg' },
+  { id: 4, nombre: 'The Legend of Zelda', presentacion: 'Cartucho SNES', descripcion: 'Explora mazmorras y salva Hyrule.', categoria: 'Aventura', stock: 7, precio: 75.0, imagen: '/zelda.jpg' },
+  { id: 5, nombre: 'FIFA 21', presentacion: 'Blu-ray', descripcion: 'El mejor fútbol en tu consola.', categoria: 'Deportes', stock: 12, precio: 55.0, imagen: '/fifa21.jpg' },
+  { id: 6, nombre: 'Tetris', presentacion: 'Cartucho NES', descripcion: 'El clásico juego de rompecabezas.', categoria: 'Puzzle', stock: 8, precio: 20.0, imagen: '/tetris.jpg' },
+  { id: 7, nombre: 'SimCity', presentacion: 'CD-ROM', descripcion: 'Construye y gestiona tu ciudad.', categoria: 'Simulación', stock: 6, precio: 30.0, imagen: '/simcity.jpg' },
+  { id: 8, nombre: 'Age of Empires II', presentacion: 'CD-ROM', descripcion: 'Estrategia en tiempo real.', categoria: 'Estrategia', stock: 9, precio: 35.0, imagen: '/aoe2.jpg' },
+  { id: 9, nombre: 'Super Mario Bros', presentacion: 'Cartucho NES', descripcion: 'Salta y corre en el Reino Champiñón.', categoria: 'Plataformas', stock: 15, precio: 28.0, imagen: '/super-mario.jpg' },
+  { id: 10, nombre: 'Call of Duty', presentacion: 'Blu-ray', descripcion: 'Acción bélica moderna.', categoria: 'Shotter', stock: 11, precio: 65.0, imagen: '/cod.jpg' },
+  { id: 11, nombre: 'Monkey Island', presentacion: 'CD-ROM', descripcion: 'Aventura gráfica de piratas.', categoria: 'Aventura gráfica', stock: 4, precio: 45.0, imagen: '/monkey-island.jpg' },
+  { id: 12, nombre: 'Resident Evil', presentacion: 'Blu-ray', descripcion: 'Sobrevive al horror en Racoon City.', categoria: 'Survival Horror', stock: 5, precio: 50.0, imagen: '/resident-evil.jpg' },
+  { id: 13, nombre: 'Among Us', presentacion: 'Digital', descripcion: 'Descubre al impostor.', categoria: 'Multijugador', stock: 20, precio: 15.0, imagen: '/among-us.jpg' },
+  { id: 14, nombre: 'Hollow Knight', presentacion: 'Digital', descripcion: 'Aventura indie en Hallownest.', categoria: 'Indie', stock: 13, precio: 32.0, imagen: '/hollow-knight.jpg' },
 ];
 
 export const usuarioP = {

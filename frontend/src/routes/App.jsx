@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
 // Importa tus demás componentes
 import Login            from '../pages/guest/LoginForm';
-import Inicio           from '../pages/client/Inicio';
+import Inicio           from '../pages/guest/Inicio';
 import Register         from '../pages/guest/RegisterForm';
 import Perfil           from '../pages/client/Perfil';
 import Carrito          from '../pages/guest/Carrito';
