@@ -44,7 +44,6 @@ export const AgregarProducto = () => {
         setBusqueda={setBusqueda}
       />
 
-      <h1>Agregar un producto</h1>
       <ProductoForm
         producto={producto}
         handleChange={handleChange}
@@ -54,7 +53,6 @@ export const AgregarProducto = () => {
         categorias={categorias}
         handleAgregarCategoria={handleAgregarCategoria}
       />
-
       <ModalNuevaCategoria
         visible={modalVisible}
         onClose={() => setModalVisible(false)}

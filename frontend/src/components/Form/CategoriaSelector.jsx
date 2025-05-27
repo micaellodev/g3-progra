@@ -1,13 +1,12 @@
-// src/components/Form/CategoriaSelector.jsx
-
 import React from 'react';
 import styles from '../../styles/AgregarProducto.module.css';
+import { categorias } from '../../constantes/Consts'; // ajusta la ruta según tu estructura
 
-const CategoriaSelector = ({ value, onChange, categorias = [], onAgregarCategoria }) => {
+const CategoriaSelector = ({ value, onChange, onAgregarCategoria }) => {
   return (
     <div className={styles.categoriaGroup}>
       <label>Categoría</label>
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <div className={styles.categoriaRow}>
         <select
           name="categoria"
           value={value}
@@ -15,8 +14,10 @@ const CategoriaSelector = ({ value, onChange, categorias = [], onAgregarCategori
           className={styles.select}
         >
           <option value="">Selecciona la categoría del producto</option>
-          {categorias.map((cat, idx) => (
-            <option key={idx} value={cat.nombre}>{cat.nombre}</option>
+          {categorias.map((cat) => (
+            <option key={cat.id} value={cat.nombre}>
+              {cat.nombre} — {cat.descripcion}
+            </option>
           ))}
         </select>
         <button

@@ -1,58 +1,100 @@
-.searchActionsContainer {
+/* Contenedor principal centrado */
+.container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 30px 20px 30px;
-  /* flex-wrap: wrap;  -- quitar para evitar que se rompan en varias filas */
+  justify-content: center;
+  align-items: flex-start; /* o 'center' si quieres centrar también verticalmente */
+  min-height: 100vh;
+  padding: 40px 20px;
+  background-color: #f0f2f5;
 }
 
-.searchForm {
+/* Caja del formulario visible */
+.formBox {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 40px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Secciones del formulario */
+.leftSection,
+.rightSection {
   flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #333;
+}
+
+label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.textarea {
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.imageUploadBox input[type="file"] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  width: 100%;
+}
+
+.stockGroup {
+  display: flex;
   gap: 10px;
-  margin-bottom: 0; /* eliminar margen inferior para mejor alineación */
+  align-items: center;
+  margin-top: 10px;
 }
 
-.searchInput, .buscarBtn, .categoriasBtn, .agregarBtn {
-  height: 40px; /* o la altura que mejor se adapte */
-}
-
-.searchInput {
+.stockInput {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-sizing: border-box; /* para evitar que padding afecte al tamaño total */
+  box-sizing: border-box;
 }
 
-.buscarBtn {
+.crearBtn {
   background-color: #4c36f4;
   color: white;
   border: none;
-  padding: 0 20px; /* solo horizontal, para mantener altura fija */
+  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.actionsGroup {
-  display: flex;
-  gap: 10px;
+.crearBtn:hover {
+  background-color: #3b28c4;
 }
 
-.categoriasBtn, .agregarBtn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background-color: white;
-  color: #4c36f4;
-  border: 1px solid #4c36f4;
-  padding: 0 15px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.actionsGroup {
-  display: flex;
-  gap: 10px;
-  margin-left: 10px; /* separa más el grupo de botones del botón buscar */
+@media (max-width: 768px) {
+  .formBox {
+    flex-direction: column;
+  }
 }

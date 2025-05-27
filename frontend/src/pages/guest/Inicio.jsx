@@ -6,7 +6,7 @@ import SeriesNuevas from '../../components/inicio/SeriesNuevas';
 import ProductosNuevos from '../../components/inicio/ProductosNuevos';
 import BannerPublicidad from '../../components/inicio/BannerPublicidad';
 import Footer from '../../components/Footer/Footer';
-import '../../styles/inicio.css';
+import '../../styles/Inicio.module.css';
 
 export const Inicio = () => {
   const [busqueda, setBusqueda] = useState('');

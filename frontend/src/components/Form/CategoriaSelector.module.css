@@ -1,0 +1,46 @@
+.categoriaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.categoriaRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+}
+
+.select option {
+  padding: 10px;
+}
+
+.agregarBtn {
+  background-color: #4c36f4;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.agregarBtn:hover {
+  background-color: #3b28c4;
+}
