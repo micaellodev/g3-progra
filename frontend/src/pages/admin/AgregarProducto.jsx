@@ -38,11 +38,7 @@ export const AgregarProducto = () => {
 
   return (
     <>
-      <TopBarAdmin
-        handleSearch={handleSearch}
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-      />
+      <TopBarAdmin handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
 
       <ProductoForm
         producto={producto}

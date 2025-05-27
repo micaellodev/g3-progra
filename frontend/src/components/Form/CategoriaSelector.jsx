@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from '../../styles/AgregarProducto.module.css';
-import { categorias } from '../../constantes/Consts'; // ajusta la ruta según tu estructura
+import styles from './CategoriaSelector.module.css';
 
-const CategoriaSelector = ({ value, onChange, onAgregarCategoria }) => {
+const CategoriaSelector = ({ value, onChange, categorias, onAgregarCategoria }) => {
   return (
     <div className={styles.categoriaGroup}>
       <label>Categoría</label>
@@ -13,12 +12,15 @@ const CategoriaSelector = ({ value, onChange, onAgregarCategoria }) => {
           onChange={onChange}
           className={styles.select}
         >
-          <option value="">Selecciona la categoría del producto</option>
-          {categorias.map((cat) => (
-            <option key={cat.id} value={cat.nombre}>
-              {cat.nombre} — {cat.descripcion}
-            </option>
-          ))}
+          {categorias.length === 0 ? (
+            <option value="">Selecciona la categoría del producto</option>
+          ) : (
+            categorias.map((cat, index) => (
+              <option key={index} value={cat.nombre}>
+                {cat.nombre} — {cat.descripcion}
+              </option>
+            ))
+          )}
         </select>
         <button
           type="button"

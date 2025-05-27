@@ -8,7 +8,7 @@ export const CategoriasProvider = ({ children }) => {
   const [categorias, setCategorias] = useState([]);
 
   const agregarCategoria = (nuevaCategoria) => {
-    setCategorias((prev) => [...prev, nuevaCategoria]);
+    setCategorias([...categorias, nuevaCategoria]);
   };
 
   return (

@@ -1,14 +1,12 @@
-/* Contenedor principal centrado */
 .container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* o 'center' si quieres centrar también verticalmente */
+  align-items: flex-start;
   min-height: 100vh;
   padding: 40px 20px;
   background-color: #f0f2f5;
 }
 
-/* Caja del formulario visible */
 .formBox {
   display: flex;
   flex-wrap: wrap;
@@ -22,7 +20,6 @@
   box-sizing: border-box;
 }
 
-/* Secciones del formulario */
 .leftSection,
 .rightSection {
   flex: 1;
