@@ -6,8 +6,6 @@ import visaImg from '../../assets/Tarjetas/FaCcVisa.svg';
 import mastercardImg from '../../assets/Tarjetas/FaCcMastercard.png';
 import amexImg from '../../assets/Tarjetas/FaCcAmex.png';
 import dinersImg from '../../assets/Tarjetas/FaCcDiners.png';
-// Si tienes discover, impórtala también
-// import discoverImg from '../../assets/Tarjetas/FaCcDiscover.png';
 
 const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   const [form, setForm] = useState({
@@ -36,18 +34,11 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const anios = Array.from({ length: 12 }, (_, i) => String(new Date().getFullYear() + i));
 
-  const handleOverlayClick = (e) => {    
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   function getCardType(number) {
     if (/^4/.test(number)) return 'visa';
     if (/^(5[1-5]|2[2-7])/.test(number)) return 'mastercard';
     if (/^3[47]/.test(number)) return 'amex';
     if (/^3/.test(number)) return 'diners';
-    if (/^6/.test(number)) return 'discover';
     return '';
   }
 
@@ -58,7 +49,6 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   if (cardType === 'mastercard') CardIcon = <img src={mastercardImg} alt="Mastercard" className={styles.cardIcon} />;
   if (cardType === 'amex') CardIcon = <img src={amexImg} alt="American Express" className={styles.cardIcon} />;
   if (cardType === 'diners') CardIcon = <img src={dinersImg} alt="Diners Club" className={styles.cardIcon} />;
-  // if (cardType === 'discover') CardIcon = <img src={discoverImg} alt="Discover" className={styles.cardIcon} />;
 
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
@@ -75,7 +65,7 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
             autoComplete="cc-name"
           />
           {/* Input con ícono */}
-          <div style={{ position: 'relative', width: '100%' }}>
+          <div className={styles.inputIconWrapper}>
             <input
               type="text"
               name="numero"
@@ -88,14 +78,8 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
               autoComplete="cc-number"
               pattern="\d{16,19}"
               inputMode="numeric"
-              style={{ paddingRight: 48 }}
             />
-            <span style={{
-              position: 'absolute',
-              right: 12,
-              top: '50%',
-              transform: 'translateY(-50%)'
-            }}>
+            <span className={styles.inputIcon}>
               {CardIcon}
             </span>
           </div>
