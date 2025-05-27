@@ -11,20 +11,18 @@ export const Checkout = () => {
   const [juegosEnCarrito] = useState(carritoInicial);
 
   return (
-    <DireccionProvider>
-      <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
-        <div style={{ flex: 2 }}>
-          <DireccionEnvioForm />
-        </div>
-        <div style={{ flex: 1 }}>
-          <CarritoResumen juegos={juegosEnCarrito} />
-          <DireccionResumen />
-          <Link to="/MetodoDePago" className={styles.botonSeguirComprando}>
-            Agregar Metodo De Pago
-          </Link>
-        </div>
+    <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
+      <div style={{ flex: 2 }}>
+        <DireccionEnvioForm />
       </div>
-    </DireccionProvider>
+      <div style={{ flex: 1 }}>
+        <CarritoResumen juegos={juegosEnCarrito} />
+        <DireccionResumen />
+        <Link to="/MetodoDePago" className={styles.botonSeguirComprando}>
+          Agregar Metodo De Pago
+        </Link>
+      </div>
+    </div>
   );
 };
 

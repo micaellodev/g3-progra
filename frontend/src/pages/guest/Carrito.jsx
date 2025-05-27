@@ -14,7 +14,7 @@ export const Carrito = () => {
         <h1>Carrito</h1>
         <CarritoItems juegos={juegosEnCarrito} />
         <Link to="/" className={styles.botonSeguirComprando}>
-          Seguir comprando
+          Seguir explorando
         </Link>
       </div>
       <div>

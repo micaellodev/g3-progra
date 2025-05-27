@@ -27,7 +27,7 @@ export const MetodoDePago = () => {
   };
 
   return (
-    <DireccionProvider>
+    <>
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
       <div className={styles.carritoWrapper} style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
         <div style={{ flex: 2 }}>
@@ -52,7 +52,7 @@ export const MetodoDePago = () => {
           setShowModalTarjeta(false);
         }}
       />
-    </DireccionProvider>
+    </>
   );
 };
 
