@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import styles from './ModalPagos.module.css';
 
-// Importa tus imágenes
+// Iconos tarjetas
 import visaImg from '../../assets/Tarjetas/FaCcVisa.svg';
 import mastercardImg from '../../assets/Tarjetas/FaCcMastercard.png';
 import amexImg from '../../assets/Tarjetas/FaCcAmex.png';
@@ -16,6 +17,8 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
     cvv: ''
   });
 
+  const navigate = useNavigate(); 
+
   if (!visible) return null;
 
   const handleChange = (e) => {
@@ -29,11 +32,13 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
       ...form,
       vencimiento: form.mes && form.anio ? `${form.mes}/${form.anio.slice(-2)}` : ''
     });
+    navigate('/ordencompletada'); // Redirige a la página de orden completada
   };
 
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const anios = Array.from({ length: 12 }, (_, i) => String(new Date().getFullYear() + i));
 
+  // Función para detectar el tipo de tarjeta
   function getCardType(number) {
     if (/^4/.test(number)) return 'visa';
     if (/^(5[1-5]|2[2-7])/.test(number)) return 'mastercard';
@@ -51,7 +56,7 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   if (cardType === 'diners') CardIcon = <img src={dinersImg} alt="Diners Club" className={styles.cardIcon} />;
 
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+    <div className={styles.modalOverlay}>
       <div className={`${styles.modalContent} ${styles.modalContentGrande}`}>
         <form onSubmit={handleSubmit}>
           <input
@@ -64,7 +69,6 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
             className={styles.input}
             autoComplete="cc-name"
           />
-          {/* Input con ícono */}
           <div className={styles.inputIconWrapper}>
             <input
               type="text"
@@ -76,7 +80,7 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
               maxLength={19}
               className={styles.input}
               autoComplete="cc-number"
-              pattern="\d{16,19}"
+              pattern="\d{14,19}"
               inputMode="numeric"
             />
             <span className={styles.inputIcon}>

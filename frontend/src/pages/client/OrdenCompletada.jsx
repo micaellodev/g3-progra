@@ -15,6 +15,10 @@ export const OrdenCompletada = () => {
         <DireccionProvider>
             <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
             <h1>Dashboard</h1>
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+                <h1>¡Orden completada con éxito! 🎉</h1>
+                <p>Gracias por tu compra, compare.</p>
+                </div>
             <DireccionResumen />
         </DireccionProvider>
     );
