@@ -7,15 +7,7 @@ function AgregarCategoria({ onAgregar }) {
   const manejarEnvio = (e) => {
     e.preventDefault();
 
-    const nuevaCategoria = {
-      id: Date.now(), // ID simulado
-      nombre,
-      descripcion,
-    };
-
-    onAgregar(nuevaCategoria); // Enviamos la categoría al padre
-
-    // Limpiar el formulario
+    onAgregar({ nombre, descripcion });
     setNombre('');
     setDescripcion('');
   };
@@ -24,27 +16,13 @@ function AgregarCategoria({ onAgregar }) {
     <form onSubmit={manejarEnvio} className="space-y-4">
       <div>
         <label className="block text-sm font-medium">Nombre</label>
-        <input
-          type="text"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
+        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full border px-3 py-2 rounded" required />
       </div>
       <div>
         <label className="block text-sm font-medium">Descripción</label>
-        <textarea
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
+        <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} className="w-full border px-3 py-2 rounded" required />
       </div>
-      <button
-        type="submit"
-        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded"
-      >
+      <button type="submit" className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded" >
         ➕ Crear categoría
       </button>
     </form>
