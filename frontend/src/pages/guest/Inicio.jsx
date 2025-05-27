@@ -5,8 +5,8 @@ import ProductosMasVendidos from '../../components/inicio/ProductosMasVendidos';
 import SeriesNuevas from '../../components/inicio/SeriesNuevas';
 import ProductosNuevos from '../../components/inicio/ProductosNuevos';
 import BannerPublicidad from '../../components/inicio/BannerPublicidad';
-import Footer from '../../components/Footer/Footer'; // Importa el Footer
-
+import Footer from '../../components/Footer/Footer';
+import '../../styles/inicio.css';
 
 export const Inicio = () => {
   const [busqueda, setBusqueda] = useState('');
@@ -14,16 +14,21 @@ export const Inicio = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
-    // Aquí podrías agregar la lógica para realizar la búsqueda o redireccionar a resultados
   };
 
   return (
     <>
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
-      <CategoriasDestacadas />
-      <ProductosMasVendidos />
-      <SeriesNuevas />
-      <ProductosNuevos />
+
+      <div className="inicio-section">
+        <div className="inicio-content">
+          <CategoriasDestacadas />
+          <ProductosMasVendidos />
+          <SeriesNuevas />
+          <ProductosNuevos />
+        </div>
+      </div>
+
       <BannerPublicidad />
       <Footer />
     </>

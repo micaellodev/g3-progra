@@ -1,14 +1,15 @@
 import React from 'react';
+import '../../styles/series-nuevas.css';
 
 const series = ['The Last of Us', 'Halo', 'Castlevania'];
 
 const SeriesNuevas = () => {
   return (
-    <section>
-      <h2>Series Nuevas</h2>
-      <div style={{ display: 'flex', gap: '1rem' }}>
+    <section className="series-nuevas-section">
+      <h2 className="series-nuevas-titulo">Series Nuevas</h2>
+      <div className="series-nuevas-grid">
         {series.map((serie, idx) => (
-          <div key={idx} style={{ border: '1px solid #aaa', padding: '1rem' }}>
+          <div key={idx} className="serie-card">
             <h3>{serie}</h3>
             <p>Disponible ahora</p>
           </div>

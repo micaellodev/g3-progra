@@ -1,0 +1,37 @@
+.series-nuevas-section {
+  padding: 2rem;
+  background-color: #111827;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.series-nuevas-titulo {
+  color: #E0F2FE;
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.series-nuevas-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.serie-card {
+  background-color: #1E293B;
+  color: #F8FAFC;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  width: 200px;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.serie-card:hover {
+  background-color: #334155;
+  transform: scale(1.05);
+}

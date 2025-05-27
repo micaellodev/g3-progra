@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/productos-nuevos.css';
 
 const productos = Array.from({ length: 6 }, (_, i) => ({
   nombre: `Nuevo Producto #${i + 1}`,
@@ -7,12 +8,12 @@ const productos = Array.from({ length: 6 }, (_, i) => ({
 
 const ProductosNuevos = () => {
   return (
-    <section>
+    <section className="productos-nuevos-section">
       <h2>Productos Nuevos</h2>
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <div className="contenedor-productos-nuevos">
         {productos.map((prod, idx) => (
-          <div key={idx} style={{ width: '150px', textAlign: 'center' }}>
-            <img src={prod.img} alt={prod.nombre} style={{ width: '100%' }} />
+          <div key={idx} className="tarjeta-producto-nuevo">
+            <img src={prod.img} alt={prod.nombre} />
             <p>{prod.nombre}</p>
           </div>
         ))}
