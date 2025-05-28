@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './TopBar.module.css';
 import useLogin from '../../hooks/useLogin';
-
+import { useContext } from 'react';
+import { CartContext } from "../../hooks/CartContext";
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();
   const { currentUser, logout } = useLogin();
+  const { cart } = useContext(CartContext); // 👈 accede al carrito
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,6 +31,11 @@ const TopBar = ({ busqueda, setBusqueda }) => {
           <Link to="/categoria" className={styles.navLinkButton}>Categoría</Link>
           <Link to="/detalleproducto" className={styles.navLinkButton}>Productos</Link>
           <Link to="/nosotros" className={styles.navLinkButton}>Nosotros</Link>
+
+          {/* Carrito con contador */}
+          <Link to="/carrito" className={styles.navLinkButton}>
+            🛒 Carrito ({cart.reduce((acc, item) => acc + item.quantity, 0)})
+          </Link>
 
           {currentUser ? (
             <>
