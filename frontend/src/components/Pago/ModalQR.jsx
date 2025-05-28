@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import styles from './ModalPagos.module.css';
+import yapeLogo from './yape-logo.png';
+import yapeQR from './yape-qr.jpg';
 
 const ModalQR = ({ visible, onClose }) => {
   const navigate = useNavigate(); // Inicializa navigate para redirigir
@@ -17,9 +19,9 @@ const ModalQR = ({ visible, onClose }) => {
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h3>Escanea el QR para pagar</h3>
-        {/* Aquí podrías poner una imagen de QR */}
+        <img src={yapeLogo} className={styles.yapeLogo} />
         <div className={styles.qrPlaceholder}>
-          <span>QR</span>
+          <img src={yapeQR} className={styles.yapeQR} />
         </div>
         <button type="button" onClick={handleSubmit} className={styles.botonContinuar}>
           Continuar

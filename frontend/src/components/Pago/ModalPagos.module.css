@@ -14,7 +14,7 @@
 }
 
 .modalContent {
-  position: relative; /* <-- necesario para .closeButton */
+  position: relative;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
@@ -23,9 +23,33 @@
   max-width: 370px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center; /* Centra el contenido horizontalmente */
   gap: 24px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center; /* Centra el logo horizontalmente */
+  margin-bottom: 16px;
+}
+
+.yapeLogo {
+  width: 80px; /* Ajusta el tamaño del logo */
+  height: auto;
+}
+
+.qrPlaceholder {
+  display: flex;
+  justify-content: center; /* Centra el QR horizontalmente */
+  margin: 16px auto;
+}
+
+.yapeQR {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .closeButton {
