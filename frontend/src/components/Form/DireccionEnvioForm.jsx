@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { DireccionContext } from '../../hooks/DireccionContext';
 import styles from '../../styles/Carrito.module.css';
 
+
 const departamentosPeru = [
   "Amazonas", "Áncash", "Apurímac", "Arequipa", "Ayacucho", "Cajamarca",
   "Callao", "Cusco", "Huancavelica", "Huánuco", "Ica", "Junín", "La Libertad",
@@ -9,7 +10,7 @@ const departamentosPeru = [
   "Piura", "Puno", "San Martín", "Tacna", "Tumbes", "Ucayali"
 ];
 
-const DireccionEnvioForm = () => {
+const DireccionEnvioForm = ({ onSubmitSuccess }) => {
   const { setDireccionEnvio } = useContext(DireccionContext);
   const [form, setForm] = useState({
     nombre: '',
@@ -28,7 +29,10 @@ const DireccionEnvioForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDireccionEnvio(form); // Guarda en el context
+    setDireccionEnvio(form);
+    if (onSubmitSuccess) {
+      onSubmitSuccess(); // Llama a la función para mostrar el botón de método de pago
+    }
   };
 
   return (
@@ -42,6 +46,7 @@ const DireccionEnvioForm = () => {
             value={form.nombre}
             onChange={handleChange}
             placeholder="Nombre"
+            required
           />
         </div>
         <div className={styles['direccion-envio-col']}>
@@ -51,6 +56,7 @@ const DireccionEnvioForm = () => {
             value={form.apellido}
             onChange={handleChange}
             placeholder="Apellido"
+            required
           />
         </div>
       </div>
@@ -60,6 +66,7 @@ const DireccionEnvioForm = () => {
             name="departamento"
             value={form.departamento}
             onChange={handleChange}
+            required
           >
             <option value="" disabled>Departamento</option>
             {departamentosPeru.map(dep => (
@@ -74,6 +81,7 @@ const DireccionEnvioForm = () => {
             value={form.ciudad}
             onChange={handleChange}
             placeholder="Ciudad"
+            required
           />
         </div>
       </div>
@@ -85,6 +93,7 @@ const DireccionEnvioForm = () => {
             value={form.direccion}
             onChange={handleChange}
             placeholder="Dirección"
+            required
           />
         </div>
       </div>
@@ -96,6 +105,7 @@ const DireccionEnvioForm = () => {
             value={form.codigoPostal}
             onChange={handleChange}
             placeholder="Código postal"
+            required
           />
         </div>
         <div className={styles['direccion-envio-col']}>
@@ -105,6 +115,7 @@ const DireccionEnvioForm = () => {
             value={form.telefono}
             onChange={handleChange}
             placeholder="Teléfono"
+            required
           />
         </div>
       </div>
