@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './TopBar.module.css';
-import useLogin from '../../hooks/useLogin';
+import { useLogin } from '../../hooks/LoginContext';
 
 const TopBarAdmin = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();

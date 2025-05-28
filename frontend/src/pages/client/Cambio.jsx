@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../hooks/LoginContext'; 
 
-function Cambio({ handleLogin }) {
+function Cambio() {
   const [actual, setActual] = useState('');
   const [nueva, setNueva] = useState('');
   const [confirmar, setConfirmar] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useLogin(); // ✅ Usa login desde el contexto
 
   const handleCambio = (e) => {
     e.preventDefault();
@@ -31,10 +33,9 @@ function Cambio({ handleLogin }) {
 
     const actualizado = { ...usuario, password: nueva };
 
-    // ✅ Actualiza en currentUser y registeredUser
     localStorage.setItem('currentUser', JSON.stringify(actualizado));
-    localStorage.setItem('registeredUser', JSON.stringify(actualizado)); // ✅ Esto asegura que el login funcione con la nueva contraseña
-    handleLogin(actualizado);
+    localStorage.setItem('registeredUser', JSON.stringify(actualizado));
+    login(actualizado); // ✅ Ya no uses handleLogin
 
     alert('Contraseña actualizada correctamente');
     navigate('/perfil');
@@ -43,7 +44,15 @@ function Cambio({ handleLogin }) {
   return (
     <div style={{ padding: '2rem' }}>
       <h2>Cambiar contraseña</h2>
-      <form onSubmit={handleCambio} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px' }}>
+      <form
+        onSubmit={handleCambio}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          maxWidth: '400px',
+        }}
+      >
         <input
           type="password"
           placeholder="Contraseña actual"

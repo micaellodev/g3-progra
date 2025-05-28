@@ -6,6 +6,7 @@ import App from './routes/App.jsx'
 import { CategoriasProvider } from './hooks/CategoriasContext.jsx';
 import { DireccionProvider } from './hooks/DireccionContext.jsx';
 import { CartProvider } from './hooks/CartContext.jsx';
+import { LoginProvider } from './hooks/LoginContext.jsx'; // ⚠️ Asegúrate de importar esto
 import './styles/index.module.css'
 
 createRoot(document.getElementById('root')).render(
@@ -13,9 +14,11 @@ createRoot(document.getElementById('root')).render(
     <CategoriasProvider>
       <CartProvider>
         <DireccionProvider>
-          <App />
+          <LoginProvider>   
+            <App />
+          </LoginProvider>
         </DireccionProvider>
       </CartProvider>
     </CategoriasProvider>
-  </StrictMode>,
+  </StrictMode>
 )

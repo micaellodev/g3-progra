@@ -1,7 +1,7 @@
 // App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import useLogin from '../hooks/useLogin';
+import { LoginProvider } from '../hooks/LoginContext';
 
 // Importa tus demás componentes
 import Login            from '../pages/guest/LoginForm';
@@ -33,8 +33,7 @@ import Categoria        from '../pages/guest/Categorias';
 import ProductoDetalle  from '../components/Product/ProductoDetalle';
 
 function App() {
-  const { currentUser, login, logout } = useLogin();
-
+  
   return (
     <Router>
       <Routes>
@@ -53,7 +52,7 @@ function App() {
         {/* Administrador y Cliente */}
         <Route path="/cambiocontra"       element={<CambioContra />} />
         <Route path="/recuperarcontra"    element={<RecuperarContra />} />
-        <Route path="/cambio"              element={<Cambio handleLogin={login} />} />
+        <Route path="/cambio" element={<Cambio />} />
 
         {/* Administrador */}
         <Route path="/dashboard"          element={<Dashboard />} />
