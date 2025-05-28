@@ -1,8 +1,13 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
+
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    // Recupera el carrito desde localStorage al cargar la página
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   const addToCart = (product, quantity = 1) => {
     const exists = cart.find(p => p.id === product.id);
@@ -18,6 +23,11 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = () => setCart([]);
+
+  // Guarda el carrito en localStorage cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>

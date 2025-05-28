@@ -12,13 +12,13 @@ export const Carrito = () => {
     <div className={styles.carritoWrapper}>
       <div className={styles.carritoContenido}>
         <h1>Carrito</h1>
-        <CarritoItems juegos={cart} /> {/* Usa el carrito del contexto */}
+        <CarritoItems juegos={cart} />
         <Link to="/" className={styles.botonSeguirComprando}>
           Seguir explorando
         </Link>
       </div>
       <div>
-        <CarritoResumen juegos={cart} /> {/* Usa el carrito del contexto */}
+        <CarritoResumen juegos={cart} />
         <Link to="/checkout" className={styles.botonSeguirComprando}>
           Continuar
         </Link>
