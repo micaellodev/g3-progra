@@ -1,6 +1,8 @@
+// src/pages/LoginForm.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useLogin from '../../hooks/useLogin';
+import { useLogin } from '../../hooks/LoginContext';
 import LoginFields from '../../components/Login/LoginFields';
 import LoginActions from '../../components/Login/LoginActions';
 import styles from '../../styles/TextInput.module.css';
@@ -27,7 +29,12 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h2 className={styles.title}>Iniciar Sesión</h2>
-      <LoginFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+      <LoginFields
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+      />
       <LoginActions />
     </form>
   );

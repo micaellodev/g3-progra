@@ -1,17 +1,24 @@
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './TopBar.module.css';
-import useLogin from '../../hooks/useLogin';
-import { useContext } from 'react';
+import { useContext } from 'react';               // Importa useContext
+import { LoginContext } from '../../hooks/LoginContext';  // Importa LoginContext
 import { CartContext } from "../../hooks/CartContext";
+import styles from './TopBar.module.css';
+
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();
-  const { currentUser, logout } = useLogin();
-  const { cart } = useContext(CartContext); // 👈 accede al carrito
+  
+  // Usa useContext para obtener datos del LoginContext
+  const { currentUser, logout } = useContext(LoginContext);
+  const { cart } = useContext(CartContext);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/resultados?busqueda=${encodeURIComponent(busqueda)}`);
+    if (busqueda.trim()) {
+      navigate(`/resultados?busqueda=${encodeURIComponent(busqueda.trim())}`);
+    }
   };
+
+  const totalItems = cart?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   return (
     <nav className={styles.navbar}>
@@ -32,9 +39,8 @@ const TopBar = ({ busqueda, setBusqueda }) => {
           <Link to="/detalleproducto" className={styles.navLinkButton}>Productos</Link>
           <Link to="/nosotros" className={styles.navLinkButton}>Nosotros</Link>
 
-          {/* Carrito con contador */}
           <Link to="/carrito" className={styles.navLinkButton}>
-            🛒 Carrito ({cart.reduce((acc, item) => acc + item.quantity, 0)})
+            🛒 Carrito ({totalItems})
           </Link>
 
           {currentUser ? (
