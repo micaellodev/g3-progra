@@ -1,21 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/productos-mas-vendidos.css';
-
-const productos = Array.from({ length: 12 }, (_, i) => ({
-  nombre: `Producto #${i + 1}`,
-  precio: (10 + i) * 3,
-}));
+import { juegos } from '../../constantes/Consts';  // Importa el array juegos
 
 const ProductosMasVendidos = () => {
   return (
     <section className="mas-vendidos-section">
       <h2 className="mas-vendidos-titulo">Más Vendidos del Mes</h2>
       <div className="mas-vendidos-grid">
-        {productos.map((prod, idx) => (
-          <div key={idx} className="producto-card">
+        {juegos.map((prod) => (
+          <Link
+            key={prod.id}
+            to={`/producto/${prod.id}`}
+            className="producto-card"
+          >
             <h4>{prod.nombre}</h4>
             <p>S/ {prod.precio.toFixed(2)}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

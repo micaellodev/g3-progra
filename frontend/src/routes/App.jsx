@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
+
 // Importa tus demás componentes
 import Login            from '../pages/guest/LoginForm';
 import Inicio           from '../pages/guest/Inicio';
@@ -28,8 +29,12 @@ import ListaOrdenes     from '../pages/admin/ListaOrdenes';
 import DetalleOrden     from '../pages/admin/DetalleOrden';
 import Categoria        from '../pages/guest/Categorias';
 
+// Importa el nuevo componente para detalle de producto por id
+import ProductoDetalle  from '../components/Product/ProductoDetalle';
+
 function App() {
   const { currentUser, login, logout } = useLogin();
+
   return (
     <Router>
       <Routes>
@@ -41,10 +46,15 @@ function App() {
         <Route path="/categoria"          element={<Categoria />} />      
         <Route path="/carrito"            element={<Carrito />} />
         <Route path="/detalleproducto"    element={<DetalleProducto />} />
+
+        {/* Ruta para detalle dinámico de producto */}
+        <Route path="/producto/:id"       element={<ProductoDetalle />} />
+        
         {/* Administrador y Cliente */}
         <Route path="/cambiocontra"       element={<CambioContra />} />
         <Route path="/recuperarcontra"    element={<RecuperarContra />} />
-        <Route path="/cambio"             element={<Cambio handleLogin={login} />} />
+        <Route path="/cambio"              element={<Cambio handleLogin={login} />} />
+
         {/* Administrador */}
         <Route path="/dashboard"          element={<Dashboard />} />
         <Route path="/listaproducto"      element={<ListaProducto />} />
@@ -53,16 +63,18 @@ function App() {
         <Route path="/listausuarios"      element={<ListaUsuarios />} />
         <Route path="/agregarproducto"    element={<AgregarProducto />} />
         <Route path="/agregarcategoria"   element={<AgregarCategoria />} />
+
         {/* Cliente Logeado */}
-        <Route path="/perfil"             element={<Perfil />} />
-        <Route path="/adminf"             element={<AdminForm />} />
-        <Route path="/checkout"           element={<Checkout />} />
-        <Route path="/metododepago"       element={<MetodoDePago />} />  
-        <Route path="/ordencompletada"    element={<OrdenCompletada />} />
-        <Route path="/admin/usuarios/:id" element={<DetalleUsuario />} />
+        <Route path="/perfil"              element={<Perfil />} />
+        <Route path="/adminf"              element={<AdminForm />} />
+        <Route path="/checkout"            element={<Checkout />} />
+        <Route path="/metododepago"        element={<MetodoDePago />} />  
+        <Route path="/ordencompletada"     element={<OrdenCompletada />} />
+        <Route path="/admin/usuarios/:id"  element={<DetalleUsuario />} />
         <Route path="/admin/ordenes/:id"   element={<DetalleOrden />} />       
       </Routes>
     </Router>
   );
 }
+
 export default App;
