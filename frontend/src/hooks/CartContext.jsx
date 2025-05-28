@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const CartContext = createContext();
 
@@ -12,7 +12,11 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product, quantity = 1) => {
     const exists = cart.find(p => p.id === product.id);
     if (exists) {
-      setCart(cart.map(p => p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p));
+      setCart(cart.map(p =>
+        p.id === product.id
+          ? { ...p, quantity: p.quantity + quantity }
+          : p
+      ));
     } else {
       setCart([...cart, { ...product, quantity }]);
     }
@@ -35,3 +39,6 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+// ✅ Hook personalizado para acceder fácilmente al contexto
+export const useCarrito = () => useContext(CartContext);
