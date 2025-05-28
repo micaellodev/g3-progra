@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';               // Importa useContext
-import { LoginContext } from '../../hooks/LoginContext';  // Importa LoginContext
+import { useContext } from 'react';
+import { useLogin } from '../../hooks/LoginContext'; // Usar el hook personalizado
 import { CartContext } from "../../hooks/CartContext";
 import styles from './TopBar.module.css';
 
 const TopBar = ({ busqueda, setBusqueda }) => {
   const navigate = useNavigate();
   
-  // Usa useContext para obtener datos del LoginContext
-  const { currentUser, logout } = useContext(LoginContext);
+  // Usa el hook personalizado useLogin
+  const { currentUser, logout } = useLogin();
   const { cart } = useContext(CartContext);
 
   const handleSearch = (e) => {
@@ -33,20 +33,23 @@ const TopBar = ({ busqueda, setBusqueda }) => {
           />
           <button type="submit" className={styles.searchButton}>Buscar</button>
         </form>
-
+        
         <div className={styles.linksContainer}>
           <Link to="/categoria" className={styles.navLinkButton}>Categoría</Link>
           <Link to="/detalleproducto" className={styles.navLinkButton}>Productos</Link>
           <Link to="/nosotros" className={styles.navLinkButton}>Nosotros</Link>
-
           <Link to="/carrito" className={styles.navLinkButton}>
             🛒 Carrito ({totalItems})
           </Link>
-
+          
           {currentUser ? (
             <>
-              <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">👤</Link>
-              <button onClick={logout} className={styles.logoutButton}>Cerrar sesión</button>
+              <Link to="/perfil" className={styles.iconButton} title="Perfil de usuario">
+                👤
+              </Link>
+              <button onClick={logout} className={styles.logoutButton}>
+                Cerrar sesión
+              </button>
             </>
           ) : (
             <Link to="/login" className={styles.loginLink}>Login</Link>
