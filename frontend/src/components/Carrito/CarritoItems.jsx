@@ -1,20 +1,23 @@
-import React from 'react';
-import styles from '../../styles/Carrito.module.css';
+import React, { useContext } from 'react';
+import { CartContext } from '../../hooks/CartContext';
 import CarritoItemCard from './CarritoItemCard';
+import styles from '../../styles/Carrito.module.css';
 
-function CarritoItems({ juegos }) {
+const CarritoItems = () => {
+  const { cart } = useContext(CartContext); // Consume el contexto del carrito
+
   return (
     <div className={styles.itemsBox}>
-      {juegos.length === 0 ? (
+      {cart.length === 0 ? (
         <p>El carrito está vacío.</p>
       ) : (
-        juegos.map((juego) => (
-          <CarritoItemCard key={juego.id} juego={juego} />
+        cart.map((juego) => (
+          <CarritoItemCard key={juego.id} juego={juego} /> // Pasa cada ítem como prop
         ))
       )}
     </div>
   );
-}
+};
 
 export default CarritoItems;
 

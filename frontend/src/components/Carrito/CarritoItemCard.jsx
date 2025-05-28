@@ -1,8 +1,16 @@
 // src/components/Carrito/CarritoItemCard.jsx
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../../hooks/CartContext';
 import styles from '../../styles/Carrito.module.css';
 
 const CarritoItemCard = ({ juego }) => {
+  const { addToCart } = useContext(CartContext);
+
+  const handleQuantityChange = (e) => {
+    const newQuantity = Math.min(parseInt(e.target.value, 10), juego.stock); // Limita al stock disponible
+    addToCart(juego, newQuantity - juego.quantity); // Actualiza la cantidad en el carrito
+  };
+
   return (
     <div className={styles.juegoItem}>
       <div className={styles.juegoImagen}>
@@ -16,7 +24,13 @@ const CarritoItemCard = ({ juego }) => {
         </div>
         <div className={styles.infoCantidad}>
           <label>Cantidad:</label>
-          <input type="number" min="0" defaultValue={1} max='3'/>
+          <input
+            type="number"
+            min="1"
+            max={juego.stock} // Limita la cantidad máxima al stock disponible
+            value={juego.quantity}
+            onChange={handleQuantityChange} // Maneja el cambio de cantidad
+          />
         </div>
       </div>
 
