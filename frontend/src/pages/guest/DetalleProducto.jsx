@@ -1,8 +1,7 @@
-// src/pages/DetalleProducto.jsx
 import React, { useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import ProductoDetalleCard from '../../components/Table/ProductoDetalleCard';
-import { juegos } from '../../constantes/consts';
+import { juegos } from '../../constantes/Consts';
 
 export const DetalleProducto = () => {
   const [busqueda, setBusqueda] = useState('');

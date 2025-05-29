@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { juegos } from '../../constantes/Consts';
 import { useCarrito } from '../../hooks/CartContext';
-import './DetalleProducto.css';
+import './DetalleProducto.module.css';
 
 
 const ProductoDetalle = () => {

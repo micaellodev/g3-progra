@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Footer from '../../components/Footer/Footer';
 import TopBar from '../../components/TopBar/TopBar';
-import { categorias, juegos } from '../../constantes/consts';
+import { categorias, juegos } from '../../constantes/Consts';
 
 export const Categoria = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos');
