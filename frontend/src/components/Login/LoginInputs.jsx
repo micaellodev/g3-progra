@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/LoginForm.module.css'; // mismo CSS
+import styles from '../../styles/LoginForm.module.css';
 
 function LoginInputs({ email, setEmail, password, setPassword }) {
   return (

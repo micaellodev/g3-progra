@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ IMPORTANTE
+import { useNavigate } from 'react-router-dom';
 import styles from './UsuariosDetalleCard.module.css';
 
 const UsuariosDetalleCard = ({ usuario }) => {
-  const navigate = useNavigate(); // ✅ NECESARIO para navegar
+  const navigate = useNavigate(); 
 
   return (
     <div className={styles.card}>

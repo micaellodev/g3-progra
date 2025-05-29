@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/TextInput.module.css';
-
+import Footer from '../../components/Footer/Footer';
 function RecuperarContra() {
   const [email, setEmail] = useState('');
   const [respuesta, setRespuesta] = useState('');
@@ -56,6 +56,7 @@ function RecuperarContra() {
   };
 
   return (
+    <>
     <form onSubmit={handleVerificar} className={styles.form}>
       <h2>Recuperar Contraseña</h2>
 
@@ -76,6 +77,8 @@ function RecuperarContra() {
 
       <button type="submit" className={styles.button}>Verificar</button>
     </form>
+    <Footer />
+    </>
   );
 }
 

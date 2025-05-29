@@ -7,6 +7,7 @@ import styles from '../../styles/LoginForm.module.css';
 import LoginInputs from '../../components/Login/LoginInputs';
 import LoginActions from '../../components/Login/LoginActions';
 import LoginLinks from '../../components/Login/LoginLinks';
+import Footer from '../../components/Footer/Footer';
 
 function LoginForm() {
   const { login } = useLogin();
@@ -50,19 +51,25 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <h2 className={styles.title}>Iniciar Sesión</h2>
+    <div className={styles.pageContainer}>
+      <div className={styles.contentWrapper}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <h2 className={styles.title}>Iniciar Sesión</h2>
 
-      <LoginInputs
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-      />
+          <LoginInputs
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+          />
 
-      <LoginLinks />
-      <LoginActions />
-    </form>
+          <LoginLinks />
+          <LoginActions />
+        </form>
+      </div>
+      
+      <Footer />
+    </div>
   );
 }
 

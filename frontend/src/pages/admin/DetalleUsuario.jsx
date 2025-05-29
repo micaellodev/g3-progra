@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import UsuariosDetalleCard from '../../components/Table/UsuariosDetalleCard';
-import { usuarios } from '../../constantes/consts'; // verifica que el archivo tenga los datos
-
+import { usuarios } from '../../constantes/consts'; 
 const DetalleUsuario = () => {
   const { id } = useParams();
   const [busqueda, setBusqueda] = useState('');

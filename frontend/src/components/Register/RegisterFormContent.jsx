@@ -2,18 +2,19 @@ import React from 'react';
 import RegisterInput from './RegisterInput';
 import RegisterNameRow from './RegisterNameRow';
 import RegisterLinks from './RegisterLinks';
+import RegisterButton from './RegisterButton';
 import styles from '../../styles/RegisterForm.module.css';
 
 function RegisterFormContent({ formData, error, onChange, onSubmit }) {
   return (
-    <form onSubmit={onSubmit} className={styles.registerForm}>
+    <form onSubmit={onSubmit} className={styles.form}>
       <h2 className={styles.title}>Registrarse</h2>
-
-      <RegisterNameRow
-        firstname={formData.firstname}
-        lastname={formData.lastname}
-        onChange={onChange}
+      
+      <RegisterNameRow 
+        formData={formData} 
+        onChange={onChange} 
       />
+      
       <RegisterInput
         name="email"
         type="email"
@@ -21,18 +22,23 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         value={formData.email}
         onChange={onChange}
       />
+      
       <RegisterInput
         name="country"
+        type="text"
         placeholder="País"
         value={formData.country}
         onChange={onChange}
       />
+      
       <RegisterInput
         name="clinic"
+        type="text"
         placeholder="Clínica donde naciste"
         value={formData.clinic}
         onChange={onChange}
       />
+      
       <RegisterInput
         name="password"
         type="password"
@@ -40,6 +46,7 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         value={formData.password}
         onChange={onChange}
       />
+      
       <RegisterInput
         name="password2"
         type="password"
@@ -48,9 +55,9 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         onChange={onChange}
       />
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <div className={styles.error}>{error}</div>}
 
-      <button type="submit" className={styles.button}>Registrarse</button>
+      <RegisterButton />
       <RegisterLinks />
     </form>
   );

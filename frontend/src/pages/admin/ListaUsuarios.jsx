@@ -17,7 +17,7 @@ const ListaUsuarios = () => {
   return (
     <>
       <TopBarAdmin />
-      <h1>Lista de Usuarios</h1>
+      <h1 style={{ margin: '20px 30px' }} >Lista de Usuarios</h1>
       <BuscadorUsuario handleSearch={handleSearch} />
       <UsuariosTable usuarios={usuariosFiltrados} />
     </>
