@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/LoginContext';
+import styles from '../../styles/LoginForm.module.css';
 
 import LoginInputs from '../../components/Login/LoginInputs';
+import LoginActions from '../../components/Login/LoginActions';
 import LoginLinks from '../../components/Login/LoginLinks';
 
 function LoginForm() {
@@ -16,40 +18,50 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const keys = ['registeredUser', 'currentUser', 'userData', 'users'];
-    let foundUser = null;
-
-    for (const key of keys) {
-      const dataRaw = localStorage.getItem(key);
-      if (!dataRaw) continue;
-
-      try {
-        const data = JSON.parse(dataRaw);
-        if (Array.isArray(data)) {
-          foundUser = data.find(user => user.email === email);
-        } else if (data?.email === email) {
-          foundUser = data;
-        }
-        if (foundUser) break;
-      } catch {
-        // ignore parse errors
-      }
+    const usersRaw = localStorage.getItem('users');
+    if (!usersRaw) {
+      alert('❌ No hay usuarios registrados.');
+      return;
     }
 
-    if (!foundUser) return alert('Usuario no encontrado');
-    if (foundUser.password !== password) return alert('Contraseña incorrecta');
+    let foundUser = null;
+
+    try {
+      const users = JSON.parse(usersRaw);
+      foundUser = users.find(user => user.email === email);
+    } catch (error) {
+      alert('❌ Error al procesar los usuarios registrados.');
+      return;
+    }
+
+    if (!foundUser) {
+      alert('❌ Usuario no encontrado');
+      return;
+    }
+
+    if (foundUser.password !== password) {
+      alert('❌ Contraseña incorrecta');
+      return;
+    }
 
     login(foundUser);
-    alert('Login exitoso');
+    alert('✅ Login exitoso');
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Iniciar Sesión</h2>
-      <LoginInputs email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <h2 className={styles.title}>Iniciar Sesión</h2>
+
+      <LoginInputs
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+      />
+
       <LoginLinks />
-      <button type="submit">Ingresar</button>
+      <LoginActions />
     </form>
   );
 }

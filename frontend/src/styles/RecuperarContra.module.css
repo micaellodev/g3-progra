@@ -1,12 +1,12 @@
-.loginContainer {
+.recuperarContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f0f2f5;
+  background-color: #0a2540; /* azul oscuro */
 }
 
-.form {
+.recuperarForm {
   max-width: 500px;
   width: 100%;
   padding: 2rem;
@@ -39,7 +39,7 @@
   background-color: #0056b3;
 }
 
-.registerLink {
+.linkText {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;

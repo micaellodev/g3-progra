@@ -1,39 +1,53 @@
 // RecuperarContra.jsx
-import { useState, useEffect } from 'react'; // Importa useEffect
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css'; // Asegúrate de importar tus estilos si los usas
+import styles from '../../styles/TextInput.module.css';
 
 function RecuperarContra() {
   const [email, setEmail] = useState('');
   const [respuesta, setRespuesta] = useState('');
   const navigate = useNavigate();
 
-  // CAMBIO PRINCIPAL AQUÍ: Limpia emailRecuperacion al montar el componente
   useEffect(() => {
-    localStorage.removeItem('emailRecuperacion'); // Limpia el email de recuperación para empezar de nuevo
-  }, []); // Se ejecuta solo una vez al montar
+    localStorage.removeItem('emailRecuperacion');
+  }, []);
 
   const handleVerificar = (e) => {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem('registeredUser'));
-
+    // Buscar usuario en ambos lugares donde podrían estar almacenados
+    let savedUser = null;
+    
+    // Primero buscar en 'users' (array)
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    savedUser = users.find(user => user.email === email);
+    
+    // Si no se encuentra, buscar en 'registeredUser' (objeto único)
     if (!savedUser) {
-      alert('❌ No hay usuarios registrados.');
-      return;
+      const registeredUserString = localStorage.getItem('registeredUser');
+      if (registeredUserString) {
+        try {
+          const registeredUser = JSON.parse(registeredUserString);
+          if (registeredUser.email === email) {
+            savedUser = registeredUser;
+          }
+        } catch (error) {
+          console.error("Error al parsear registeredUser:", error);
+        }
+      }
     }
 
-    if (email !== savedUser.email) {
+    if (!savedUser) {
       alert('❌ El correo no está registrado.');
       return;
     }
 
-    const respuestaCorrecta = savedUser.securityQuestion?.trim().toLowerCase();
+    const respuestaCorrecta = savedUser.clinica?.trim().toLowerCase();
     const respuestaIngresada = respuesta.trim().toLowerCase();
 
     if (respuestaIngresada === respuestaCorrecta) {
-      localStorage.setItem('emailRecuperacion', email); // Guarda el email solo si la verificación es exitosa
+      localStorage.setItem('emailRecuperacion', email);
       alert('✅ Verificación correcta');
       navigate('/cambiocontra');
     } else {
@@ -42,7 +56,7 @@ function RecuperarContra() {
   };
 
   return (
-    <form onSubmit={handleVerificar} className={styles.form}> {/* Usar tus estilos */}
+    <form onSubmit={handleVerificar} className={styles.form}>
       <h2>Recuperar Contraseña</h2>
 
       <TextInput
@@ -50,15 +64,17 @@ function RecuperarContra() {
         placeholder="Correo registrado"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
 
       <TextInput
         placeholder="¿En qué clínica naciste?"
         value={respuesta}
         onChange={(e) => setRespuesta(e.target.value)}
+        required
       />
 
-      <button type="submit" className={styles.button}>Verificar</button> {/* Usar tus estilos */}
+      <button type="submit" className={styles.button}>Verificar</button>
     </form>
   );
 }

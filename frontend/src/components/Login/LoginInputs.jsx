@@ -1,22 +1,23 @@
 import React from 'react';
+import styles from '../../styles/LoginForm.module.css'; // mismo CSS
 
 function LoginInputs({ email, setEmail, password, setPassword }) {
   return (
     <>
       <input
         type="email"
-        name="email"
-        placeholder="Correo"
+        placeholder="Correo electrónico"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
+        className={styles.input}
         required
       />
       <input
         type="password"
-        name="password"
         placeholder="Contraseña"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
+        className={styles.input}
         required
       />
     </>

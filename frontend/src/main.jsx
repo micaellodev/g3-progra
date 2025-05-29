@@ -1,24 +1,24 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './routes/App.jsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './routes/App.jsx';
 
-// Contexts
+// Contextos
 import { CategoriasProvider } from './hooks/CategoriasContext.jsx';
 import { DireccionProvider } from './hooks/DireccionContext.jsx';
 import { CartProvider } from './hooks/CartContext.jsx';
-import { LoginProvider } from './hooks/LoginContext.jsx'; // ⚠️ Asegúrate de importar esto
-import './styles/index.module.css'
+import { LoginProvider } from './hooks/LoginContext.jsx'; // ← ESTE ES EL CLAVE
+import './styles/index.module.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <CategoriasProvider>
-      <CartProvider>
-        <DireccionProvider>
-          <LoginProvider>   
+    <LoginProvider> {/* Este debe envolver todo */}
+      <CategoriasProvider>
+        <CartProvider>
+          <DireccionProvider>
             <App />
-          </LoginProvider>
-        </DireccionProvider>
-      </CartProvider>
-    </CategoriasProvider>
+          </DireccionProvider>
+        </CartProvider>
+      </CategoriasProvider>
+    </LoginProvider>
   </StrictMode>
-)
+);

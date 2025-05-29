@@ -1,87 +1,85 @@
+// hooks/LoginContext.jsx
+// hooks/LoginContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Crear el contexto
 const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(undefined); // undefined inicialmente para loading
-  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Cargar datos al inicializar
   useEffect(() => {
     try {
-      // Cargar usuarios guardados
-      const savedUsers = JSON.parse(localStorage.getItem('users') || '[]');
-      setUsers(savedUsers);
+      const savedUser = localStorage.getItem('currentUser');
+      console.log('Datos guardados en localStorage:', savedUser);
       
-      // Cargar usuario actual
-      const savedCurrentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-      setCurrentUser(savedCurrentUser);
+      if (savedUser && savedUser !== 'null' && savedUser !== 'undefined') {
+        const parsedUser = JSON.parse(savedUser);
+        console.log('Usuario parseado:', parsedUser);
+        
+        if (parsedUser && typeof parsedUser === 'object' && Object.keys(parsedUser).length > 0) {
+          setCurrentUser(parsedUser);
+        }
+      }
     } catch (error) {
-      console.error('Error cargando datos:', error);
-      setCurrentUser(null);
-      setUsers([]);
+      console.error('Error parsing saved user:', error);
+      localStorage.removeItem('currentUser');
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
-  // Guardar usuarios cuando cambien
-  useEffect(() => {
-    if (users.length > 0) {
-      localStorage.setItem('users', JSON.stringify(users));
+  const login = (user) => {
+    console.log('Intentando hacer login con:', user);
+    
+    if (!user || typeof user !== 'object') {
+      console.error('Datos de usuario inválidos');
+      return false;
     }
-  }, [users]);
 
-  // Guardar usuario actual cuando cambie
-  useEffect(() => {
-    if (currentUser !== undefined) {
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    }
-  }, [currentUser]);
-
-  const register = (newUser) => {
-    console.log('Registrando usuario:', newUser);
-    setUsers(prev => [...prev, newUser]);
-    setCurrentUser(newUser);
-  };
-
-  const login = (credentials) => {
-    console.log('Intentando login:', credentials);
-    const found = users.find(
-      user => user.email === credentials.email && user.password === credentials.password
-    );
-    if (found) {
-      console.log('Usuario encontrado:', found);
-      setCurrentUser(found);
+    try {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      setCurrentUser(user);
+      console.log('Login exitoso, usuario guardado:', user);
       return true;
+    } catch (error) {
+      console.error('Error al guardar usuario:', error);
+      return false;
     }
-    console.log('Usuario no encontrado');
-    return false;
   };
 
   const logout = () => {
     console.log('Cerrando sesión');
+    localStorage.removeItem('currentUser');
     setCurrentUser(null);
   };
 
   const updateUser = (newData) => {
-  setCurrentUser((prevUser) => ({
-    ...prevUser,
-    ...newData, // Esto asegura que nombre, apellido y pais se actualicen
-  }));
-  // Si usas localStorage o backend, también actualiza ahí:
-  localStorage.setItem('currentUser', JSON.stringify({
-    ...currentUser,
-    ...newData,
-  }));
-};
+    setCurrentUser((prevUser) => {
+      if (!prevUser) {
+        console.error('No hay usuario para actualizar');
+        return null;
+      }
+
+      const updatedUser = { ...prevUser, ...newData };
+      console.log('Actualizando usuario:', updatedUser);
+      
+      try {
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        return updatedUser;
+      } catch (error) {
+        console.error('Error al actualizar usuario:', error);
+        return prevUser;
+      }
+    });
+  };
 
   const value = {
     currentUser,
-    users,
     login,
     logout,
-    register,
-    updateUser
+    updateUser,
+    isLoading
   };
 
   return (
@@ -94,10 +92,7 @@ export const LoginProvider = ({ children }) => {
 export const useLogin = () => {
   const context = useContext(LoginContext);
   if (!context) {
-    throw new Error('useLogin debe ser usado dentro de LoginProvider');
+    throw new Error('useLogin debe ser usado dentro de un LoginProvider');
   }
   return context;
 };
-
-// Exportar el contexto también si lo necesitas en otros lugares
-export { LoginContext };

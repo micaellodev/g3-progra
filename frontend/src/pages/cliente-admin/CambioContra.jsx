@@ -2,20 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css'; 
+import styles from '../../styles/TextInput.module.css';
 
 function CambioContra() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const emailRecuperacion = localStorage.getItem('emailRecuperacion');
     if (!emailRecuperacion) {
       alert('Debes pasar por el proceso de verificación de seguridad primero.');
-      // Limpia por si acaso y redirige
-      localStorage.removeItem('emailRecuperacion'); 
+      localStorage.removeItem('emailRecuperacion');
       navigate('/recuperarcontra');
     }
   }, [navigate]);
@@ -28,49 +26,64 @@ function CambioContra() {
       return;
     }
 
-    if (newPassword.length < 3) { // Añade alguna validación de longitud o complejidad
+    if (newPassword.length < 3) {
       alert('❌ La contraseña debe tener al menos 3 caracteres.');
       return;
     }
 
     const emailRecuperacion = localStorage.getItem('emailRecuperacion');
-    // Doble verificación: si por alguna razón no está aquí, redirigimos
     if (!emailRecuperacion) {
       alert('Error: No se encontró el correo de recuperación. Vuelve a iniciar el proceso.');
       navigate('/recuperarcontra');
       return;
     }
 
-    const savedUserString = localStorage.getItem('registeredUser');
-    let savedUser = null;
-    if (savedUserString) {
+    let userUpdated = false;
+
+    // Actualizar en 'users' (array) si existe
+    const usersString = localStorage.getItem('users');
+    if (usersString) {
       try {
-        savedUser = JSON.parse(savedUserString);
+        const users = JSON.parse(usersString);
+        const userIndex = users.findIndex(user => user.email === emailRecuperacion);
+        
+        if (userIndex !== -1) {
+          users[userIndex].password = newPassword;
+          localStorage.setItem('users', JSON.stringify(users));
+          userUpdated = true;
+        }
       } catch (error) {
-        console.error("Error al parsear el usuario de localStorage:", error);
-        alert("Error al procesar los datos del usuario.");
-        return;
+        console.error("Error al parsear users:", error);
       }
     }
 
-    if (savedUser && savedUser.email === emailRecuperacion) {
-      const updatedUser = {
-        ...savedUser,
-        password: newPassword,
-      };
+    // También actualizar en 'registeredUser' (objeto único) si existe
+    const registeredUserString = localStorage.getItem('registeredUser');
+    if (registeredUserString) {
+      try {
+        const registeredUser = JSON.parse(registeredUserString);
+        if (registeredUser.email === emailRecuperacion) {
+          const updatedUser = {
+            ...registeredUser,
+            password: newPassword,
+          };
+          localStorage.setItem('registeredUser', JSON.stringify(updatedUser));
+          userUpdated = true;
+        }
+      } catch (error) {
+        console.error("Error al parsear registeredUser:", error);
+      }
+    }
 
-      localStorage.setItem('registeredUser', JSON.stringify(updatedUser));
+    // Limpiar el email de recuperación
+    localStorage.removeItem('emailRecuperacion');
 
-      // CAMBIO ADICIONAL: Limpiar el email de recuperación SIEMPRE que se haya usado
-      localStorage.removeItem('emailRecuperacion'); 
-
+    if (userUpdated) {
       alert('✅ Contraseña cambiada exitosamente. ¡Ahora puedes iniciar sesión con tu nueva contraseña!');
       navigate('/login');
     } else {
-      alert('Error: No se pudo encontrar el usuario para cambiar la contraseña o el email no coincide.');
-      // Si hay un error, limpiar el email de recuperación para forzar el flujo correcto
-      localStorage.removeItem('emailRecuperacion'); 
-      navigate('/recuperarcontra'); 
+      alert('Error: No se pudo encontrar el usuario para cambiar la contraseña.');
+      navigate('/recuperarcontra');
     }
   };
 
@@ -83,6 +96,7 @@ function CambioContra() {
         placeholder="Nueva Contraseña"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
+        required
       />
 
       <TextInput
@@ -90,6 +104,7 @@ function CambioContra() {
         placeholder="Confirmar Nueva Contraseña"
         value={confirmNewPassword}
         onChange={(e) => setConfirmNewPassword(e.target.value)}
+        required
       />
 
       <div className={styles.actions}>
@@ -101,4 +116,3 @@ function CambioContra() {
 }
 
 export default CambioContra;
-
