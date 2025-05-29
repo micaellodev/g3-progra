@@ -15,9 +15,34 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const savedUser = JSON.parse(localStorage.getItem('registeredUser'));
+    
+    // Buscar usuario registrado - puede estar guardado de diferentes formas
+    let savedUser = null;
+    
+    // Intentar diferentes claves que podrías estar usando
+    const possibleKeys = ['registeredUser', 'currentUser', 'userData', 'users'];
+    
+    for (let key of possibleKeys) {
+      const userData = localStorage.getItem(key);
+      if (userData) {
+        try {
+          const parsedData = JSON.parse(userData);
+          // Si es un array de usuarios
+          if (Array.isArray(parsedData)) {
+            savedUser = parsedData.find(user => user.email === email);
+          } 
+          // Si es un solo usuario
+          else if (parsedData.email === email) {
+            savedUser = parsedData;
+          }
+          if (savedUser) break;
+        } catch (error) {
+          console.error(`Error parsing ${key}:`, error);
+        }
+      }
+    }
 
-    if (savedUser && email === savedUser.email && password === savedUser.password) {
+    if (savedUser && password === savedUser.password) {
       login(savedUser);
       alert('Login exitoso');
       navigate('/');

@@ -3,28 +3,63 @@ import GuardarBoton from './GuardarBoton';
 import styles from '../../styles/Perfil.module.css';
 
 function PerfilForm({ usuario, onGuardar }) {
-  const [nombre, setNombre] = useState(usuario.nombre);
-  const [apellido, setApellido] = useState(usuario.apellido);
-  const [email, setEmail] = useState(usuario.email);
-  const [pais, setPais] = useState(usuario.pais);
+  const [formData, setFormData] = useState({
+    nombre: usuario.nombre || '',
+    apellido: usuario.apellido || '',
+    email: usuario.email || '',
+    pais: usuario.pais || '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = () => {
-    onGuardar({ nombre, apellido, email, pais });
+    onGuardar(formData);
   };
 
   return (
     <>
       <label>Nombre:</label>
-      <input className={styles.input} type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder={usuario.nombre} />
+      <input
+        className={styles.input}
+        type="text"
+        name="nombre"
+        value={formData.nombre}
+        onChange={handleChange}
+        placeholder="Nombre"
+      />
 
       <label>Apellido:</label>
-      <input className={styles.input} type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} placeholder={usuario.apellido} />
+      <input
+        className={styles.input}
+        type="text"
+        name="apellido"
+        value={formData.apellido}
+        onChange={handleChange}
+        placeholder="Apellido"
+      />
 
       <label>Correo:</label>
-      <input className={styles.input} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={usuario.email} />
+      <input
+        className={styles.input}
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Correo"
+      />
 
       <label>País:</label>
-      <input className={styles.input} type="text" value={pais} onChange={(e) => setPais(e.target.value)} placeholder={usuario.pais} />
+      <input
+        className={styles.input}
+        type="text"
+        name="pais"
+        value={formData.pais}
+        onChange={handleChange}
+        placeholder="País"
+      />
 
       <GuardarBoton onClick={handleSubmit} />
     </>
