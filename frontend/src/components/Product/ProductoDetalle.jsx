@@ -1,20 +1,28 @@
-import React from 'react';
+// src/pages/ProductoDetalle.jsx
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { juegos } from '../../constantes/Consts';
 import { useCarrito } from '../../hooks/CartContext';
-//import './DetalleProducto.css';
+import TopBar from '../../components/TopBar/TopBar';
+import ProductoDetalleCard from '../../components/Table/ProductoDetalleCard';
 
 const ProductoDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCarrito();  
+  const { addToCart } = useCarrito();
+
+  const [busqueda, setBusqueda] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('Buscando:', busqueda);
+  };
 
   const producto = juegos.find(j => j.id === Number(id));
-
-  if (!producto) return <p>Producto no encontrado</p>;
+  if (!producto) return <p style={{ padding: '20px' }}>Producto no encontrado</p>;
 
   const handleAgregar = () => {
-    addToCart(producto);  
+    addToCart(producto);
     navigate('/carrito');
   };
 
@@ -23,14 +31,11 @@ const ProductoDetalle = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>{producto.nombre}</h1>
-      <img src={producto.imagen} alt={producto.nombre} width={250} />
-      <p><strong>Descripción:</strong> {producto.descripcion}</p>
-      <p><strong>Categoría:</strong> {producto.categoria}</p>
-      <p><strong>Precio:</strong> S/ {producto.precio.toFixed(2)}</p>
-      <p><strong>Stock:</strong> {producto.stock}</p>
-      <div style={{ marginTop: '20px' }}>
+    <>
+      <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
+      <h1 style={{ margin: '20px 30px' }}>Detalle del Producto</h1>
+      <ProductoDetalleCard producto={producto} />
+      <div style={{ marginLeft: '30px', marginTop: '20px' }}>
         <button onClick={handleAgregar} style={{ marginRight: '10px' }}>
           Agregar al carrito
         </button>
@@ -38,7 +43,7 @@ const ProductoDetalle = () => {
           Volver al inicio
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AgregarCategoria from './AgregarCategorias';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
-import { categorias } from '../../constantes/consts';
+import { categorias } from '../../constantes/Consts';
 
 function ListaCategorias() {
   const [busqueda, setBusqueda] = useState('');
@@ -106,4 +106,3 @@ function ListaCategorias() {
 }
 
 export default ListaCategorias;
-
