@@ -8,8 +8,11 @@ import styles from '../../styles/OrdenCompletada.module.css';
 
 export const OrdenCompletada = () => {
   const [busqueda, setBusqueda] = useState('');
-  const { direccionEnvio } = useContext(DireccionContext); // Obtiene la dirección del contexto
-  const { cart, clearCart } = useContext(CartContext); // Obtiene los productos del carrito y la función para limpiarlo
+  const { direccionEnvio } = useContext(DireccionContext);
+  const { cart, selectedIds, removeFromCart } = useContext(CartContext);
+
+  // Mostrar productos comprados
+  const productosSeleccionados = cart.filter(producto => selectedIds.includes(producto.id));
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -17,26 +20,32 @@ export const OrdenCompletada = () => {
   };
 
   const calcularTotal = () => {
-    return cart.reduce((total, producto) => total + producto.precio * producto.quantity, 0);
+    return productosSeleccionados.reduce(
+      (total, producto) => total + producto.precio * producto.quantity, 0
+    );
   };
 
-
+  /* useEffect(() => {
+    productosSeleccionados.forEach(producto => {
+       removeFromCart(producto.id);
+    });
+   }, []);*/
 
   return (
     <>
       <TopBar handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda} />
       <div className={styles.ordenCompletadaWrapper}>
         <h1>¡Orden completada con éxito! 🎉</h1>
-        <p>Gracias por tu compra, compare.</p>
+        <p>Gracias por tu compra.</p>
 
-        {/* Renderiza los detalles de los productos */}
-        <DetallesProductos productos={cart} calcularTotal={calcularTotal} />
+        <DetallesProductos productos={productosSeleccionados} calcularTotal={calcularTotal} />
 
-        {/* Renderiza los detalles de la dirección */}
         <DetallesDireccion direccion={direccionEnvio} />
       </div>
     </>
   );
+
+
 };
 
 export default OrdenCompletada;

@@ -25,12 +25,12 @@ const CarritoItemCard = ({ juego }) => {
     const checked = e.target.checked;
     setIsSelected(checked);
     if (checked) {
-      // Agrega el ID al contexto si no está
+      // Agrega el ID al contexto si no está seleccionado
       if (!selectedIds.includes(juego.id)) {
         updateSelectedIds([...selectedIds, juego.id]);
       }
     } else {
-      // Quita el ID del contexto si está
+      // Quita el ID del contexto si está seleccionado
       updateSelectedIds(selectedIds.filter(id => id !== juego.id));
     }
   };
