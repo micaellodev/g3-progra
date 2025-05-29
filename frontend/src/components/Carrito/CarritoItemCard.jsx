@@ -53,10 +53,12 @@ const CarritoItemCard = ({ juego }) => {
         />
       </div>
       <div className={styles.juegoImagen}>
+        {/* Imagen del juego */}
         <img src={juego.imagen} alt={juego.nombre} className={styles.juegoImagen} />
       </div>
       <div className={styles.juegoInfo}>
         <div className={styles.infoNombre}>
+          {/* Nombre del juego */}
           <div className={styles.juegoNombre}>{juego.nombre}</div>
           <div className={styles.juegoPresentacion}>{juego.presentacion}</div>
         </div>

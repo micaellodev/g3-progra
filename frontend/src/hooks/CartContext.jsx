@@ -8,7 +8,9 @@ export const CartProvider = ({ children }) => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  // Nuevo estado para los juegos seleccionados (IDs)
+
+
+  // Juegos seleccionados (IDs)
   const [selectedIds, setSelectedIds] = useState([]);
 
   const addToCart = (product, quantity = 1) => {
@@ -30,10 +32,10 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => setCart([]);
 
-  // Función para actualizar los seleccionados
+  // Actualizar los seleccionados
   const updateSelectedIds = (ids) => setSelectedIds(ids);
 
-  // Guarda el carrito en localStorage cada vez que cambie
+  // Guardar el carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
