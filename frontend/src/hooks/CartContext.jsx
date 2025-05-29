@@ -8,6 +8,8 @@ export const CartProvider = ({ children }) => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
+  // Nuevo estado para los juegos seleccionados (IDs)
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const addToCart = (product, quantity = 1) => {
     const exists = cart.find(p => p.id === product.id);
@@ -28,13 +30,16 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => setCart([]);
 
+  // Función para actualizar los seleccionados
+  const updateSelectedIds = (ids) => setSelectedIds(ids);
+
   // Guarda el carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, selectedIds, updateSelectedIds }}>
       {children}
     </CartContext.Provider>
   );

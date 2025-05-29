@@ -3,24 +3,21 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../../hooks/CartContext';
 import CarritoItems from '../../components/Carrito/CarritoItems';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
-import TopBar from '../../components/TopBar/TopBar'; // Importa el TopBar
-import Footer from '../../components/Footer/Footer'; // Importa el Footer
+import TopBar from '../../components/TopBar/TopBar';
+import Footer from '../../components/Footer/Footer';
 import styles from '../../styles/Carrito.module.css';
 
 export const Carrito = () => {
-  const { cart } = useContext(CartContext); // Obtiene el carrito desde el contexto
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [busqueda, setBusqueda] = useState(''); // Estado para la barra de búsqueda
+  const { cart, selectedIds, updateSelectedIds } = useContext(CartContext);
+  const [busqueda, setBusqueda] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
   };
 
-  const handleSelectedItemsChange = (selectedIds) => {
-    const selectedProducts = cart.filter((item) => selectedIds.includes(item.id));
-    setSelectedItems(selectedProducts); // Actualiza los productos seleccionados
-  };
+  // Los productos seleccionados se filtran desde el contexto
+  const selectedItems = cart.filter((item) => selectedIds.includes(item.id));
 
   return (
     <>
@@ -32,18 +29,20 @@ export const Carrito = () => {
           ) : (
             <>
               <h1>Carrito</h1>
-              <CarritoItems juegos={cart} onSelectedItemsChange={handleSelectedItemsChange} />
+              <CarritoItems
+                juegos={cart}
+                onSelectedItemsChange={updateSelectedIds} // Usa la función del contexto
+              />
               <Link to="/" className={styles.botonSeguirComprando}>
                 Seguir explorando
               </Link>
             </>
           )}
         </div>
-        
         <div>
-          <CarritoResumen juegos={selectedItems} />
+          <CarritoResumen />
           {selectedItems.length === 0 ? (
-            <p className={styles.mensajeNoSeleccionados}> 
+            <p className={styles.mensajeNoSeleccionados}>
               No hay ningún producto seleccionado para la compra.
             </p>
           ) : (
