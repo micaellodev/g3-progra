@@ -17,6 +17,11 @@
   margin-bottom: 24px;
 }
 
+styles.totalFila{
+  background-color: #c0392b;
+  margin-top: 12px;
+}
+
 .carritoContenido h1, .direccionEnvioContenido h2 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -69,19 +74,22 @@
 }
 
 .resumenBox {
-  flex: 1;
-  background-color: #fafafa;
+  background-color: #fff;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  width: 100%; /* Asegura que ocupe todo el espacio disponible */
   min-width: 280px;
-  height: fit-content;
+  height: 300px; /* Tamaño fijo para el resumen */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaciado entre el contenido */
 }
 
 .resumenFila {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 1px;
   font-size: 15px;
   color: #333;
 }
@@ -91,11 +99,12 @@
   justify-content: space-between;
   font-weight: bold;
   font-size: 18px;
-  margin: 16px 0 24px;
   color: #000;
+  border-top: 1px solid #ddd; /* Línea separadora arriba del total */
+  padding-top: 12px; /* Espaciado interno para separar la línea del contenido */
 }
 
-.botonCompra {
+.botonCompra{
   width: 100%;
   padding: 14px;
   background-color: #111;
@@ -112,7 +121,7 @@
   background-color: #333;
 }
 
-.botonSeguirComprando {
+.botonSeguirComprando,.submit-button {
   display: inline-block;
   margin-top: 20px;
   padding: 12px 24px;
@@ -126,7 +135,7 @@
   transition: all 0.3s ease;
 }
 
-.botonSeguirComprando:hover {
+.botonSeguirComprando:hover,.submit-button:hover {
   background-color: #111;
   color: #fff;
 }
@@ -278,4 +287,13 @@
   border: 1.5px solid #111;
   outline: none;
   background: #fff;
+}
+
+.mensajeNoSeleccionados {
+  color: gray;
+  font-size: 0.9rem;
+  margin-top: 16px;
+  text-align: center;
+  width: 100%;
+  padding: 12px;
 }

@@ -9,7 +9,7 @@ function CarritoResumen({ juegos, botonTexto = "Continuar compra", botonRuta = "
 
   return (
     <div className={styles.resumenBox}>
-      <h3>Resumen de compra</h3>
+      <h2>Resumen de compra</h2>
       <div className={styles.resumenFila}>
         <span>Juegos ({juegos.length})</span>
         <span>S/. {total.toFixed(2)}</span>
@@ -18,7 +18,6 @@ function CarritoResumen({ juegos, botonTexto = "Continuar compra", botonRuta = "
         <span>Descuentos</span>
         <span>-S/. {descuento.toFixed(2)}</span>
       </div>
-      <hr />
       <div className={styles.totalFila}>
         <span>Total</span>
         <span>S/. {totalFinal.toFixed(2)}</span>

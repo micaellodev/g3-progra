@@ -119,7 +119,7 @@ const DireccionEnvioForm = ({ onSubmitSuccess }) => {
           />
         </div>
       </div>
-      <button type="submit" className={styles['submit-button']}>Enviar</button>
+      <button type="submit" className={styles['submit-button']}>Guardar</button>
     </form>
   );
 };

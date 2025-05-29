@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import SelectorMetodoPago from '../../components/Pago/SelectorMetodoPago';
 import ModalTarjeta from '../../components/Pago/ModalTarjeta';
 import ModalQR from '../../components/Pago/ModalQR';
-import { DireccionProvider } from '../../hooks/DireccionContext';
 import DireccionResumen from '../../components/Direccion/DirecciónResumen'; 
+import CarritoResumen from '../../components/Carrito/CarritoResumen';
+import Footer from '../../components/Footer/Footer'; // Importa el footer
+import { CartContext } from '../../hooks/CartContext'; // Importa el contexto del carrito
 import styles from '../../styles/Carrito.module.css';
 
 export const MetodoDePago = () => {
@@ -12,6 +14,7 @@ export const MetodoDePago = () => {
   const [metodoPago, setMetodoPago] = useState('');
   const [showModalQR, setShowModalQR] = useState(false);
   const [showModalTarjeta, setShowModalTarjeta] = useState(false);
+  const { cart } = useContext(CartContext); // Obtiene los juegos en el carrito desde el contexto
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -38,6 +41,10 @@ export const MetodoDePago = () => {
           </button>
         </div>
         <div style={{ flex: 1 }}>
+          {/* Resumen de compra */}
+          <CarritoResumen juegos={cart} />
+          <br/>
+          {/* Dirección */}
           <DireccionResumen />
         </div>
       </div>
@@ -52,6 +59,8 @@ export const MetodoDePago = () => {
           setShowModalTarjeta(false);
         }}
       />
+      {/* Footer */}
+      <Footer />
     </>
   );
 };

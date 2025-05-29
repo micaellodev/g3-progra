@@ -9,7 +9,7 @@ const DireccionResumen = () => {
 
   return (
     <div className={styles.resumenBox}>
-      <h4>Dirección de Envío</h4>
+      <h2>Dirección de Envío</h2>
       <p><strong>Nombre:</strong> {direccionEnvio.nombre}</p>
       <p><strong>Dirección:</strong> {direccionEnvio.direccion}</p>
       <p><strong>Teléfono:</strong> {direccionEnvio.telefono}</p>
