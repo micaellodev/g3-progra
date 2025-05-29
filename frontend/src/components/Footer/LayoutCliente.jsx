@@ -1,13 +1,23 @@
+// src/components/LayoutCliente/LayoutCliente.jsx
 import React from 'react';
-import Footer from './Footer';
+import { Outlet } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
-const LayoutCliente = ({ children }) => {
+const LayoutCliente = () => {
   return (
-    <>
-      {/* Aquí otros componentes comunes (header, topbar, etc.) */}
-      {children}
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column' 
+    }}>
+      
+      
+      <main style={{ flex: 1 }}>
+        <Outlet />
+      </main>
+
       <Footer />
-    </>
+    </div>
   );
 };
 
