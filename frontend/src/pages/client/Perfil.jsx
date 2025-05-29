@@ -17,6 +17,10 @@ function Perfil() {
     alert('Datos actualizados correctamente');
   };
 
+  const handleCambiarContrasena = () => {
+    navigate('/cambiocontra');
+  };
+
   if (!currentUser) {
     return (
       <div className={styles.perfilContainer}>
@@ -34,7 +38,16 @@ function Perfil() {
       ) : (
         <PerfilView usuario={currentUser} onEditar={() => setEditando(true)} />
       )}
-      <AtrasBoton onClick={() => navigate('/')} />
+      
+      <div className={styles.botonesContainer}>
+        <button 
+          className={styles.cambiarContrasenaBtn}
+          onClick={handleCambiarContrasena}
+        >
+          Cambiar Contraseña
+        </button>
+        <AtrasBoton onClick={() => navigate('/')} />
+      </div>
     </div>
   );
 }

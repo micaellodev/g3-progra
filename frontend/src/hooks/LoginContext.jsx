@@ -1,10 +1,13 @@
-// hooks/LoginContext.jsx
 import { createContext, useContext, useState } from 'react';
 
 export const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  // Inicializar currentUser con datos de localStorage si existen
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem('registeredUser');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const login = (user) => setCurrentUser(user);
   const logout = () => setCurrentUser(null);
@@ -14,8 +17,14 @@ export const LoginProvider = ({ children }) => {
     setCurrentUser(newUser); // Opcional si quieres logear al registrar
   };
 
+  const updateUser = (updatedData) => {
+    const updatedUser = { ...currentUser, ...updatedData };
+    setCurrentUser(updatedUser);
+    localStorage.setItem('registeredUser', JSON.stringify(updatedUser)); // Actualiza también en localStorage
+  };
+
   return (
-    <LoginContext.Provider value={{ currentUser, login, logout, register }}>
+    <LoginContext.Provider value={{ currentUser, login, logout, register, updateUser }}>
       {children}
     </LoginContext.Provider>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { juegos } from '../../constantes/Consts';
+import { juegos } from '../constantes/Consts';
 
 export default function ListaProductos() {
   return (

@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css'; // Asegúrate de importar tus estilos
+import styles from '../../styles/TextInput.module.css'; 
 
 function CambioContra() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const navigate = useNavigate();
 
-  // CAMBIO PRINCIPAL AQUÍ: Asegurar que el emailRecuperacion existe al montar
+
   useEffect(() => {
     const emailRecuperacion = localStorage.getItem('emailRecuperacion');
     if (!emailRecuperacion) {

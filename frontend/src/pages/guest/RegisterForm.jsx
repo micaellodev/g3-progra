@@ -28,7 +28,7 @@ function RegisterForm() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    register(formData); // Guarda en localStorage y opcionalmente en contexto
+    register(formData); // Asegúrate de que el método register guarde todos los campos correctamente
     alert('¡Registro exitoso!');
     navigate('/login');
   };
