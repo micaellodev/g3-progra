@@ -52,22 +52,20 @@ function LoginForm() {
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.contentWrapper}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <h2 className={styles.title}>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2 className={styles.title}>Iniciar Sesión</h2>
 
-          <LoginInputs
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-          />
+        <LoginInputs
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+        />
 
-          <LoginLinks />
-          <LoginActions />
-        </form>
-      </div>
-      
+        <LoginLinks />
+        <LoginActions />
+      </form>
+
       <Footer />
     </div>
   );

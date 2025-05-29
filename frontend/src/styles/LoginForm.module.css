@@ -1,21 +1,26 @@
-.loginContainer {
+
+.pageContainer {
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
   background-color: #f0f2f5;
 }
 
 .form {
-  flex: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   max-width: 500px;
   width: 100%;
   padding: 2rem;
+  margin: 0 auto;
   background-color: #fff;
-  border-radius: 8px;
   border: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
+  border-radius: 8px;
   gap: 1rem;
 }
 
@@ -23,6 +28,12 @@
   font-size: 1.5rem;
   text-align: center;
   color: #333;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .button {
@@ -40,30 +51,11 @@
   background-color: #0056b3;
 }
 
-.registerLink {
-  margin-top: 1rem;
+.links {
   text-align: center;
-  font-size: 0.9rem;
-  color: #555;
 }
 
-.pageWrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.pageContainer {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.contentWrapper {
-  flex: 1;
+.actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2rem;
 }

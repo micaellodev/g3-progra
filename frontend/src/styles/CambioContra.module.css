@@ -1,9 +1,16 @@
 .cambioContainer {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0a2540; 
+}
+
+.cambioContent {
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #0a2540; /* azul oscuro */
+  padding: 2rem;
 }
 
 .cambioForm {
@@ -22,6 +29,16 @@
   font-size: 1.5rem;
   text-align: center;
   color: #333;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 .button {
@@ -37,6 +54,27 @@
 
 .button:hover {
   background-color: #0056b3;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.link:hover {
+  background-color: #f8f9fa;
+  text-decoration: underline;
+}
+
+/* Forzar que el footer esté en la parte inferior */
+.cambioContainer :global(footer) {
+  margin-top: auto !important;
+  position: relative !important;
+  transform: none !important;
 }
 
 .linkText {

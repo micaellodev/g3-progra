@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css';
+import styles from '../../styles/CambioContra.module.css';
+import Footer from '../../components/Footer/Footer';
 
 function CambioContra() {
   const [newPassword, setNewPassword] = useState('');
@@ -40,7 +41,7 @@ function CambioContra() {
 
     let userUpdated = false;
 
-    // Actualizar en 'users' (array) si existe
+   
     const usersString = localStorage.getItem('users');
     if (usersString) {
       try {
@@ -57,7 +58,7 @@ function CambioContra() {
       }
     }
 
-    // También actualizar en 'registeredUser' (objeto único) si existe
+    
     const registeredUserString = localStorage.getItem('registeredUser');
     if (registeredUserString) {
       try {
@@ -75,7 +76,7 @@ function CambioContra() {
       }
     }
 
-    // Limpiar el email de recuperación
+
     localStorage.removeItem('emailRecuperacion');
 
     if (userUpdated) {
@@ -88,30 +89,32 @@ function CambioContra() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <h2>Cambiar Contraseña</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Cambiar Contraseña</h2>
 
-      <TextInput
-        type="password"
-        placeholder="Nueva Contraseña"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        required
-      />
+        <TextInput
+          type="password"
+          placeholder="Nueva Contraseña"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          required
+        />
 
-      <TextInput
-        type="password"
-        placeholder="Confirmar Nueva Contraseña"
-        value={confirmNewPassword}
-        onChange={(e) => setConfirmNewPassword(e.target.value)}
-        required
-      />
+        <TextInput
+          type="password"
+          placeholder="Confirmar Nueva Contraseña"
+          value={confirmNewPassword}
+          onChange={(e) => setConfirmNewPassword(e.target.value)}
+          required
+        />
 
-      <div className={styles.actions}>
-        <button type="submit" className={styles.button}>Cambiar</button>
-        <Link to="/login" className={styles.link}>Cancelar</Link>
-      </div>
-    </form>
+        <div className={styles.actions}>
+          <button type="submit" className={styles.button}>Cambiar</button>
+          <Link to="/login" className={styles.link}>Cancelar</Link>
+        </div>
+        
+        <Footer /> 
+      </form>
   );
 }
 
