@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // 👈 Asegúrate de importar esto
-import styles from '../../styles/AgregarProducto.module.css';
+import { Link } from 'react-router-dom'; 
+import styles from '../Lista/BuscadorConBotones.module.css'; 
 
 const BuscadorConBotones = ({ busqueda, setBusqueda, handleSearch }) => {
     return (

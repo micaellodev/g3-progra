@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorOrdenes from '../../components/Lista/BuscadorOrdenes';
 import OrdenesTable from '../../components/Table/OrdenesTable';
-import { ordenes } from '../../constantes/consts';
+import { ordenes } from '../../constantes/Consts';
 
 const ListaOrdenes = () => {
   const [busqueda, setBusqueda] = useState('');

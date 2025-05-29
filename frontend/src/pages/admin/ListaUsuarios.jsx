@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorUsuario from '../../components/Lista/BuscadorUsuario';
 import UsuariosTable from '../../components/Table/UsuariosTable';
-import { usuarios } from '../../constantes/consts';
+import { usuarios } from '../../constantes/Consts';
 
 const ListaUsuarios = () => {
   const [usuariosFiltrados, setUsuariosFiltrados] = useState(usuarios);

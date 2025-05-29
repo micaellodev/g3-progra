@@ -1,48 +1,75 @@
-/* src/styles/ListaProducto.module.css */
-
 .tableWrapper {
-  margin: 0 30px 30px;
+  margin: 0 auto 30px;
   overflow-x: auto;
+  width: 100%;
+  max-width: 1100px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  padding: 0 15px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .productosTable {
   width: 100%;
   border-collapse: collapse;
+  margin: 0 auto;
 }
 
 .productosTable th,
 .productosTable td {
   padding: 12px 8px;
-  border: 1px solid #e0e0e0;
-  text-align: left;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.productosTable th {
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #f9f9f9;
+}
+
+.editBtn,
+.deleteBtn {
+  background: #3884fd;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 8px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.editBtn:hover {
+  background: #1c6ce3;
+}
+
+.deleteBtn {
+  background: #ff4343;
+}
+
+.deleteBtn:hover {
+  background: #e04848;
 }
 
 .imagenProducto {
   width: 40px;
-  height: auto;
+  height: 40px;
+  object-fit: cover;
   border-radius: 4px;
 }
 
 .descripcionCell {
   max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.editBtn,
-.deleteBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-right: 8px;
-}
-
-.editBtn:hover {
-  color: #007bff;
-}
-
-.deleteBtn:hover {
-  color: #dc3545;
+  text-align: left;
+  word-wrap: break-word;
 }

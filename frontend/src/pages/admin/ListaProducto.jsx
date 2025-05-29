@@ -4,25 +4,38 @@ import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
 import ProductosTable from '../../components/Table/ProductosTable';
 
 export const ListaProducto = () => {
-    const [busqueda, setBusqueda] = useState('');
+  const [busquedaTopbar, setBusquedaTopbar] = useState('');
+  const [busquedaTabla, setBusquedaTabla] = useState('');
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        console.log('Buscando:', busqueda);
-    };
+  const handleSearchTopbar = (e) => {
+    e.preventDefault();
+    console.log('Buscando desde topbar:', busquedaTopbar);
+  };
 
-    return (
-        <>
-            <TopBarAdmin handleSearch={handleSearch} busqueda={busqueda} setBusqueda={setBusqueda}/>
-            <h1>Lista Producto</h1>
-            <BuscadorConBotones
-                busqueda={busqueda}
-                setBusqueda={setBusqueda}
-                handleSearch={handleSearch}
-            />
-            <ProductosTable />
-        </>
-    );
+  const handleSearchTabla = (e) => {
+    e.preventDefault();
+    console.log('Buscando en productos:', busquedaTabla);
+  };
+
+  return (
+    <>
+      <TopBarAdmin
+        handleSearch={handleSearchTopbar}
+        busqueda={busquedaTopbar}
+        setBusqueda={setBusquedaTopbar}
+      />
+
+      <h1>Lista Producto</h1>
+
+      <BuscadorConBotones
+        busqueda={busquedaTabla}
+        setBusqueda={setBusquedaTabla}
+        handleSearch={handleSearchTabla}
+      />
+
+      <ProductosTable busqueda={busquedaTabla} />
+    </>
+  );
 };
 
 export default ListaProducto;
