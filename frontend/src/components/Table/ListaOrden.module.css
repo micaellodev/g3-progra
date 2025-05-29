@@ -1,4 +1,4 @@
-/* Contenedor general de la tabla */
+
 .tableWrapper {
   margin: 0 auto 30px;
   overflow-x: auto;
@@ -10,16 +10,17 @@
   box-shadow: 0 0 8px rgba(0,0,0,0.05);
   padding: 0 15px;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Tabla */
+
 .ordenesTable {
   width: 100%;
   border-collapse: collapse;
   margin: 0 auto;
 }
 
-/* Celdas */
+
 .ordenesTable th,
 .ordenesTable td {
   padding: 12px 8px;
@@ -30,15 +31,15 @@
   text-align: center;
 }
 
-/* Encabezados */
+
 .ordenesTable th {
   border-bottom: 2px solid #e0e0e0;
   background-color: #f9f9f9;
 }
 
-/* Botón detalle */
+
 .verDetalleBtn {
-  background: #3884fd; /* azul pastel */
+  background: #3884fd; 
   color: white;
   border: none;
   cursor: pointer;
@@ -50,24 +51,24 @@
 }
 
 .verDetalleBtn:hover {
-  background: #1c6ce3; /* azul más oscuro */
-  color: white; /* mantiene letras blancas */
+  background: #1c6ce3;
+  color: white;
 }
 
-/* Estado Entregado en verde */
+
 .estadoEntregado {
   color: green;
   font-weight: 600;
 }
 
-/* Estado Por Entregar en rojo */
+
 .estadoPorEntregar {
   color: red;
   font-weight: 600;
 }
 
 
-/* Botón buscar */
+
 .buscarBtn {
   padding: 8px 20px;
   font-size: 1rem;

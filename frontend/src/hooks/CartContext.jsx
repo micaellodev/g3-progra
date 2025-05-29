@@ -40,5 +40,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// ✅ Hook personalizado para acceder fácilmente al contexto
 export const useCarrito = () => useContext(CartContext);

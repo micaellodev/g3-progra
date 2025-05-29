@@ -1,13 +1,32 @@
-import React from 'react';
+// UsuariosTable.jsx
+import React, { useState, useEffect } from 'react';
 import styles from './ListaUsuario.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const UsuariosTable = ({ usuarios = [] }) => {
   const navigate = useNavigate();
+  const [usuariosEstado, setUsuariosEstado] = useState([]);
+
+  useEffect(() => {
+    setUsuariosEstado(usuarios);
+  }, [usuarios]);
 
   const handleDesactivar = (id) => {
+    setUsuariosEstado(prevUsuarios =>
+      prevUsuarios.map(u =>
+        u.id === id ? { ...u, estado: 'Inactivo' } : u
+      )
+    );
     alert(`Usuario con ID ${id} desactivado`);
-    // Aquí podrías cambiar el estado o llamar una API
+  };
+
+  const handleActivar = (id) => {
+    setUsuariosEstado(prevUsuarios =>
+      prevUsuarios.map(u =>
+        u.id === id ? { ...u, estado: 'Activo' } : u
+      )
+    );
+    alert(`Usuario con ID ${id} activado`);
   };
 
   return (
@@ -22,7 +41,7 @@ const UsuariosTable = ({ usuarios = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {usuarios.map((usuario) => (
+          {usuariosEstado.map((usuario) => (
             <tr key={usuario.id}>
               <td className={styles.nombreCelda}>
                 <div className={styles.nombreContenido}>
@@ -39,12 +58,21 @@ const UsuariosTable = ({ usuarios = [] }) => {
                 >
                   Ver Detalle
                 </button>
-                <button
-                  className={styles.desactivarBtn}
-                  onClick={() => handleDesactivar(usuario.id)}
-                >
-                  Desactivar
-                </button>
+                {usuario.estado === 'Activo' ? (
+                  <button
+                    className={styles.desactivarBtn}
+                    onClick={() => handleDesactivar(usuario.id)}
+                  >
+                    Desactivar
+                  </button>
+                ) : (
+                  <button
+                    className={styles.activarBtn}
+                    onClick={() => handleActivar(usuario.id)}
+                  >
+                    Activar
+                  </button>
+                )}
               </td>
             </tr>
           ))}

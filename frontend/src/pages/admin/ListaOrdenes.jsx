@@ -6,7 +6,7 @@ import { ordenes } from '../../constantes/consts';
 
 const ListaOrdenes = () => {
   const [busqueda, setBusqueda] = useState('');
-  const [ordenesFiltradas, setOrdenesFiltradas] = useState(ordenes); // estado separado
+  const [ordenesFiltradas, setOrdenesFiltradas] = useState(ordenes); 
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -14,13 +14,13 @@ const ListaOrdenes = () => {
       o.id?.toString().includes(busqueda.toLowerCase()) ||
       o.usuario?.toLowerCase().includes(busqueda.toLowerCase())
     );
-    setOrdenesFiltradas(resultado); // solo se actualiza al presionar "Buscar"
+    setOrdenesFiltradas(resultado); 
   };
 
   return (
     <>
       <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} />
-      <h1>Lista de Órdenes</h1>
+      <h1 style={{ margin: '20px 30px' }} >Lista de Órdenes</h1>
       <BuscadorOrdenes
         busqueda={busqueda}
         setBusqueda={setBusqueda}

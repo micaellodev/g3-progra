@@ -62,15 +62,15 @@ function App() {
         <Route path="/listausuarios"      element={<ListaUsuarios />} />
         <Route path="/agregarproducto"    element={<AgregarProducto />} />
         <Route path="/agregarcategoria"   element={<AgregarCategoria />} />
-
+        <Route path="/admin/usuarios/:id"  element={<DetalleUsuario />} />
+        <Route path="/admin/ordenes/:id"   element={<DetalleOrden />} />    
         {/* Cliente Logeado */}
         <Route path="/perfil"              element={<Perfil />} />
         <Route path="/adminf"              element={<AdminForm />} />
         <Route path="/checkout"            element={<Checkout />} />
         <Route path="/metododepago"        element={<MetodoDePago />} />  
         <Route path="/ordencompletada"     element={<OrdenCompletada />} />
-        <Route path="/admin/usuarios/:id"  element={<DetalleUsuario />} />
-        <Route path="/admin/ordenes/:id"   element={<DetalleOrden />} />       
+   
       </Routes>
     </Router>
   );

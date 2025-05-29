@@ -6,7 +6,7 @@ const BuscadorUsuario = ({ handleSearch }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSearch(localBusqueda);  // Pasar localBusqueda al handler
+    handleSearch(localBusqueda); 
   };
 
   return (

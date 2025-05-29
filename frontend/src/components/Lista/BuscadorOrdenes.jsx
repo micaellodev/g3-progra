@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/BuscadorOrdenes.module.css'; // Ajusta si tienes estilos
+import styles from '../../styles/BuscadorOrdenes.module.css'; 
 
 const BuscadorOrdenes = ({ busqueda, setBusqueda, handleSearch }) => {
   return (

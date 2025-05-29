@@ -1,32 +1,43 @@
+// OrdenDetalleCard.jsx
 import React from 'react';
 import styles from './OrdenDetalleCard.module.css';
 
 const OrdenDetalleCard = ({ orden }) => {
+  const estadoEsEntregado = orden.estado.toLowerCase() === 'entregado';
+
   return (
     <div className={styles.card}>
-      <h2>Orden #{orden.id}</h2>
-      <p><strong>Estado:</strong> {orden.estado}</p>
-      <p><strong>Total:</strong> S/ {orden.total.toFixed(2)}</p>
+      <h2>
+        Orden <span className={styles.ordenId}>#{orden.id}</span>
+      </h2>
+      <div className={styles.estadoTotalContainer}>
+        <p className={estadoEsEntregado ? styles.estadoEntregado : styles.estado}>
+          Estado: <strong>{orden.estado}</strong>
+        </p>
+        <p className={styles.montoTotal}>
+          Monto total: <strong>S/ {orden.total.toFixed(2)}</strong>
+        </p>
+      </div>
 
       <h3>Productos ordenados</h3>
-      <table className={styles.productosTable}>
+      <table className={styles.ordenProductosTable}>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Categoría</th>
             <th>Cantidad</th>
-            <th>Total (S/.)</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
           {orden.productos.map(prod => (
             <tr key={prod.id}>
-              <td>{prod.id}</td>
+              <td className={styles.idColor}>#{prod.id}</td>
               <td>{prod.nombre}</td>
-              <td>{prod.categoria}</td>
+              <td className={styles.categoriaBold}>{prod.categoria}</td>
               <td>{prod.cantidad}</td>
-              <td>{(prod.cantidad * prod.precio).toFixed(2)}</td>
+              <td>S/ {(prod.cantidad * prod.precio).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
