@@ -6,16 +6,20 @@ import App from './routes/App.jsx';
 import { CategoriasProvider } from './hooks/CategoriasContext.jsx';
 import { DireccionProvider } from './hooks/DireccionContext.jsx';
 import { CartProvider } from './hooks/CartContext.jsx';
-import { LoginProvider } from './hooks/LoginContext.jsx'; // ← ESTE ES EL CLAVE
+import { LoginProvider } from './hooks/LoginContext.jsx'; 
+import { ProductProvider } from './hooks/ProductContext.jsx';  // ← nuevo
+
 import './styles/index.module.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <LoginProvider> {/* Este debe envolver todo */}
+    <LoginProvider> 
       <CategoriasProvider>
         <CartProvider>
           <DireccionProvider>
-            <App />
+            <ProductProvider>
+                        <App />
+            </ProductProvider>
           </DireccionProvider>
         </CartProvider>
       </CategoriasProvider>

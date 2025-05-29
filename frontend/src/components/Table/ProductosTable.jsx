@@ -1,9 +1,16 @@
-
 import React from 'react';
-import { juegos } from '../../constantes/consts.jsx'; // ajusta la ruta si la tienes en otro sitio
+import { juegos } from '../../constantes/Consts.jsx'; // mantenemos los juegos iniciales
+import { useProductContext } from '../../hooks/ProductContext.jsx';
 import styles from './ListaProducto.module.css';
 
 const ProductosTable = () => {
+  const { products: nuevosProductos } = useProductContext();
+  const allProducts = [...juegos, ...nuevosProductos];
+
+  if (allProducts.length === 0) {
+    return <p>No hay productos para mostrar.</p>;
+  }
+
   return (
     <div className={styles.tableWrapper}>
       <table className={styles.productosTable}>
@@ -20,21 +27,26 @@ const ProductosTable = () => {
           </tr>
         </thead>
         <tbody>
-          {juegos.map((j) => (
-            <tr key={j.id}>
+          {allProducts.map((p, idx) => (
+            <tr key={idx}>
               <td>
-                <img
-                  src={j.imagen}
-                  alt={j.nombre}
-                  className={styles.imagenProducto}
-                />
+                {p.imagen
+                  ? <img
+                      src={typeof p.imagen === 'string'
+                        ? p.imagen
+                        : URL.createObjectURL(p.imagen)
+                      }
+                      alt={p.nombre}
+                      className={styles.imagenProducto}
+                    />
+                  : '—'}
               </td>
-              <td>#{j.id.toString().padStart(4, '0')}</td>
-              <td>{j.nombre}</td>
-              <td>{j.presentacion}</td>
-              <td className={styles.descripcionCell}>{j.descripcion}</td>
-              <td>{j.categoria}</td>
-              <td>{j.stock}</td>
+              <td>#{(idx + 1).toString().padStart(4, '0')}</td>
+              <td>{p.nombre}</td>
+              <td>{p.presentacion}</td>
+              <td className={styles.descripcionCell}>{p.descripcion}</td>
+              <td>{p.categoria}</td>
+              <td>{p.stock}</td>
               <td>
                 <button className={styles.editBtn}>✏️</button>
                 <button className={styles.deleteBtn}>🗑️</button>

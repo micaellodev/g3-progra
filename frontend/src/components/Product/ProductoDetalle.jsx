@@ -4,18 +4,17 @@ import { juegos } from '../../constantes/Consts';
 import { useCarrito } from '../../hooks/CartContext';
 //import './DetalleProducto.css';
 
-
 const ProductoDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCarrito(); // usar la función unificada
+  const { addToCart } = useCarrito();  
 
   const producto = juegos.find(j => j.id === Number(id));
 
   if (!producto) return <p>Producto no encontrado</p>;
 
   const handleAgregar = () => {
-    addToCart(producto); // Agrega al carrito con cantidad 1
+    addToCart(producto);  
     navigate('/carrito');
   };
 

@@ -1,4 +1,3 @@
-//Renzo
 import React, { useState } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
