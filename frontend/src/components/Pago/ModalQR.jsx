@@ -9,9 +9,9 @@ const ModalQR = ({ visible, onClose }) => {
 
   if (!visible) return null;
 
+  // Ppágina de orden completada
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Redirige directamente a la página de orden completada
     navigate('/ordencompletada');
   };
 

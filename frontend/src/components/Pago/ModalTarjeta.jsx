@@ -26,13 +26,15 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
     setForm({ ...form, [name]: value });
   };
 
+  
+  // Redirige a la página de orden completada
   const handleSubmit = (e) => {
     e.preventDefault();
     onCreate({
       ...form,
       vencimiento: form.mes && form.anio ? `${form.mes}/${form.anio.slice(-2)}` : ''
     });
-    navigate('/ordencompletada'); // Redirige a la página de orden completada
+    navigate('/ordencompletada');
   };
 
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
