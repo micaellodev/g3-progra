@@ -31,7 +31,7 @@ export const Carrito = () => {
               <h1>Carrito</h1>
               <CarritoItems
                 juegos={cart}
-                onSelectedItemsChange={updateSelectedIds} // Usa la función del contexto
+                onSelectedItemsChange={updateSelectedIds} // Usa el contexto
               />
               <Link to="/" className={styles.botonSeguirComprando}>
                 Seguir explorando
