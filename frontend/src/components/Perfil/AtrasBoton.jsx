@@ -1,10 +1,21 @@
 import React from 'react';
-import styles from '../../styles/Perfil.module.css';
 
 function AtrasBoton({ onClick }) {
   return (
-    <button className={styles.button} onClick={onClick} style={{ marginTop: '20px' }}>
-      Atrás
+    <button 
+      onClick={onClick}
+      style={{
+        padding: '8px 16px',
+        margin: '10px',
+        backgroundColor: '#007bff',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '14px'
+      }}
+    >
+      ← Atrás
     </button>
   );
 }

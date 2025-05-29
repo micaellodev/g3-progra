@@ -1,33 +1,30 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0b2545; 
+  color: white;
+  justify-content: center; /* Esto centra el contenido verticalmente */
+}
+
 .perfilContainer {
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   width: 100%;
   max-width: 500px;
-  margin: 0 auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
-.infoGroup {
-  margin-top: 10px;
+.pageWrapper > :last-child {
+  margin-top: auto;
 }
 
-.buttonGroup {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #0077cc;
+.footer {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  background-color: #001f3f;
   color: white;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #005fa3;
 }

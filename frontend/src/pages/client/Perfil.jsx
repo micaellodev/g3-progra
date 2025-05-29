@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLogin } from '../../hooks/LoginContext';
-import PerfilView from '../../components/Perfil/PerfilView';
-import PerfilForm from '../../components/Perfil/PerfilForm';
+import PerfilContenido from '../../components/Perfil/PerfilContenido';
 import AtrasBoton from '../../components/Perfil/AtrasBoton';
+import Footer from '../../components/Footer/Footer';
 import styles from '../../styles/Perfil.module.css';
 
 function Perfil() {
@@ -11,44 +11,75 @@ function Perfil() {
   const navigate = useNavigate();
   const [editando, setEditando] = useState(false);
 
-  const handleGuardar = (data) => {
-    updateUser(data);
-    setEditando(false);
-    alert('Datos actualizados correctamente');
+  useEffect(() => {
+    console.log('Current user:', currentUser);
+  }, [currentUser]);
+
+  const handleGuardar = async (data) => {
+    try {
+      await updateUser(data);
+      setEditando(false);
+      alert('Datos actualizados correctamente');
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert('Error al actualizar los datos');
+    }
   };
 
   const handleCambiarContrasena = () => {
     navigate('/cambiocontra');
   };
 
-  if (!currentUser) {
+  const handleEditar = () => {
+    setEditando(true);
+  };
+
+  const handleVolver = () => {
+    navigate('/'); 
+  };
+
+  // Estado de carga - INCLUYE el botón aquí también
+  if (currentUser === undefined) {
     return (
-      <div className={styles.perfilContainer}>
-        <h2>No has iniciado sesión</h2>
-        <p>Por favor, <Link to="/login">inicia sesión</Link> para ver tu perfil.</p>
-      </div>
+      <main className={styles.pageWrapper}>
+        <div className={styles.botonesContainer}>
+          <AtrasBoton onClick={handleVolver} />
+        </div>
+        <div className={styles.perfilContainer}>
+          <h2>Cargando...</h2>
+        </div>
+        <Footer />
+      </main>
     );
   }
 
+  // Estado normal - cuando ya terminó de cargar
   return (
-    <div className={styles.perfilContainer}>
-      <h2>Mi Perfil</h2>
-      {editando ? (
-        <PerfilForm usuario={currentUser} onGuardar={handleGuardar} />
+    <main className={styles.pageWrapper}>
+      <div className={styles.botonesContainer}>
+        <AtrasBoton onClick={handleVolver} />
+      </div>
+      
+      {!currentUser ? (
+        <div className={styles.perfilContainer}>
+          <h2>No has iniciado sesión</h2>
+          <p>
+            Por favor, <Link to="/login">inicia sesión</Link> para ver tu perfil.
+          </p>
+        </div>
       ) : (
-        <PerfilView usuario={currentUser} onEditar={() => setEditando(true)} />
+        <PerfilContenido
+          currentUser={currentUser}  
+          editando={editando}
+          setEditando={setEditando}
+          onGuardar={handleGuardar}
+          onEditar={handleEditar}  
+          onCambiarContrasena={handleCambiarContrasena}
+        />
       )}
       
-      <div className={styles.botonesContainer}>
-        <button 
-          className={styles.cambiarContrasenaBtn}
-          onClick={handleCambiarContrasena}
-        >
-          Cambiar Contraseña
-        </button>
-        <AtrasBoton onClick={() => navigate('/')} />
-      </div>
-    </div>
+      <Footer />
+    </main>
   );
 }
 
