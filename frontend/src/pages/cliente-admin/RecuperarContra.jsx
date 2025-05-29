@@ -2,8 +2,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
-import styles from '../../styles/TextInput.module.css';
+import styles from '../../styles/RecuperarContra.module.css';
 import Footer from '../../components/Footer/Footer';
+
 function RecuperarContra() {
   const [email, setEmail] = useState('');
   const [respuesta, setRespuesta] = useState('');
@@ -16,14 +17,11 @@ function RecuperarContra() {
   const handleVerificar = (e) => {
     e.preventDefault();
 
-    // Buscar usuario en ambos lugares donde podrían estar almacenados
     let savedUser = null;
     
-    // Primero buscar en 'users' (array)
     const users = JSON.parse(localStorage.getItem('users')) || [];
     savedUser = users.find(user => user.email === email);
     
-    // Si no se encuentra, buscar en 'registeredUser' (objeto único)
     if (!savedUser) {
       const registeredUserString = localStorage.getItem('registeredUser');
       if (registeredUserString) {
@@ -56,29 +54,31 @@ function RecuperarContra() {
   };
 
   return (
-    <>
-    <form onSubmit={handleVerificar} className={styles.form}>
-      <h2>Recuperar Contraseña</h2>
+    <div className={styles.recuperarContainer}>
+      <div className={styles.recuperarContent}>
+        <form onSubmit={handleVerificar} className={styles.recuperarForm}>
+          <h2>Recuperar Contraseña</h2>
 
-      <TextInput
-        type="email"
-        placeholder="Correo registrado"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+          <TextInput
+            type="email"
+            placeholder="Correo registrado"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-      <TextInput
-        placeholder="¿En qué clínica naciste?"
-        value={respuesta}
-        onChange={(e) => setRespuesta(e.target.value)}
-        required
-      />
+          <TextInput
+            placeholder="¿En qué clínica naciste?"
+            value={respuesta}
+            onChange={(e) => setRespuesta(e.target.value)}
+            required
+          />
 
-      <button type="submit" className={styles.button}>Verificar</button>
-    </form>
-    <Footer />
-    </>
+          <button type="submit" className={styles.button}>Verificar</button>
+        </form>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/LoginContext';
 import RegisterFormContent from '../../components/Register/RegisterFormContent';
 import Footer from '../../components/Footer/Footer';
-import styles from '../../styles/RegisterForm.module.css'; // Asegúrate de tener esto si usas estilos
-
+import styles from '../../styles/RegisterForm.module.css'; 
 function RegisterForm() {
   const { register } = useLogin();
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className={styles.registerPage}> {/* Asegura márgenes y estructura */}
+    <div className={styles.registerPage}> 
       <RegisterFormContent
         formData={formData}
         error={error}

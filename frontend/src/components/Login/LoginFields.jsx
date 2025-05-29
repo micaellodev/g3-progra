@@ -1,5 +1,6 @@
 import React from 'react';
 import TextInput from '../Text/TextInput';
+import styles from '../../styles/LoginForm.module.css';
 
 function LoginFields({ email, setEmail, password, setPassword }) {
   return (
