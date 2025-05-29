@@ -63,19 +63,17 @@ export const LoginProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
-  const updateUser = (updatedUser) => {
-    console.log('Actualizando usuario:', updatedUser);
-    
-    // Actualizar en la lista de usuarios
-    setUsers(prev =>
-      prev.map(user =>
-        user.email === updatedUser.email ? updatedUser : user
-      )
-    );
-    
-    // Actualizar usuario actual
-    setCurrentUser(updatedUser);
-  };
+  const updateUser = (newData) => {
+  setCurrentUser((prevUser) => ({
+    ...prevUser,
+    ...newData, // Esto asegura que nombre, apellido y pais se actualicen
+  }));
+  // Si usas localStorage o backend, también actualiza ahí:
+  localStorage.setItem('currentUser', JSON.stringify({
+    ...currentUser,
+    ...newData,
+  }));
+};
 
   const value = {
     currentUser,

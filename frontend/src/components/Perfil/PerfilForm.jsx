@@ -15,12 +15,13 @@ function PerfilForm({ usuario, onGuardar }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onGuardar(formData);
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit} className={styles.formGroup}>
       <label>Nombre:</label>
       <input
         className={styles.input}
@@ -49,6 +50,7 @@ function PerfilForm({ usuario, onGuardar }) {
         value={formData.email}
         onChange={handleChange}
         placeholder="Correo"
+        disabled
       />
 
       <label>País:</label>
@@ -61,8 +63,8 @@ function PerfilForm({ usuario, onGuardar }) {
         placeholder="País"
       />
 
-      <GuardarBoton onClick={handleSubmit} />
-    </>
+      <GuardarBoton />
+    </form>
   );
 }
 
