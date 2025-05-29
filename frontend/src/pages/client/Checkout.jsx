@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import CarritoItems from '../../components/Carrito/CarritoItems';
 import CarritoResumen from '../../components/Carrito/CarritoResumen';
 import DireccionEnvioForm from '../../components/Form/DireccionEnvioForm';
 import DireccionResumen from '../../components/Direccion/DirecciónResumen';
-import TopBar from '../../components/TopBar/TopBar'; // Importa el TopBar
-import Footer from '../../components/Footer/Footer'; // Importa el Footer
+import TopBar from '../../components/TopBar/TopBar';
+import Footer from '../../components/Footer/Footer';
 import styles from '../../styles/Carrito.module.css';
-import { carritoInicial } from '../../constantes/consts';
+import { CartContext } from '../../hooks/CartContext'; // Importa el contexto
 
 export const Checkout = () => {
-  const [juegosEnCarrito] = useState(carritoInicial);
+  const { cart } = useContext(CartContext); // Obtiene el carrito del contexto
   const [mostrarBotonMetodoPago, setMostrarBotonMetodoPago] = useState(false);
   const [busqueda, setBusqueda] = useState(''); // Estado para la barra de búsqueda
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
   };
+
+  // Esta función se pasa a CarritoItems y se llama cada vez que seleccionas/deseleccionas un producto
+  const handleSelectedItemsChange = (ids) => {
+    setSelectedIds(ids);
+  };
+
+  // Siempre filtra los seleccionados desde el contexto actualizado
+  const juegosSeleccionados = cart.filter(j => selectedIds.includes(j.id));
 
   return (
     <>
@@ -26,7 +36,7 @@ export const Checkout = () => {
           <DireccionEnvioForm onSubmitSuccess={() => setMostrarBotonMetodoPago(true)} />
         </div>
         <div style={{ flex: 1 }}>
-          <CarritoResumen juegos={juegosEnCarrito} />
+          <CarritoResumen juegos={juegosSeleccionados} />
           <br/>
           <DireccionResumen />
           {mostrarBotonMetodoPago && (

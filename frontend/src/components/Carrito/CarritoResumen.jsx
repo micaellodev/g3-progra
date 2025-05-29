@@ -1,9 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { CartContext } from '../../hooks/CartContext';
 import styles from '../../styles/Carrito.module.css';
 
-function CarritoResumen({ juegos, botonTexto = "Continuar compra", botonRuta = "/checkout" }) {
-  const total = juegos.reduce((acc, j) => acc + j.precio, 0);
+function CarritoResumen({ botonTexto = "Continuar compra", botonRuta = "/checkout" }) {
+  const { cart, selectedIds } = useContext(CartContext);
+
+  // Solo los juegos seleccionados
+  const juegos = cart.filter(j => selectedIds.includes(j.id));
+  const total = juegos.reduce((acc, j) => acc + j.precio * j.quantity, 0);
   const descuento = 0;
   const totalFinal = total - descuento;
 
