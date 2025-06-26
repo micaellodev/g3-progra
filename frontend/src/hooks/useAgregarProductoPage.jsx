@@ -1,4 +1,3 @@
-// src/hooks/useAgregarProductoPage.jsx
 import { useState } from 'react';
 import { useCategorias } from '../hooks/CategoriasContext.jsx';
 import { useProductoForm } from './useProductoForm.jsx';

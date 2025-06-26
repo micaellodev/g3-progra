@@ -8,7 +8,7 @@ const Tabla = ({
   columns, 
   data, 
   renderRow, 
-  actions // [{ label, to, variant? }]
+  actions 
 }) => (
   <section className={styles.section}>
     {title && <h2 className={styles.title}>{title}</h2>}
