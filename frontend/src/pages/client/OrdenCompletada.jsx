@@ -25,6 +25,7 @@ export const OrdenCompletada = () => {
     );
   };
 
+  // Limpiar el carrito al completar la orden (pero lo borra del contexto antes de que se renderise la orden)
   /* useEffect(() => {
     productosSeleccionados.forEach(producto => {
        removeFromCart(producto.id);
