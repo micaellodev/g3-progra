@@ -2,19 +2,30 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { juegos } from '../../constantes/Consts'; 
 import '../../pages/guest/resultadosEstilos.css';
 import TopBar from '../../components/TopBar/TopBar';
-
+import { useEffect, useState } from 'react';
 
 const Resultados = () => {
   const location = useLocation();
-  const navigate = useNavigate(); 
-  const queryParams = new URLSearchParams(location.search);
-  const busqueda = queryParams.get('busqueda'); 
+  const navigate = useNavigate();
+  const [busqueda, setBusqueda] = useState('');
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
 
-  // Filtrar juegos según el parámetro de búsqueda
-  const productosFiltrados = juegos.filter(juego => 
-    juego.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const busquedaActual = queryParams.get('busqueda') || '';
 
+    setBusqueda(busquedaActual); // actualizar el término mostrado
+
+    if (busquedaActual.trim() === '') {
+      // si no hay término válido, redirige a Categoría
+      navigate('/categoria');
+    } else {
+      const filtrados = juegos.filter(juego =>
+        juego.nombre.toLowerCase().includes(busquedaActual.toLowerCase())
+      );
+      setProductosFiltrados(filtrados);
+    }
+  }, [location.search, navigate]);
 
   const volverAlInicio = () => {
     navigate('/'); 
@@ -22,7 +33,7 @@ const Resultados = () => {
 
   return (
     <div>
-      <TopBar />
+      <TopBar busqueda={busqueda} setBusqueda={setBusqueda} />
 
       <div className="resultados-container">
         <h1 className="resultados-title">Resultados de búsqueda para: "{busqueda}"</h1>
@@ -44,7 +55,6 @@ const Resultados = () => {
         ) : (
           <p className="no-resultados">No se encontraron resultados para tu búsqueda.</p>
         )}
-
 
         <button onClick={volverAlInicio} className="volver-inicio-btn">
           Volver al Inicio
