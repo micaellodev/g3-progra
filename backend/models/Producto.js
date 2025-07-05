@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { Categoria } from "./Categoria.js";
 
 export const Producto = sequelize.define("Producto", {
   id_producto: {
@@ -18,6 +17,3 @@ export const Producto = sequelize.define("Producto", {
   freezeTableName: true
 });
 
-// Relaciones
-Producto.belongsTo(Categoria, { foreignKey: "id_categoria" });
-Categoria.hasMany(Producto, { foreignKey: "id_categoria" });

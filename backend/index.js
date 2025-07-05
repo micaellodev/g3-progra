@@ -9,6 +9,7 @@ import { DetalleOrden } from './models/DetalleOrden.js';
 import { MetodoPago } from './models/MetodoPago.js';
 import { Pago } from './models/Pago.js';
 import { Carrito } from './models/Carrito.js';
+import { DetalleCategoria } from './models/DetalleCategoria.js';
 
 const app = express();
 const port = 3000;
