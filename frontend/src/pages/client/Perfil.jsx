@@ -4,7 +4,7 @@ import { useLogin } from '../../hooks/LoginContext';
 import PerfilContenido from '../../components/Perfil/PerfilContenido';
 import AtrasBoton from '../../components/Perfil/AtrasBoton';
 import Footer from '../../components/Footer/Footer';
-import styles from '../../styles/Perfil.module.css';
+import styles from "../../styles/Perfil.module.css";
 
 function Perfil() {
   const { currentUser, updateUser } = useLogin();
@@ -84,3 +84,4 @@ function Perfil() {
 }
 
 export default Perfil;
+
