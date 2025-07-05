@@ -1,381 +1,216 @@
-import express from 'express';
-import cors from 'cors';
-import { sequelize } from './config/database.js';
-import { Categoria } from './models/Categoria.js';
-import { Producto } from './models/Producto.js';
-import { Usuario } from './models/Usuario.js';
-import { Orden } from './models/Orden.js';
-import { DetalleOrden } from './models/DetalleOrden.js';
-import { MetodoPago } from './models/MetodoPago.js';
-import { Pago } from './models/Pago.js';
-import { Carrito } from './models/Carrito.js';
-import { DetalleCategoria } from './models/DetalleCategoria.js';
+const API_URL = "http://localhost:3000";
 
-const app = express();
-const port = 3000;
-
-app.use(express.json());
-app.use(cors());
-
-async function verifyAndSyncDatabase() {
+// Funciones para productos
+export const CrearProducto = async (id,nombre, stock, precio) => {
     try {
-      await sequelize.authenticate();
-      console.log("Conexion exitosa con la BD");
-    } catch (error) {
-      console.log("Ocurrio un error con la conexion", error);
-    }
-  }
-  
-  // Conexión a la DB
-  try {
-      await sequelize.authenticate();
-      console.log('Conexión a la base de datos exitosa');
-      await sequelize.sync(); // Crea tablas si no existen
-  } catch (error) {
-      console.error('Error al conectar a la base de datos:', error);
-  }
-// ---------------------- PRODUCTOS ----------------------
-// GET - Obtener todos los productos
-app.get("/productos", async (req, res) => {
-    try {
-        const productos = await Producto.findAll();
-        res.json(productos);
-    } catch (error) {
-        res.status(500).json({ error: "Error al obtener productos" });
-    }
-});
-
-// GET - Obtener un producto por ID
-app.get("/productos/:id", async (req, res) => {
-    try {
-        const producto = await Producto.findByPk(req.params.id);
-        if (producto) {
-            res.json(producto);
-        } else {
-            res.status(404).json({ error: "Producto no encontrado" });
-        }
-    } catch (error) {
-        res.status(500).json({ error: "Error al buscar producto" });
-    }
-});
-
-// POST - Crear un nuevo producto
-app.post("/productos", async (req, res) => {
-    try {
-        const { nombre, presentacion, descripcion, id_categoria, stock, precio, imagen } = req.body;
-        const nuevoProducto = await Producto.create({
-            nombre,
-            presentacion,
-            descripcion,
-            id_categoria,
-            stock,
-            precio,
-            imagen
+        const response = await fetch(`${API_URL}/productos`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({id,nombre,stock,precio}),
         });
-        res.status(201).json(nuevoProducto);
-    } catch (error) {
-        res.status(400).json({ error: "Error al crear producto", detalles: error.message });
-    }
-});
-
-// PUT - Actualizar un producto existente
-app.put("/productos/:id", async (req, res) => {
-    try {
-        const producto = await Producto.findByPk(req.params.id);
-        if (!producto) {
-            return res.status(404).json({ mensaje: "Producto no encontrado" });
+        if (!response.ok) {
+            throw new Error("Error al crear el producto");
         }
-
-        const { nombre, presentacion, descripcion, id_categoria, stock, precio, imagen } = req.body;
-        await producto.update({ nombre, presentacion, descripcion, id_categoria, stock, precio, imagen });
-
-        res.json({ mensaje: "Producto actualizado", producto });
+        return await response.json();
     } catch (error) {
-        res.status(400).json({ error: "Error al actualizar producto", detalles: error.message });
+        console.error(error);
     }
-});
-
-// DELETE - Eliminar un producto
-app.delete("/productos/:id", async (req, res) => {
+}
+export const BorrarProducto = async (id) => {
     try {
-        const producto = await Producto.findByPk(req.params.id);
-        if (!producto) {
-            return res.status(404).json({ error: "Producto no encontrado" });
+        const response = await fetch(`${API_URL}/productos/${id}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error("Error al borrar el producto");
         }
-
-        await producto.destroy();
-        res.status(204).send();
     } catch (error) {
-        res.status(500).json({ error: "Error al eliminar producto" });
+        console.error(error);
     }
-});
+}
 
-// ---------------------- CATEGORIAS ----------------------
-app.get('/categorias', async (req, res) => {
-  try {
-    const categorias = await Categoria.findAll();
-    res.json(categorias);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener categorías' });
-  }
-});
-
-app.get('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    res.json(cat);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar categoría' });
-  }
-});
-
-app.post('/categorias', async (req, res) => {
-  try {
-    const { nombre, descripcion } = req.body;
-    const nuevaCategoria = await Categoria.create({ nombre, descripcion });
-    res.status(201).json(nuevaCategoria);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear categoría', detalles: error.message });
-  }
-});
-
-app.put('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    const { nombre, descripcion } = req.body;
-    await cat.update({ nombre, descripcion });
-    res.json({ mensaje: 'Categoría actualizada', cat });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar categoría', detalles: error.message });
-  }
-});
-
-app.delete('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    await cat.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar categoría' });
-  }
-});
-
-// ---------------------- USUARIOS ----------------------
-app.get('/usuarios', async (req, res) => {
-  try {
-    const usuarios = await Usuario.findAll();
-    res.json(usuarios);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener usuarios' });
-  }
-});
-
-app.get('/usuarios/:id', async (req, res) => {
-  try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    res.json(usr);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar usuario' });
-  }
-});
-
-app.post('/usuarios', async (req, res) => {
-  try {
-    const { nombre, email, password } = req.body;
-    const nuevoUsuario = await Usuario.create({ nombre, email, password });
-    res.status(201).json(nuevoUsuario);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
-  }
-});
-
-app.put('/usuarios/:id', async (req, res) => {
-  try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    const { nombre, email, password } = req.body;
-    await usr.update({ nombre, email, password });
-    res.json({ mensaje: 'Usuario actualizado', usr });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar usuario', detalles: error.message });
-  }
-});
-
-app.delete('/usuarios/:id', async (req, res) => {
-  try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    await usr.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar usuario' });
-  }
-});
-
-// ---------------------- ORDENES ----------------------
-app.get('/ordenes', async (req, res) => {
-  try {
-    const ordenes = await Orden.findAll();
-    res.json(ordenes);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener órdenes' });
-  }
-});
-
-app.get('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    res.json(ord);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar orden' });
-  }
-});
-
-app.post('/ordenes', async (req, res) => {
-  try {
-    const { usuarioId, total } = req.body;
-    const nuevaOrden = await Orden.create({ usuarioId, total });
-    res.status(201).json(nuevaOrden);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear orden', detalles: error.message });
-  }
-});
-
-app.put('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    const { usuarioId, total } = req.body;
-    await ord.update({ usuarioId, total });
-    res.json({ mensaje: 'Orden actualizada', ord });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar orden', detalles: error.message });
-  }
-});
-
-app.delete('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    await ord.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar orden' });
-  }
-});
-
-// ---------------------- DETALLE ORDEN ----------------------
-app.get('/detalle-ordenes', async (req, res) => {
-  try {
-    const detalles = await DetalleOrden.findAll();
-    res.json(detalles);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener detalles' });
-  }
-});
-
-app.get('/detalle-ordenes/:id', async (req, res) => {
-  try {
-    const det = await DetalleOrden.findByPk(req.params.id);
-    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
-    res.json(det);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar detalle' });
-  }
-});
-
-app.post('/detalle-ordenes', async (req, res) => {
-  try {
-    const { ordenId, productoId, cantidad, precio } = req.body;
-    const nuevoDetalle = await DetalleOrden.create({ ordenId, productoId, cantidad, precio });
-    res.status(201).json(nuevoDetalle);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear detalle', detalles: error.message });
-  }
-});
-
-app.put('/detalle-ordenes/:id', async (req, res) => {
-  try {
-    const det = await DetalleOrden.findByPk(req.params.id);
-    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
-    const { ordenId, productoId, cantidad, precio } = req.body;
-    await det.update({ ordenId, productoId, cantidad, precio });
-    res.json({ mensaje: 'Detalle actualizado', det });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar detalle', detalles: error.message });
-  }
-});
-
-app.delete('/detalle-ordenes/:id', async (req, res) => {
-  try {
-    const det = await DetalleOrden.findByPk(req.params.id);
-    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
-    await det.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar detallet'})
-  }
-});
-
-// ---------------------- METODOS DE PAGO ----------------------
-app.get('/metodos-pago', async (req, res) => {
-  try {
-    const mps = await MetodoPago.findAll();
-    res.json(mps);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener métodos de pago' });
-  }
-});
-
-app.get('/metodos-pago/:id', async (req, res) => {
-  try {
-    const mp = await MetodoPago.findByPk(req.params.id);
-    if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
-    res.json(mp);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar método' });
-  }
-});
-
-app.post('/metodos-pago', async (req, res) => {
-  try {
-    const { nombre } = req.body;
-    const nuevoMp = await MetodoPago.create({ nombre });
-    res.status(201).json(nuevoMp);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear método', detalles: error.message });
-  }
-});
-
-app.put('/metodos-pago/:id', async (req, res) => {
-  try {
-    const mp = await MetodoPago.findByPk(req.params.id);
-    if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
-    const { nombre } = req.body;
-    await mp.update({ nombre });
-    res.json({ mensaje: 'Método actualizado', mp });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar método', detalles: error.message });
-  }
-});
-
-app.delete('/metodos-pago/:id', async (req, res) => {
+export const ObtenerProductoPorId = async (id) => {
     try {
-      const mp = await MetodoPago.findByPk(req.params.id);
-      if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
-      await mp.destroy();
-      res.sendStatus(204); // ó res.status(204).send();
+        const response = await fetch(`${API_URL}/productos/${id}`);
+        if (!response.ok) {
+            throw new Error("Error al obtener el producto");
+        }
+        return await response.json();
     } catch (error) {
-      res.status(500).json({ error: 'Error al eliminar método' });
+        console.error(error);
     }
-  });
-  
-  app.listen(port, () => {
-    console.log(`Servidor escuchando en http: localhost:${port}`);
-    verifyAndSyncDatabase()
-});
+}
+export const ActualizarProducto = async (id, producto) => {
+    try {
+        const response = await fetch(`${API_URL}/productos/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(producto),
+        });
+        if (!response.ok) {
+            throw new Error("Error al actualizar el producto");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Funciones para Usuario
+export const CrearUsuario = async (usuario) => {
+    try {
+        const response = await fetch(`${API_URL}/usuarios`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(usuario),
+        });
+        if (!response.ok) {
+            throw new Error("Error al crear el usuario");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const BorrarUsuario = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/usuarios/${id}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error("Error al borrar el usuario");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const ObtenerUsuarioPorId = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/usuarios/${id}`);
+        if (!response.ok) {
+            throw new Error("Error al obtener el usuario");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const ActualizarUsuario = async (id, usuario) => {
+    try {
+        const response = await fetch(`${API_URL}/usuarios/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(usuario),
+        });
+        if (!response.ok) {
+            throw new Error("Error al actualizar el usuario");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+//Funciones Login Usuario
+export const LoginUsuario = async (usuario) => {
+    try {
+        const response = await fetch(`${API_URL}/usuarios/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(usuario),
+        });
+        if (!response.ok) {
+            throw new Error("Error al iniciar sesión");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+//Funciones para Carrito
+export const ObtenerCarrito = async (usuarioId) => {
+    try {
+        const response = await fetch(`${API_URL}/carrito/${usuarioId}`);
+        if (!response.ok) {
+            throw new Error("Error al obtener el carrito");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const AgregarProductoAlCarrito = async (usuarioId, productoId) => {
+    try {
+        const response = await fetch(`${API_URL}/carrito/${usuarioId}/productos`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productoId }),
+        });
+        if (!response.ok) {
+            throw new Error("Error al agregar el producto al carrito");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const EliminarProductoDelCarrito = async (usuarioId, productoId) => {
+    try {
+        const response = await fetch(`${API_URL}/carrito/${usuarioId}/productos/${productoId}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error("Error al eliminar el producto del carrito");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const ActualizarProductoEnCarrito = async (usuarioId, productoId, cantidad) => {
+    try {
+        const response = await fetch(`${API_URL}/carrito/${usuarioId}/productos/${productoId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cantidad }),
+        });
+        if (!response.ok) {
+            throw new Error("Error al actualizar el producto en el carrito");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}   
+
+export const LimpiarCarrito = async (usuarioId) => {
+    try {
+        const response = await fetch(`${API_URL}/carrito/${usuarioId}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error("Error al limpiar el carrito");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}   
