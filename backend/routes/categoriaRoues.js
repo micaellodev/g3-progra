@@ -4,15 +4,16 @@ import {
   postCategoria,
   deleteCategoria,
   putCategoria,
-  getAllCategories,
+  getCategoriaById
 } from "../controllers/CategoriaController.js";
 
 const router = express.Router();
 
-router.get("/",       getCategorias);
-router.post("/",      postCategoria);
-router.get("/",       getAllCategories);
-router.delete("/:id", deleteCategoria);
-router.put("/:id",    putCategoria);
+router.get('/', getCategorias);
+router.get('/:id', getCategoriaById);
+router.post('/', postCategoria);
+router.put('/:id', putCategoria);
+router.delete('/:id', deleteCategoria);
+
 
 export default router;
