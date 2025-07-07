@@ -185,8 +185,8 @@ app.get('/usuarios/:id', async (req, res) => {
 
 app.post('/usuarios', async (req, res) => {
   try {
-    const { nombre, email, password } = req.body;
-    const nuevoUsuario = await Usuario.create({ nombre, email, password });
+    const { nombre, correo, contrasena } = req.body;
+    const nuevoUsuario = await Usuario.create({ nombre, correo, contrasena });
     res.status(201).json(nuevoUsuario);
   } catch (error) {
     res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
@@ -195,15 +195,37 @@ app.post('/usuarios', async (req, res) => {
 
 app.put('/usuarios/:id', async (req, res) => {
   try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    const { nombre, email, password } = req.body;
-    await usr.update({ nombre, email, password });
-    res.json({ mensaje: 'Usuario actualizado', usr });
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    const { nombre, correo } = req.body;
+    await usuario.update({ nombre, correo });
+
+    res.json({ mensaje: 'Perfil actualizado', usuario });
   } catch (error) {
     res.status(400).json({ error: 'Error al actualizar usuario', detalles: error.message });
   }
 });
+
+app.put('/usuarios/:id/cambiar-contrasena', async (req, res) => {
+  try {
+    const { contrasenaActual, nuevaContrasena } = req.body;
+
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    if (usuario.contrasena !== contrasenaActual) {
+      return res.status(400).json({ error: 'La contraseña actual es incorrecta' });
+    }
+
+    await usuario.update({ contrasena: nuevaContrasena });
+
+    res.json({ mensaje: 'Contraseña actualizada correctamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al cambiar la contraseña', detalles: error.message });
+  }
+});
+
 
 app.delete('/usuarios/:id', async (req, res) => {
   try {
