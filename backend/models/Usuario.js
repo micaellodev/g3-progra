@@ -7,16 +7,36 @@ export const Usuario = sequelize.define("Usuario", {
     primaryKey: true,
     autoIncrement: true
   },
-  nombre: DataTypes.STRING(100),
+  nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  apellido: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
   correo: {
     type: DataTypes.STRING(100),
-    unique: true
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
-  contrasena: DataTypes.STRING(100),
-  rol: DataTypes.STRING(50),
-  direccion: DataTypes.TEXT,
-  telefono: DataTypes.STRING(20),
-  estado: DataTypes.STRING(20)
+  pais: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  clinica: {
+    type: DataTypes.STRING(150),
+    allowNull: false
+  },
+  contrasena: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  }
 }, {
-  freezeTableName: true
+  freezeTableName: true,
+  tableName: 'Usuario',
+  timestamps: false
 });

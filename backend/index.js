@@ -173,33 +173,56 @@ app.get('/usuarios', async (req, res) => {
   }
 });
 
+// Obtener un usuario por ID
 app.get('/usuarios/:id', async (req, res) => {
   try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    res.json(usr);
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    res.json(usuario);
   } catch (error) {
     res.status(500).json({ error: 'Error al buscar usuario' });
   }
 });
 
+// Crear un nuevo usuario
 app.post('/usuarios', async (req, res) => {
   try {
-    const { nombre, correo, contrasena } = req.body;
-    const nuevoUsuario = await Usuario.create({ nombre, correo, contrasena });
+    const { nombre, apellido, correo, pais, clinica, contrasena } = req.body;
+
+    // Validar campos requeridos
+    if (!nombre || !apellido || !correo || !pais || !clinica || !contrasena) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+
+    // Verificar si el correo ya está registrado
+    const existe = await Usuario.findOne({ where: { correo } });
+    if (existe) {
+      return res.status(400).json({ error: 'El correo ya está registrado' });
+    }
+
+    const nuevoUsuario = await Usuario.create({
+      nombre,
+      apellido,
+      correo,
+      pais,
+      clinica,
+      contrasena
+    });
+
     res.status(201).json(nuevoUsuario);
   } catch (error) {
     res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
   }
 });
 
+// Actualizar nombre, apellido y correo
 app.put('/usuarios/:id', async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.params.id);
     if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
 
-    const { nombre, correo } = req.body;
-    await usuario.update({ nombre, correo });
+    const { nombre, apellido, correo, pais } = req.body;
+    await usuario.update({ nombre, apellido, correo, pais });
 
     res.json({ mensaje: 'Perfil actualizado', usuario });
   } catch (error) {
@@ -207,6 +230,7 @@ app.put('/usuarios/:id', async (req, res) => {
   }
 });
 
+// Cambiar contraseña
 app.put('/usuarios/:id/cambiar-contrasena', async (req, res) => {
   try {
     const { contrasenaActual, nuevaContrasena } = req.body;
@@ -226,12 +250,13 @@ app.put('/usuarios/:id/cambiar-contrasena', async (req, res) => {
   }
 });
 
-
+// Eliminar usuario
 app.delete('/usuarios/:id', async (req, res) => {
   try {
-    const usr = await Usuario.findByPk(req.params.id);
-    if (!usr) return res.status(404).json({ error: 'Usuario no encontrado' });
-    await usr.destroy();
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    await usuario.destroy();
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar usuario' });
