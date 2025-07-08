@@ -1,17 +1,22 @@
 .productos-nuevos-section {
   padding: 2rem;
   margin-bottom: 2rem;
-  background-color: #1a1a3d;
+  background-color: #1F2235;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  color: white;
   text-align: center;
+}
+
+.productos-nuevos-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
 }
 
 .contenedor-productos-nuevos {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
 }
 
@@ -19,8 +24,8 @@
   background-color: #0D1117;
   border: 1px solid #30363D;
   border-radius: 10px;
-  padding: 1.5rem;
-  width: 150px;
+  padding: 1rem;
+  width: 200px;
   color: #C9D1D9;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -28,11 +33,44 @@
 .tarjeta-producto-nuevo:hover {
   background-color: #30363D;
   transform: translateY(-5px);
-  cursor: pointer;
   border-color: #58A6FF;
+  cursor: pointer;
 }
 
 .tarjeta-producto-nuevo img {
   width: 100%;
+  height: 150px;
+  object-fit: contain;
   border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta-producto-nuevo p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.producto-info-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.producto-info-link:hover {
+  text-decoration: underline;
+}
+
+.tarjeta-producto-nuevo button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #238636;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.tarjeta-producto-nuevo button:hover {
+  background-color: #2ea043;
+  cursor: pointer;
 }
