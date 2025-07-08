@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { juegos } from '../constantes/consts';
+import { juegos } from '../constantes/Consts';
 
 const ProductContext = createContext();
 
