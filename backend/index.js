@@ -30,6 +30,10 @@ sequelize.authenticate()
     console.error('❌ Error al conectar con Supabase:', err);
   });
   
+app.get('/', (req, res) => {
+  res.send('Hola desde el backend');
+});
+
 
 async function verifyAndSyncDatabase() {
     try {
