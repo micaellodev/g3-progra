@@ -29,12 +29,17 @@ sequelize.authenticate()
   .catch((err) => {
     console.error('❌ Error al conectar con Supabase:', err);
   });
-  
+
 app.get('/', (req, res) => {
   res.send('Hola desde el backend');
 });
 
-
+sequelize.define('Categoria', {
+  nombre: DataTypes.STRING
+}, {
+  tableName: 'categoria',
+  freezeTableName: true
+});
 async function verifyAndSyncDatabase() {
     try {
       await sequelize.authenticate();
@@ -48,7 +53,6 @@ async function verifyAndSyncDatabase() {
   try {
       await sequelize.authenticate();
       console.log('Conexión a la base de datos exitosa');
-      await sequelize.sync(); // Crea tablas si no existen
   } catch (error) {
       console.error('Error al conectar a la base de datos:', error);
   }
