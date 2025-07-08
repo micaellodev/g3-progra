@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';  
 import OrdenDetalleCard from '../../components/Table/OrdenDetalleCard';
-import { ordenes } from '../../constantes/consts'; 
+import { ordenes } from '../../constantes/Consts'; 
 
 const DetalleOrden = () => {
   const { id } = useParams();

@@ -6,7 +6,7 @@ import Resumen from '../../components/Dash/Resumen/Resumen';
 import UsuariosTabla from '../../components/Dash/Usuarios/UsuariosTabla';
 import UsuariosDetalle from '../../components/Dash/Usuarios/UsuariosDetalle';
 import OrdenesTabla from '../../components/Dash/Ordenes/OrdenesTabla';
-import { UserDash } from '../../constantes/consts';
+import { UserDash } from '../../constantes/Consts';
 
 export const Dashboard = () => {
   const [busqueda, setBusqueda] = useState('');
