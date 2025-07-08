@@ -1,7 +1,7 @@
 // UsuariosTabla.jsx
 import React, { useState, useEffect } from 'react';
 import Tabla from '../Tabla/Tabla';
-import { usuarios as usuariosConst } from '../../../constantes/consts';
+import { usuarios as usuariosConst } from '../../../constantes/Consts';
 import styles from './UsuariosTabla.module.css';
 
 const UsuariosTabla = ({ onVerDetalle }) => {

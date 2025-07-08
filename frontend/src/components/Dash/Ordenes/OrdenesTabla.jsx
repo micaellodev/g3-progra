@@ -1,7 +1,7 @@
 // src/components/Dash/OrdersSection.jsx
 import React from 'react';
 import Tabla from '../Tabla/Tabla';
-import { ordenes } from '../../../constantes/consts';
+import { ordenes } from '../../../constantes/Consts';
 import styles from './OrdenesTabla.module.css';
 
 const OrdenesTabla = () => (

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { juegos } from '../../constantes/consts';
+import { juegos } from '../../constantes/Consts';
 
 const Resultados = () => {
   const location = useLocation();

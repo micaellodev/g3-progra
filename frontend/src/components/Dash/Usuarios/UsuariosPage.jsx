@@ -1,6 +1,6 @@
 // UsuariosPage.jsx
 import React, { useState } from 'react';
-import { usuarios } from '../../../constantes/consts';
+import { usuarios } from '../../../constantes/Consts';
 import UsuariosTabla from './UsuariosTabla';
 import UsuarioDetalleCard from './UsuarioDetalleCard';
 
