@@ -10,6 +10,7 @@ import { MetodoPago } from './models/MetodoPago.js';
 import { Pago } from './models/Pago.js';
 import { Carrito } from './models/Carrito.js';
 import { DetalleCategoria } from './models/DetalleCategoria.js';
+import { DataTypes } from 'sequelize';
 
 const app = express();
 const port = process.env.PORT || 3000;
