@@ -12,10 +12,24 @@ import { Carrito } from './models/Carrito.js';
 import { DetalleCategoria } from './models/DetalleCategoria.js';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
+
+app.get('/health', (req, res) => res.send('OK'));
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('✅ Conexión exitosa a Supabase');
+    app.listen(port, () => {
+      console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ Error al conectar con Supabase:', err);
+  });
+  
 
 async function verifyAndSyncDatabase() {
     try {
@@ -422,7 +436,4 @@ app.delete('/metodos-pago/:id', async (req, res) => {
     }
   });
   
-  app.listen(port, () => {
-    console.log(`Servidor escuchando en http: localhost:${port}`);
-    verifyAndSyncDatabase()
-});
+  

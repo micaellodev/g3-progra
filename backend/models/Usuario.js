@@ -40,4 +40,4 @@ export const Usuario = sequelize.define("Usuario", {
   tableName: 'Usuario',
   timestamps: false
 });
-module.exports = Usuario;
+export default Usuario;
