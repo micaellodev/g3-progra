@@ -7,12 +7,33 @@ export const Producto = sequelize.define("Producto", {
     primaryKey: true,
     autoIncrement: true
   },
-  nombre: DataTypes.STRING(100),
-  presentacion: DataTypes.STRING(100),
-  descripcion: DataTypes.TEXT,
-  stock: DataTypes.INTEGER,
-  precio: DataTypes.DECIMAL(10, 2),
-  imagen: DataTypes.TEXT
+  nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  presentacion: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  descripcion: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 1
+  },
+  precio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0.00
+  },
+  imagen: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
 }, {
-  freezeTableName: true
+  freezeTableName: true,
+  timestamps: true
 });

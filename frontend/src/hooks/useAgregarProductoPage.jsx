@@ -6,29 +6,48 @@ import { useProductContext } from './ProductContext.jsx';
 export const useAgregarProductoPage = () => {
   const [busqueda, setBusqueda] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { categorias, agregarCategoria } = useCategorias();
-  const { producto, setProducto, handleChange, handleStockChange, handleImagenChange, resetForm } = useProductoForm();
-  const { addProduct } = useProductContext();
+  const { producto, setProducto, handleChange, handleStockChange, resetForm } = useProductoForm();
+  const { addProduct, error: productError } = useProductContext();
 
   const handleSearch = e => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
   };
 
-  const handleCrearProducto = () => {
+  const handleCrearProducto = async () => {
     const { nombre, presentacion, categoria, descripcion, imagen, stock } = producto;
-    if (!nombre || !presentacion || !categoria || !descripcion || !imagen) {
-      alert('Por favor completa todos los campos.');
+    
+    // Validaciones
+    if (!nombre || !presentacion || !descripcion) {
+      alert('Por favor completa todos los campos requeridos.');
       return;
     }
+    
     if (stock < 1) {
       alert('El stock mínimo es 1.');
       return;
     }
-    addProduct(producto);
-    alert('Producto generado exitosamente');
-    resetForm();
+
+    // Agregar precio por defecto si no existe
+    const productoConPrecio = {
+      ...producto,
+      precio: producto.precio || 0
+    };
+
+    try {
+      setIsSubmitting(true);
+      await addProduct(productoConPrecio);
+      alert('Producto creado exitosamente');
+      resetForm();
+    } catch (error) {
+      console.error('Error al crear producto:', error);
+      alert(`Error al crear producto: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleAgregarCategoria = () => {
@@ -50,10 +69,11 @@ export const useAgregarProductoPage = () => {
       producto,
       handleChange,
       handleStockChange,
-      handleImagenChange,
     },
     categorias,
     modalVisible,
+    isSubmitting,
+    productError,
     handlers: {
       handleSearch,
       handleCrearProducto,
