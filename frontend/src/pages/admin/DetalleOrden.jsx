@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';  
 import OrdenDetalleCard from '../../components/Table/OrdenDetalleCard';
-import { getOrdenById } from '../../services/listaOrdenesService';
+import { obtenerOrdenPorId } from '../../services/listaOrdenesService';
 
 const DetalleOrden = () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ const DetalleOrden = () => {
 
   useEffect(() => {
     const fetchOrden = async () => {
-      const data = await getOrdenById(id);
+      const data = await obtenerOrdenPorId(id);
       setOrden(data);
     };
     fetchOrden();

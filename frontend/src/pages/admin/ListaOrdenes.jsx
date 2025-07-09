@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorOrdenes from '../../components/Lista/BuscadorOrdenes';
 import OrdenesTable from '../../components/Table/OrdenesTable';
-import { getListaOrdenes } from '../../services/listaOrdenesService';
+import { obtenerOrdenes } from '../../services/listaOrdenesService';
 
 const ListaOrdenes = () => {
   const [busqueda, setBusqueda] = useState('');
@@ -11,7 +11,7 @@ const ListaOrdenes = () => {
 
   useEffect(() => {
     const fetchOrdenes = async () => {
-      const data = await getListaOrdenes();
+      const data = await obtenerOrdenes();
       setOrdenes(data);
       setOrdenesFiltradas(data);
     };

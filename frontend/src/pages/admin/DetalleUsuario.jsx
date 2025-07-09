@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import UsuariosDetalleCard from '../../components/Table/UsuariosDetalleCard';
-import { getUsuarioById } from '../../services/listaUsuariosService';
+import { obtenerUsuarioPorId } from '../../services/listaUsuariosService';
 
 const DetalleUsuario = () => {
   const { id } = useParams();
