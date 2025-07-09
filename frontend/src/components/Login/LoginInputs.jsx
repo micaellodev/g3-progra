@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/LoginForm.module.css';
 
-function LoginInputs({ email, setEmail, password, setPassword }) {
+function LoginInputs({ email, setEmail, password, setPassword, isLoading }) {
   return (
     <>
       <input
@@ -10,6 +10,7 @@ function LoginInputs({ email, setEmail, password, setPassword }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className={styles.input}
+        disabled={isLoading}
         required
       />
       <input
@@ -18,6 +19,7 @@ function LoginInputs({ email, setEmail, password, setPassword }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
+        disabled={isLoading}
         required
       />
     </>

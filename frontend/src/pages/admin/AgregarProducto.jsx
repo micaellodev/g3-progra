@@ -1,6 +1,6 @@
 import React from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
-import ProductoForm from '../../components/Form/ProductoForm';
+import ProductoForm from '../../components/Product/ProductoForm.jsx';
 import ModalNuevaCategoria from '../../components/Form/ModalNuevaCategoria';
 import { useAgregarProductoPage } from '../../hooks/useAgregarProductoPage.jsx';
 import Footer from '../../components/Footer/Footer.jsx';

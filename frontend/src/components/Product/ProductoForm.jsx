@@ -1,6 +1,6 @@
 import React from 'react';
-import LabeledInput from './LabeledInput';
-import CategoriaSelector from './CategoriaSelector';
+import LabeledInput from '../Form/LabeledInput';
+import CategoriaSelector from '../Form/CategoriaSelector';
 import styles from '../../styles/AgregarProducto.module.css';
 
 export const ProductoForm = ({ producto, handleChange, handleStockChange, handleImagenChange, handleCrearProducto,categorias,handleAgregarCategoria}) => {
