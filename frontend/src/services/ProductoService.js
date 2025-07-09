@@ -99,3 +99,9 @@ export async function deleteProducto(id) {
     throw error;
   }
 }
+
+export async function fetchCategorias() {
+  const response = await fetch(`${api}/categorias`);
+  if (!response.ok) throw new Error('Error al obtener categorías');
+  return await response.json();
+}
