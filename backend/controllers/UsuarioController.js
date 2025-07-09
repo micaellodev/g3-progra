@@ -97,3 +97,27 @@ app.delete('/usuarios/:id', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar usuario' });
   }
 });
+
+// Iniciar sesión
+app.post('/usuarios/login', async (req, res) => {
+  try {
+    const { correo, contrasena } = req.body;
+
+    if (!correo || !contrasena) {
+      return res.status(400).json({ error: 'Correo y contraseña son obligatorios' });
+    }
+
+    const usuario = await Usuario.findOne({ where: { correo } });
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    if (usuario.contrasena !== contrasena) {
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
+    }
+
+    res.json({ mensaje: 'Login exitoso', usuario });
+  } catch (error) {
+    res.status(500).json({ error: 'Error en el login', detalles: error.message });
+  }
+});
