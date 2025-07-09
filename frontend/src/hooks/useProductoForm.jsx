@@ -7,7 +7,8 @@ export const useProductoForm = () => {
     categoria: '',
     descripcion: '',
     stock: 0,
-    imagen: null,
+    precio: '',
+    imagen: '',
   });
 
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ export const useProductoForm = () => {
   };
 
   const handleImagenChange = (e) => {
-    setProducto((prev) => ({ ...prev, imagen: e.target.files[0] }));
+    setProducto((prev) => ({ ...prev, imagen: e.target.value }));
   };
 
   const resetForm = () => {
@@ -30,7 +31,8 @@ export const useProductoForm = () => {
       categoria: '',
       descripcion: '',
       stock: 0,
-      imagen: null,
+      precio: '',
+      imagen: '',
     });
   };
 

@@ -3,18 +3,35 @@ import LabeledInput from '../Form/LabeledInput';
 import CategoriaSelector from '../Form/CategoriaSelector';
 import styles from '../../styles/AgregarProducto.module.css';
 
-export const ProductoForm = ({ producto, handleChange, handleStockChange, handleImagenChange, handleCrearProducto,categorias,handleAgregarCategoria}) => {
+export const ProductoForm = ({ 
+    producto, 
+    handleChange, 
+    handleStockChange, 
+    handleCrearProducto,
+    categorias,
+    handleAgregarCategoria,
+    isSubmitting = false,
+    error = null
+}) => {
     return (
         <div className={styles.container}>
             <div className={styles.formBox}>
                 <div className={styles.leftSection}>
                     <h1>Agregar un producto</h1>
+                    
+                    {error && (
+                        <div className={styles.errorMessage}>
+                            Error: {error}
+                        </div>
+                    )}
+                    
                     <LabeledInput
                         label="Nombre de producto"
                         placeholder="Nombre del producto"
                         name="nombre"
                         value={producto.nombre}
                         onChange={handleChange}
+                        required
                     />
 
                     <LabeledInput
@@ -23,6 +40,19 @@ export const ProductoForm = ({ producto, handleChange, handleStockChange, handle
                         name="presentacion"
                         value={producto.presentacion}
                         onChange={handleChange}
+                        required
+                    />
+
+                    <LabeledInput
+                        label="Precio"
+                        placeholder="0.00"
+                        name="precio"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={producto.precio || ''}
+                        onChange={handleChange}
+                        required
                     />
 
                     <CategoriaSelector
@@ -39,26 +69,36 @@ export const ProductoForm = ({ producto, handleChange, handleStockChange, handle
                         onChange={handleChange}
                         placeholder="Escribe una descripción del producto..."
                         className={styles.textarea}
+                        required
                     />
                 </div>
 
                 <div className={styles.rightSection}>
-                    <label>Imagen</label>
-                    <div className={styles.imageUploadBox}>
-                        <input type="file" onChange={handleImagenChange} />
-                    </div>
+                    <LabeledInput
+                        label="URL de la imagen"
+                        placeholder="https://ejemplo.com/imagen.jpg"
+                        name="imagen"
+                        type="url"
+                        value={producto.imagen || ''}
+                        onChange={handleChange}
+                    />
 
                     <label>Stock</label>
                     <div className={styles.stockGroup}>
                         <input
                             type="number"
-                            min="0"
+                            min="1"
                             value={producto.stock}
                             onChange={handleStockChange}
                             className={styles.stockInput}
+                            required
                         />
-                        <button onClick={handleCrearProducto} className={styles.crearBtn}>
-                            Crear producto
+                        <button 
+                            onClick={handleCrearProducto} 
+                            className={styles.crearBtn}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Creando...' : 'Crear producto'}
                         </button>
                     </div>
                 </div>

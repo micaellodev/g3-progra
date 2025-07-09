@@ -12,6 +12,8 @@ export const AgregarProducto = () => {
     productoProps,
     categorias,
     modalVisible,
+    isSubmitting,
+    productError,
     handlers: {
       handleSearch,
       handleCrearProducto,
@@ -34,6 +36,8 @@ export const AgregarProducto = () => {
         categorias={categorias}
         handleCrearProducto={handleCrearProducto}
         handleAgregarCategoria={handleAgregarCategoria}
+        isSubmitting={isSubmitting}
+        error={productError}
       />
 
       <ModalNuevaCategoria

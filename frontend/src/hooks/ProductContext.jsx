@@ -1,42 +1,92 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { juegos } from '../constantes/Consts';
+import { fetchProductos, createProducto, updateProducto, deleteProducto } from '../services/ProductoService.js';
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Cargar `juegos` solo una vez al inicio
+  // Cargar productos desde la base de datos
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const productos = await fetchProductos();
+      setProducts(productos);
+    } catch (err) {
+      setError(err.message);
+      console.error('Error loading products:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setProducts(juegos);
+    loadProducts();
   }, []);
 
-  const addProduct = (product) => {
-    setProducts(prev => [...prev, product]);
+  const addProduct = async (product) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const newProduct = await createProducto(product);
+      setProducts(prev => [...prev, newProduct]);
+      return newProduct;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const updateProduct = (index, updatedProduct) => {
-    setProducts(prev => {
-      const updated = [...prev];
-      updated[index] = updatedProduct;
+  const updateProduct = async (id, updatedProduct) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const updated = await updateProducto(id, updatedProduct);
+      setProducts(prev => {
+        const updatedList = [...prev];
+        const index = updatedList.findIndex(p => p.id_producto === id);
+        if (index !== -1) {
+          updatedList[index] = updated;
+        }
+        return updatedList;
+      });
       return updated;
-    });
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const deleteProduct = (index) => {
-    setProducts(prev => {
-      const updated = [...prev];
-      updated.splice(index, 1);
-      return updated;
-    });
+  const removeProduct = async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      await deleteProducto(id);
+      setProducts(prev => prev.filter(p => p.id_producto !== id));
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <ProductContext.Provider value={{
       products,
+      loading,
+      error,
       addProduct,
       updateProduct,
-      deleteProduct
+      deleteProduct: removeProduct,
+      refreshProducts: loadProducts
     }}>
       {children}
     </ProductContext.Provider>

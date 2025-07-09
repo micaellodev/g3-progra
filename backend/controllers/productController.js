@@ -1,7 +1,24 @@
+import { Producto } from '../models/Producto.js';
+import { Categoria } from '../models/Categoria.js';
+
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, categoryId } = req.body;
-    const newProduct = await Product.create({ name, description, price, categoryId });
+    const { nombre, presentacion, descripcion, stock, precio, imagen, categoria } = req.body;
+    
+    // Validar que todos los campos requeridos estén presentes
+    if (!nombre || !presentacion || !descripcion || stock === undefined || !precio) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+
+    const newProduct = await Producto.create({ 
+      nombre, 
+      presentacion, 
+      descripcion, 
+      stock: parseInt(stock), 
+      precio: parseFloat(precio), 
+      imagen: imagen || null 
+    });
+    
     res.status(201).json(newProduct);
   } catch (error) {
     console.error('Error creating product:', error);
@@ -11,8 +28,8 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.findAll({
-      include: [{ model: Category, as: 'category' }]
+    const products = await Producto.findAll({
+      include: [{ model: Categoria, as: 'categoria' }]
     });
     res.status(200).json(products);
   } catch (error) {
@@ -23,8 +40,8 @@ export const getProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findByPk(req.params.id, {
-      include: [{ model: Category, as: 'category' }]
+    const product = await Producto.findByPk(req.params.id, {
+      include: [{ model: Categoria, as: 'categoria' }]
     });
     if (!product) return res.status(404).json({ error: 'Product not found' });
     res.status(200).json(product);
@@ -37,11 +54,11 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const [updated] = await Product.update(req.body, {
-      where: { id }
+    const [updated] = await Producto.update(req.body, {
+      where: { id_producto: id }
     });
     if (!updated) return res.status(404).json({ error: 'Product not found' });
-    const product = await Product.findByPk(id);
+    const product = await Producto.findByPk(id);
     res.status(200).json(product);
   } catch (error) {
     console.error('Error updating product:', error);
@@ -52,8 +69,8 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Product.destroy({
-      where: { id }
+    const deleted = await Producto.destroy({
+      where: { id_producto: id }
     });
     if (!deleted) return res.status(404).json({ error: 'Product not found' });
     res.status(200).json({ message: 'Product deleted', id });

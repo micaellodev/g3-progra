@@ -90,6 +90,21 @@ label {
   background-color: #3b28c4;
 }
 
+.crearBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  background-color: #fee;
+  color: #c33;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #fcc;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
   .formBox {
     flex-direction: column;
