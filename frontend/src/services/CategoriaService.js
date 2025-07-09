@@ -1,9 +1,14 @@
 // apuntamos al endpoint donde corren tus rutas de Express:
-const API_URL = "http://localhost:3000/categorias";
+// src/services/CategoriaService.js
+
+// La URL base de tu API, definida en .env como VITE_API_URL=http://localhost:3000/categorias
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getCategorias() {
   const res = await fetch(API_URL);
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
   return res.json();
 }
 
@@ -13,14 +18,20 @@ export async function postCategoria(categoria) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(categoria),
   });
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
   return res.json();
 }
 
 export async function deleteCategoria(id) {
-  const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error(res.statusText);
-  // no devolvemos body
+  const res = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
+  // no devolvemos body, solo confirmamos que fue exitoso
 }
 
 export async function putCategoria(id, categoria) {
@@ -29,6 +40,8 @@ export async function putCategoria(id, categoria) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(categoria),
   });
-  if (!res.ok) throw new Error(res.statusText);
-  return res.json();  // aquí recibes el objeto actualizado
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
+  return res.json();
 }
