@@ -39,3 +39,4 @@ function PerfilForm({ usuario, onGuardar, onCancelar }) {
     </form>
   );
 }
+export default PerfilForm;
