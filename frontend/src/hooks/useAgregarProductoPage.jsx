@@ -10,7 +10,7 @@ export const useAgregarProductoPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { categorias, agregarCategoria } = useCategorias();
-  const { producto, setProducto, handleChange, handleStockChange, resetForm } = useProductoForm();
+  const { producto, setProducto, handleChange, handleStockChange, resetForm, handleImagenChange } = useProductoForm();
   const { addProduct, error: productError } = useProductContext();
 
   const handleSearch = e => {
@@ -58,6 +58,7 @@ export const useAgregarProductoPage = () => {
       producto,
       handleChange,
       handleStockChange,
+      handleImagenChange,
     },
     categorias,
     modalVisible,
