@@ -38,7 +38,7 @@ export const AgregarProducto = () => {
         handleAgregarCategoria={handleAgregarCategoria}
         isSubmitting={isSubmitting}
         error={productError}
-        handleImagenChange={handleImagenChange}
+        handleFileChange={handleFileChange}
       />
 
       <ModalNuevaCategoria

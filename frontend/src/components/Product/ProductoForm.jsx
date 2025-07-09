@@ -75,11 +75,7 @@ export const ProductoForm = ({
                         type="file"
                         accept=".jpg,.jpeg"
                         style={{ margin: '10px 0' }}
-                        onChange={e => {
-                            if (e.target.files && e.target.files[0]) {
-                                handleImagenChange(e.target.files[0]);
-                            }
-                        }}
+                        onChange={handleFileChange}
                     />
                     {producto.imagenPreview && (
                         <div style={{ margin: '10px 0' }}>
