@@ -322,6 +322,14 @@ app.post('/detalle-ordenes', async (req, res) => {
   try {
     const { ordenId, productoId, cantidad, precio } = req.body;
     const nuevoDetalle = await DetalleOrden.create({ ordenId, productoId, cantidad, precio });
+
+    // Disminuir el stock del producto
+    const producto = await Producto.findByPk(productoId);
+    if (producto) {
+      producto.stock = Math.max(0, producto.stock - cantidad);
+      await producto.save();
+    }
+
     res.status(201).json(nuevoDetalle);
   } catch (error) {
     res.status(400).json({ error: 'Error al crear detalle', detalles: error.message });
