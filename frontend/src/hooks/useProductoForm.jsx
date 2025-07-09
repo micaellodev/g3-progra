@@ -6,7 +6,7 @@ export const useProductoForm = () => {
     presentacion: '',
     categoria: '',
     descripcion: '',
-    stock: 0,
+    stock: 1,
     precio: '',
     imagen: '',
   });
@@ -30,7 +30,7 @@ export const useProductoForm = () => {
       presentacion: '',
       categoria: '',
       descripcion: '',
-      stock: 0,
+      stock: 1,
       precio: '',
       imagen: '',
     });
