@@ -5,7 +5,7 @@ import RegisterLinks from './RegisterLinks';
 import RegisterButton from './RegisterButton';
 import styles from '../../styles/RegisterForm.module.css';
 
-function RegisterFormContent({ formData, error, onChange, onSubmit }) {
+function RegisterFormContent({ formData, error, isLoading, onChange, onSubmit }) {
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <h2 className={styles.title}>Registrarse</h2>
@@ -21,6 +21,7 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         placeholder="Correo electrónico"
         value={formData.email}
         onChange={onChange}
+        required
       />
       
       <RegisterInput
@@ -29,6 +30,7 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         placeholder="País"
         value={formData.country}
         onChange={onChange}
+        required
       />
       
       <RegisterInput
@@ -37,14 +39,16 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         placeholder="Clínica donde naciste"
         value={formData.clinic}
         onChange={onChange}
+        required
       />
       
       <RegisterInput
         name="password"
         type="password"
-        placeholder="Contraseña"
+        placeholder="Contraseña (mínimo 6 caracteres)"
         value={formData.password}
         onChange={onChange}
+        required
       />
       
       <RegisterInput
@@ -53,11 +57,12 @@ function RegisterFormContent({ formData, error, onChange, onSubmit }) {
         placeholder="Confirmar contraseña"
         value={formData.password2}
         onChange={onChange}
+        required
       />
 
       {error && <div className={styles.error}>{error}</div>}
 
-      <RegisterButton />
+      <RegisterButton isLoading={isLoading} />
       <RegisterLinks />
     </form>
   );
