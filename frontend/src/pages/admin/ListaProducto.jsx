@@ -2,94 +2,83 @@ import React, { useState, useEffect } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorConBotones from '../../components/Lista/BuscadorConBotones';
 import {
-  getCategorias,
-  postCategoria,
-  deleteCategoria,
-  putCategoria
-} from '../../services/CategoriaService';
-import AgregarCategoria from './AgregarCategorias';
+  fetchProductos,
+  updateProducto,
+  deleteProducto
+} from '../../services/ProductoService';
+import { fetchCategorias } from '../../services/ProductoService';
 
 export const ListaProducto = () => {
   const [busquedaTopbar, setBusquedaTopbar] = useState('');
   const [busquedaTabla, setBusquedaTabla] = useState('');
-  const [categoriasLista, setCategorias] = useState([]);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [modoEdicion, setModoEdicion] = useState(null);
-  const [nombreEditado, setNombreEditado] = useState('');
-  const [descripcionEditada, setDescripcionEditada] = useState('');
+  const [productoEditado, setProductoEditado] = useState({});
 
-  // Carga inicial de categorías
+  // Cargar productos y categorías
   useEffect(() => {
     (async () => {
       try {
-        const data = await getCategorias();
-        setCategorias(data);
+        const data = await fetchProductos();
+        setProductos(data);
+        const cats = await fetchCategorias();
+        setCategorias(cats);
       } catch (err) {
-        console.error('Error al cargar categorías:', err);
+        console.error('Error al cargar productos o categorías:', err);
       }
     })();
   }, []);
 
   const handleSearchTopbar = (e) => {
     e.preventDefault();
-    console.log('Buscando desde topbar:', busquedaTopbar);
   };
 
   const handleSearchTabla = (e) => {
     e.preventDefault();
-    console.log('Buscando en categorías:', busquedaTabla);
   };
 
-  // Crear nueva categoría
-  const agregarCategoria = async (nueva) => {
-    try {
-      const categoriaCreada = await postCategoria(nueva);
-      setCategorias(prev => [...prev, categoriaCreada]);
-      setMostrarFormulario(false);
-    } catch (error) {
-      console.error('Error al agregar categoría:', error);
-    }
-  };
-
-  // Eliminar categoría
+  // Eliminar producto
   const eliminar = async (id) => {
-    if (!window.confirm('¿Estás seguro de eliminar esta categoría?')) return;
+    if (!window.confirm('¿Estás seguro de eliminar este producto?')) return;
     try {
-      await deleteCategoria(id);
-      setCategorias(prev => prev.filter(cat => cat.id_categoria !== id));
+      await deleteProducto(id);
+      setProductos(prev => prev.filter(prod => prod.id_producto !== id));
     } catch (error) {
-      console.error('Error al eliminar categoría:', error);
+      console.error('Error al eliminar producto:', error);
     }
   };
 
   // Iniciar edición
-  const iniciarEdicion = (cat) => {
-    setModoEdicion(cat.id_categoria);
-    setNombreEditado(cat.nombre);
-    setDescripcionEditada(cat.descripcion);
+  const iniciarEdicion = (prod) => {
+    setModoEdicion(prod.id_producto);
+    setProductoEditado({ ...prod });
   };
 
   // Guardar edición
   const guardarEdicion = async (id) => {
     try {
-      const payload = { nombre: nombreEditado, descripcion: descripcionEditada };
-      const categoriaActualizada = await putCategoria(id, payload);
-      setCategorias(prev =>
-        prev.map(cat =>
-          cat.id_categoria === id ? categoriaActualizada : cat
+      const actualizado = await updateProducto(id, productoEditado);
+      setProductos(prev =>
+        prev.map(prod =>
+          prod.id_producto === id ? actualizado : prod
         )
       );
       setModoEdicion(null);
-      setNombreEditado('');
-      setDescripcionEditada('');
+      setProductoEditado({});
     } catch (error) {
-      console.error('Error al actualizar categoría:', error);
+      console.error('Error al actualizar producto:', error);
     }
   };
 
-  const categoriasFiltradas = categoriasLista.filter(cat =>
-    cat.nombre.toLowerCase().includes(busquedaTabla.toLowerCase())
+  const productosFiltrados = productos.filter(prod =>
+    prod.nombre.toLowerCase().includes(busquedaTabla.toLowerCase())
   );
+
+  const getCategoriaNombre = (id_categoria) => {
+    const cat = categorias.find(c => c.id_categoria === id_categoria);
+    return cat ? cat.nombre : '';
+  };
 
   return (
     <>
@@ -99,7 +88,7 @@ export const ListaProducto = () => {
         setBusqueda={setBusquedaTopbar}
       />
 
-      <h1>Lista de Categorías</h1>
+      <h1>Lista de Productos</h1>
 
       <div style={{ marginBottom: '16px' }}>
         <BuscadorConBotones
@@ -107,19 +96,7 @@ export const ListaProducto = () => {
           setBusqueda={setBusquedaTabla}
           handleSearch={handleSearchTabla}
         />
-        <button
-          onClick={() => setMostrarFormulario(!mostrarFormulario)}
-          style={{ marginLeft: '12px', padding: '8px 16px' }}
-        >
-          {mostrarFormulario ? 'Cancelar' : 'Agregar Categoría'}
-        </button>
       </div>
-
-      {mostrarFormulario && (
-        <div style={{ marginBottom: '24px' }}>
-          <AgregarCategoria onAgregar={agregarCategoria} />
-        </div>
-      )}
 
       <div style={{ overflowX: 'auto' }}>
         <table
@@ -131,48 +108,119 @@ export const ListaProducto = () => {
             <tr>
               <th>Id</th>
               <th>Nombre</th>
+              <th>Presentación</th>
               <th>Descripción</th>
+              <th>Stock</th>
+              <th>Precio</th>
+              <th>Imagen</th>
+              <th>Categoría</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {categoriasFiltradas.length === 0 ? (
+            {productosFiltrados.length === 0 ? (
               <tr>
-                <td colSpan="4" style={{ textAlign: 'center' }}>
-                  No hay categorías para mostrar.
+                <td colSpan="9" style={{ textAlign: 'center' }}>
+                  No hay productos para mostrar.
                 </td>
               </tr>
             ) : (
-              categoriasFiltradas.map(cat => (
-                <tr key={cat.id_categoria}>
-                  <td>#{String(cat.id_categoria).padStart(4, '0')}</td>
+              productosFiltrados.map(prod => (
+                <tr key={prod.id_producto}>
+                  <td>#{String(prod.id_producto).padStart(4, '0')}</td>
                   <td>
-                    {modoEdicion === cat.id_categoria ? (
+                    {modoEdicion === prod.id_producto ? (
                       <input
-                        value={nombreEditado}
-                        onChange={e => setNombreEditado(e.target.value)}
+                        value={productoEditado.nombre || ''}
+                        onChange={e => setProductoEditado({ ...productoEditado, nombre: e.target.value })}
                         style={{ width: '100%', padding: '4px' }}
                       />
                     ) : (
-                      cat.nombre
+                      prod.nombre
                     )}
                   </td>
                   <td>
-                    {modoEdicion === cat.id_categoria ? (
+                    {modoEdicion === prod.id_producto ? (
                       <input
-                        value={descripcionEditada}
-                        onChange={e => setDescripcionEditada(e.target.value)}
+                        value={productoEditado.presentacion || ''}
+                        onChange={e => setProductoEditado({ ...productoEditado, presentacion: e.target.value })}
                         style={{ width: '100%', padding: '4px' }}
                       />
                     ) : (
-                      cat.descripcion
+                      prod.presentacion
                     )}
                   </td>
                   <td>
-                    {modoEdicion === cat.id_categoria ? (
+                    {modoEdicion === prod.id_producto ? (
+                      <input
+                        value={productoEditado.descripcion || ''}
+                        onChange={e => setProductoEditado({ ...productoEditado, descripcion: e.target.value })}
+                        style={{ width: '100%', padding: '4px' }}
+                      />
+                    ) : (
+                      prod.descripcion
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === prod.id_producto ? (
+                      <input
+                        type="number"
+                        value={productoEditado.stock || 0}
+                        onChange={e => setProductoEditado({ ...productoEditado, stock: e.target.value })}
+                        style={{ width: '100%', padding: '4px' }}
+                      />
+                    ) : (
+                      prod.stock
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === prod.id_producto ? (
+                      <input
+                        type="number"
+                        value={productoEditado.precio || 0}
+                        onChange={e => setProductoEditado({ ...productoEditado, precio: e.target.value })}
+                        style={{ width: '100%', padding: '4px' }}
+                      />
+                    ) : (
+                      prod.precio
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === prod.id_producto ? (
+                      <input
+                        value={productoEditado.imagen || ''}
+                        onChange={e => setProductoEditado({ ...productoEditado, imagen: e.target.value })}
+                        style={{ width: '100%', padding: '4px' }}
+                      />
+                    ) : (
+                      prod.imagen ? (
+                        <img src={prod.imagen} alt={prod.nombre} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                      ) : (
+                        'Sin imagen'
+                      )
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === prod.id_producto ? (
+                      <select
+                        value={productoEditado.id_categoria || ''}
+                        onChange={e => setProductoEditado({ ...productoEditado, id_categoria: e.target.value })}
+                        style={{ width: '100%', padding: '4px' }}
+                      >
+                        <option value="">Selecciona</option>
+                        {categorias.map(cat => (
+                          <option key={cat.id_categoria} value={cat.id_categoria}>{cat.nombre}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      getCategoriaNombre(prod.id_categoria)
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === prod.id_producto ? (
                       <>
                         <button
-                          onClick={() => guardarEdicion(cat.id_categoria)}
+                          onClick={() => guardarEdicion(prod.id_producto)}
                           title="Guardar"
                           style={{ marginRight: '8px', padding: '4px 8px' }}
                         >
@@ -181,8 +229,7 @@ export const ListaProducto = () => {
                         <button
                           onClick={() => {
                             setModoEdicion(null);
-                            setNombreEditado('');
-                            setDescripcionEditada('');
+                            setProductoEditado({});
                           }}
                           title="Cancelar"
                           style={{ padding: '4px 8px' }}
@@ -193,14 +240,14 @@ export const ListaProducto = () => {
                     ) : (
                       <>
                         <button
-                          onClick={() => iniciarEdicion(cat)}
+                          onClick={() => iniciarEdicion(prod)}
                           title="Editar"
                           style={{ marginRight: '8px', padding: '4px 8px' }}
                         >
                           ✏️
                         </button>
                         <button
-                          onClick={() => eliminar(cat.id_categoria)}
+                          onClick={() => eliminar(prod.id_producto)}
                           title="Eliminar"
                           style={{ padding: '4px 8px' }}
                         >
