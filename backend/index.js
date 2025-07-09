@@ -15,6 +15,7 @@ import categoriaRoutes from './routes/categoriaRoutes.js';
 import carritoRoutes from './routes/carritoRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import usuarioRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,9 +29,10 @@ app.use(cors({
 }));
 app.use('/categorias', categoriaRoutes);
 app.use('/carrito', carritoRoutes);
+app.use('/usuarios', usuarioRoutes);
+app.use('/ordenes', orderRoutes);
 app.get('/health', (req, res) => res.send('OK'));
 app.get('/',        (req, res) => res.send('Hola desde el backend'));
-app.get('/usuario', usuarioRoutes);
 
 sequelize.authenticate()
   .then(() => {
@@ -145,158 +147,9 @@ app.delete("/productos/:id", async (req, res) => {
 
 
 
-// ---------------------- USUARIOS ----------------------
-app.get('/usuarios', async (req, res) => {
-  try {
-    const usuarios = await Usuario.findAll();
-    res.json(usuarios);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener usuarios' });
-  }
-});
 
-// Obtener un usuario por ID
-app.get('/usuarios/:id', async (req, res) => {
-  try {
-    const usuario = await Usuario.findByPk(req.params.id);
-    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-    res.json(usuario);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar usuario' });
-  }
-});
 
-// Crear un nuevo usuario
-app.post('/usuarios', async (req, res) => {
-  try {
-    const { nombre, apellido, correo, pais, clinica, contrasena } = req.body;
 
-    // Validar campos requeridos
-    if (!nombre || !apellido || !correo || !pais || !clinica || !contrasena) {
-      return res.status(400).json({ error: 'Faltan campos obligatorios' });
-    }
-
-    // Verificar si el correo ya está registrado
-    const existe = await Usuario.findOne({ where: { correo } });
-    if (existe) {
-      return res.status(400).json({ error: 'El correo ya está registrado' });
-    }
-
-    const nuevoUsuario = await Usuario.create({
-      nombre,
-      apellido,
-      correo,
-      pais,
-      clinica,
-      contrasena
-    });
-
-    res.status(201).json(nuevoUsuario);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
-  }
-});
-
-// Actualizar nombre, apellido y correo
-app.put('/usuarios/:id', async (req, res) => {
-  try {
-    const usuario = await Usuario.findByPk(req.params.id);
-    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-
-    const { nombre, apellido, correo, pais } = req.body;
-    await usuario.update({ nombre, apellido, correo, pais });
-
-    res.json({ mensaje: 'Perfil actualizado', usuario });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar usuario', detalles: error.message });
-  }
-});
-
-// Cambiar contraseña
-app.put('/usuarios/:id/cambiar-contrasena', async (req, res) => {
-  try {
-    const { contrasenaActual, nuevaContrasena } = req.body;
-
-    const usuario = await Usuario.findByPk(req.params.id);
-    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-
-    if (usuario.contrasena !== contrasenaActual) {
-      return res.status(400).json({ error: 'La contraseña actual es incorrecta' });
-    }
-
-    await usuario.update({ contrasena: nuevaContrasena });
-
-    res.json({ mensaje: 'Contraseña actualizada correctamente' });
-  } catch (error) {
-    res.status(500).json({ error: 'Error al cambiar la contraseña', detalles: error.message });
-  }
-});
-
-// Eliminar usuario
-app.delete('/usuarios/:id', async (req, res) => {
-  try {
-    const usuario = await Usuario.findByPk(req.params.id);
-    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-
-    await usuario.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar usuario' });
-  }
-});
-
-// ---------------------- ORDENES ----------------------
-app.get('/ordenes', async (req, res) => {
-  try {
-    const ordenes = await Orden.findAll();
-    res.json(ordenes);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener órdenes' });
-  }
-});
-
-app.get('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    res.json(ord);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar orden' });
-  }
-});
-
-app.post('/ordenes', async (req, res) => {
-  try {
-    const { usuarioId, total } = req.body;
-    const nuevaOrden = await Orden.create({ usuarioId, total });
-    res.status(201).json(nuevaOrden);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear orden', detalles: error.message });
-  }
-});
-
-app.put('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    const { usuarioId, total } = req.body;
-    await ord.update({ usuarioId, total });
-    res.json({ mensaje: 'Orden actualizada', ord });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar orden', detalles: error.message });
-  }
-});
-
-app.delete('/ordenes/:id', async (req, res) => {
-  try {
-    const ord = await Orden.findByPk(req.params.id);
-    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
-    await ord.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar orden' });
-  }
-});
 
 // ---------------------- DETALLE ORDEN ----------------------
 app.get('/detalle-ordenes', async (req, res) => {
