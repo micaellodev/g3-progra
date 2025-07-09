@@ -10,6 +10,7 @@ export const ProductoForm = ({
     handleCrearProducto,
     categorias,
     handleAgregarCategoria,
+    handleFileChange,
     isSubmitting = false,
     error = null,
 }) => {
@@ -19,6 +20,11 @@ export const ProductoForm = ({
                 <div className={styles.leftSection}>
                     <h1>Agregar un producto</h1>
                     
+                    {error && (
+                        <div className={styles.errorMessage}>
+                            {error}
+                        </div>
+                    )}
                     
                     <LabeledInput
                         label="Nombre de producto"

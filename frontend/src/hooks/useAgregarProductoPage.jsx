@@ -20,16 +20,36 @@ export const useAgregarProductoPage = () => {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
       setProducto(prev => ({
         ...prev,
-        imagenFile: e.target.files[0],
-        imagen: e.target.files[0].name
+        imagenFile: file,
+        imagen: file.name,
+        imagenPreview: imageUrl
       }));
     }
   };
 
   const handleCrearProducto = async () => {
     try {
+      // Validación básica
+      if (!producto.nombre || !producto.presentacion || !producto.precio || !producto.id_categoria || !producto.descripcion || !producto.stock) {
+        alert('Por favor, completa todos los campos requeridos');
+        return;
+      }
+
+      if (producto.precio <= 0) {
+        alert('El precio debe ser mayor a 0');
+        return;
+      }
+
+      if (producto.stock <= 0) {
+        alert('El stock debe ser mayor a 0');
+        return;
+      }
+
+      setIsSubmitting(true);
       let imageUrl = '';
       if (producto.imagenFile) {
         imageUrl = await uploadImageToSupabase(producto.imagenFile);
@@ -43,9 +63,18 @@ export const useAgregarProductoPage = () => {
 
       await addProduct(nuevoProducto);
 
+      // Limpiar la vista previa de la imagen
+      if (producto.imagenPreview) {
+        URL.revokeObjectURL(producto.imagenPreview);
+      }
+
+      // Resetear el formulario
+      resetForm();
       alert('Producto creado exitosamente');
     } catch (error) {
       alert('Error al crear producto: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

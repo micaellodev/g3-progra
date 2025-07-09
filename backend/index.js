@@ -13,6 +13,7 @@ import { DetalleCategoria } from './models/DetalleCategoria.js';
 import { DataTypes } from 'sequelize';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import carritoRoutes from './routes/carritoRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;

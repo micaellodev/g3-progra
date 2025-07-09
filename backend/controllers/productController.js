@@ -3,10 +3,10 @@ import { Categoria } from '../models/Categoria.js';
 
 export const createProduct = async (req, res) => {
   try {
-    const { nombre, presentacion, descripcion, stock, precio, imagen, categoria } = req.body;
+    const { nombre, presentacion, descripcion, stock, precio, imagen, id_categoria } = req.body;
     
     // Validar que todos los campos requeridos estén presentes
-    if (!nombre || !presentacion || !descripcion || stock === undefined || !precio) {
+    if (!nombre || !presentacion || !descripcion || stock === undefined || !precio || !id_categoria) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
 
@@ -16,7 +16,8 @@ export const createProduct = async (req, res) => {
       descripcion, 
       stock: parseInt(stock), 
       precio: parseFloat(precio), 
-      imagen: imagen || null 
+      imagen: imagen || null,
+      id_categoria: parseInt(id_categoria)
     });
     
     res.status(201).json(newProduct);
