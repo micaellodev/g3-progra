@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';  
 import OrdenDetalleCard from '../../components/Table/OrdenDetalleCard';
-import { ordenes } from '../../constantes/Consts'; 
+import { getOrdenById } from '../../services/listaOrdenesService';
 
 const DetalleOrden = () => {
   const { id } = useParams();
   const [busqueda, setBusqueda] = useState('');
+  const [orden, setOrden] = useState(null);
+
+  useEffect(() => {
+    const fetchOrden = async () => {
+      const data = await getOrdenById(id);
+      setOrden(data);
+    };
+    fetchOrden();
+  }, [id]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log('Buscando orden:', busqueda);
   };
-
-  const orden = ordenes.find(o => o.id.toString() === id);
 
   if (!orden) {
     return <p>Orden no encontrada</p>;

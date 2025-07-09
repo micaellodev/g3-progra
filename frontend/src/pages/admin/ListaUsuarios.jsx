@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorUsuario from '../../components/Lista/BuscadorUsuario';
 import UsuariosTable from '../../components/Table/UsuariosTable';
-import { usuarios } from '../../constantes/Consts';
+import { getListaUsuarios } from '../../services/listaUsuariosService';
 
 const ListaUsuarios = () => {
-  const [usuariosFiltrados, setUsuariosFiltrados] = useState(usuarios);
+  const [usuarios, setUsuarios] = useState([]);
+  const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
+
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      const data = await getListaUsuarios();
+      setUsuarios(data);
+      setUsuariosFiltrados(data);
+    };
+    fetchUsuarios();
+  }, []);
 
   const handleSearch = (termino) => {
     const resultado = usuarios.filter((u) =>
@@ -17,7 +27,7 @@ const ListaUsuarios = () => {
   return (
     <>
       <TopBarAdmin />
-      <h1 style={{ margin: '20px 30px' }} >Lista de Usuarios</h1>
+      <h1 style={{ margin: '20px 30px' }}>Lista de Usuarios</h1>
       <BuscadorUsuario handleSearch={handleSearch} />
       <UsuariosTable usuarios={usuariosFiltrados} />
     </>
