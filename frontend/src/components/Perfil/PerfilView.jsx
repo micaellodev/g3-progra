@@ -81,7 +81,7 @@ function PerfilView({ usuario, onEditar, onCambiarContrasena }) {
       
       <div style={fieldStyles}>
         <span style={labelStyles}>Email:</span>
-        <span style={valueStyles}>{usuario.email || 'No especificado'}</span>
+        <span style={valueStyles}>{usuario.correo || usuario.email || 'No especificado'}</span>
       </div>
       
       <div style={fieldStyles}>

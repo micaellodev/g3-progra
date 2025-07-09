@@ -21,21 +21,21 @@ function PerfilForm({ usuario, onGuardar, onCancelar }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <label>Nombre:</label>
-      <input name="nombre" value={formData.nombre} onChange={handleChange} />
+    <form onSubmit={handleSubmit} className={styles.formGroup}>
+      <label className={styles.label}>Nombre:</label>
+      <input className={styles.input} name="nombre" value={formData.nombre} onChange={handleChange} />
 
-      <label>Apellido:</label>
-      <input name="apellido" value={formData.apellido} onChange={handleChange} />
+      <label className={styles.label}>Apellido:</label>
+      <input className={styles.input} name="apellido" value={formData.apellido} onChange={handleChange} />
 
-      <label>Correo:</label>
-      <input name="correo" value={formData.correo} onChange={handleChange} />
+      <label className={styles.label}>Correo:</label>
+      <input className={styles.input} name="correo" value={formData.correo} onChange={handleChange} />
 
-      <label>País:</label>
-      <input name="pais" value={formData.pais} onChange={handleChange} />
+      <label className={styles.label}>País:</label>
+      <input className={styles.input} name="pais" value={formData.pais} onChange={handleChange} />
 
       <GuardarBoton />
-      <button type="button" onClick={onCancelar} className={styles.cancelar}>Cancelar</button>
+      <button type="button" onClick={onCancelar} className={styles.button}>Cancelar</button>
     </form>
   );
 }
