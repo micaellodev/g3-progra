@@ -56,11 +56,14 @@ export const useAgregarProductoPage = () => {
       }
 
       const nuevoProducto = {
-        ...producto,
+        nombre: producto.nombre,
+        presentacion: producto.presentacion,
+        descripcion: producto.descripcion,
+        stock: Number(producto.stock),
+        precio: Number(producto.precio),
         imagen: imageUrl,
+        id_categoria: Number(producto.id_categoria)
       };
-      delete nuevoProducto.imagenFile;
-
       await addProduct(nuevoProducto);
 
       // Limpiar la vista previa de la imagen

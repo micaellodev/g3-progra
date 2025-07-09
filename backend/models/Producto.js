@@ -37,7 +37,7 @@ export const Producto = sequelize.define("Producto", {
 }, {
   tableName:"producto",
   freezeTableName: true,
-  timestamps: true
+  timestamps: false
 });
 
 // Definir la relación con Categoria
