@@ -1,10 +1,8 @@
 import express from 'express';
-
-const router = express.Router();
-
 import {
   getUsers,
   getUserDetail,
+  toggleUserStatus,
   createUser,
   updateUser,
   deleteUser,
@@ -12,9 +10,10 @@ import {
   changePassword,
   recoverPassword,
   getUserProfile,
-  toggleUserStatus,
   verifyEmail
 } from '../controllers/UsuarioController.js';
+
+const router = express.Router();
 
 router.get('/', getUsers);
 router.get('/:id', getUserDetail);
