@@ -93,7 +93,11 @@ export async function deleteProducto(id) {
       method: 'DELETE',
     });
 
-    if (!response.ok) throw new Error('Error al eliminar producto');
+    if (!response.ok) {
+      // Mostrar el mensaje real del backend
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Error al eliminar producto');
+    }
     return await response.json();
   } catch (error) {
     console.error('deleteProducto error:', error);
