@@ -1,5 +1,3 @@
-// src/pages/admin/ListaCategorias.jsx
-
 import React, { useState, useEffect } from 'react';
 import {
   getCategorias,
@@ -18,18 +16,23 @@ function ListaCategorias() {
   const [nombreEditado, setNombreEditado] = useState('');
   const [descripcionEditada, setDescripcionEditada] = useState('');
 
-  // 1️⃣ Carga inicial de categorías desde el backend
+  // 1️⃣ Carga inicial de categorías
   useEffect(() => {
-    getCategorias()
-      .then((data) => setCategorias(data))
-      .catch((err) => console.error('Error al cargar categorías:', err));
+    (async () => {
+      try {
+        const data = await getCategorias();
+        setCategorias(data);
+      } catch (err) {
+        console.error('Error al cargar categorías:', err);
+      }
+    })();
   }, []);
 
   // 2️⃣ Crear nueva categoría
   const agregarCategoria = async (nueva) => {
     try {
       const categoriaCreada = await postCategoria(nueva);
-      setCategorias([...categoriasLista, categoriaCreada]);
+      setCategorias(prev => [...prev, categoriaCreada]);
       setMostrarFormulario(false);
     } catch (error) {
       console.error('Error al agregar categoría:', error);
@@ -38,34 +41,32 @@ function ListaCategorias() {
 
   // 3️⃣ Eliminar categoría
   const eliminar = async (id) => {
-    const confirmado = window.confirm('¿Estás seguro de eliminar esta categoría?');
-    if (!confirmado) return;
+    if (!window.confirm('¿Estás seguro de eliminar esta categoría?')) return;
     try {
       await deleteCategoria(id);
-      setCategorias(categoriasLista.filter((cat) => cat.id_categoria !== id));
+      setCategorias(prev => prev.filter(cat => cat.id_categoria !== id));
     } catch (error) {
       console.error('Error al eliminar categoría:', error);
     }
   };
 
-  //  Iniciar modo edición
+  // 4️⃣ Iniciar edición
   const iniciarEdicion = (cat) => {
     setModoEdicion(cat.id_categoria);
     setNombreEditado(cat.nombre);
     setDescripcionEditada(cat.descripcion);
   };
 
-  //  Guardar cambios de edición
+  // 5️⃣ Guardar edición
   const guardarEdicion = async (id) => {
     try {
-      const actualizada = {
-        nombre: nombreEditado,
-        descripcion: descripcionEditada
-      };
-      const categoriaFinal = await putCategoria(id, actualizada);
-      setCategorias(categoriasLista.map((cat) =>
-        cat.id_categoria === id ? categoriaFinal : cat
-      ));
+      const payload = { nombre: nombreEditado, descripcion: descripcionEditada };
+      const categoriaActualizada = await putCategoria(id, payload);
+      setCategorias(prev =>
+        prev.map(cat =>
+          cat.id_categoria === id ? categoriaActualizada : cat
+        )
+      );
       setModoEdicion(null);
       setNombreEditado('');
       setDescripcionEditada('');
@@ -77,15 +78,14 @@ function ListaCategorias() {
   return (
     <div>
       <TopBarAdmin />
-
-      <h1>Lista Categorías</h1>
+      <h1>Lista de Categorías</h1>
 
       <div style={{ marginBottom: '16px' }}>
         <input
           type="text"
           placeholder="Buscar una categoría..."
           value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+          onChange={e => setBusqueda(e.target.value)}
           style={{ padding: '8px', width: '60%' }}
         />
         <button
@@ -117,17 +117,17 @@ function ListaCategorias() {
         </thead>
         <tbody>
           {categoriasLista
-            .filter((cat) =>
+            .filter(cat =>
               cat.nombre.toLowerCase().includes(busqueda.toLowerCase())
             )
-            .map((cat) => (
+            .map(cat => (
               <tr key={cat.id_categoria}>
                 <td>#{String(cat.id_categoria).padStart(4, '0')}</td>
                 <td>
                   {modoEdicion === cat.id_categoria ? (
                     <input
                       value={nombreEditado}
-                      onChange={(e) => setNombreEditado(e.target.value)}
+                      onChange={e => setNombreEditado(e.target.value)}
                     />
                   ) : (
                     cat.nombre
@@ -137,7 +137,7 @@ function ListaCategorias() {
                   {modoEdicion === cat.id_categoria ? (
                     <input
                       value={descripcionEditada}
-                      onChange={(e) => setDescripcionEditada(e.target.value)}
+                      onChange={e => setDescripcionEditada(e.target.value)}
                     />
                   ) : (
                     cat.descripcion
