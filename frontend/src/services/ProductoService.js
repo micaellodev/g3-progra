@@ -1,7 +1,11 @@
 // URL del backend desde variables de entorno
 const api = import.meta.env.VITE_API_URL;
 
-console.log('API URL:', api); // Para debug
+console.log('=== DEBUG INFO ===');
+console.log('import.meta.env:', import.meta.env);
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('API URL final:', api);
+console.log('==================');
 
 export async function fetchProductos() {
   try {

@@ -19,15 +19,6 @@ export const ProductoForm = ({
                 <div className={styles.leftSection}>
                     <h1>Agregar un producto</h1>
                     
-                    {error && (
-                        <div className={styles.errorMessage}>
-                            <strong>Error:</strong> {error}
-                            <br />
-                            <small>
-                                Si el error persiste, verifica que el backend esté ejecutándose en http://localhost:3000
-                            </small>
-                        </div>
-                    )}
                     
                     <LabeledInput
                         label="Nombre de producto"

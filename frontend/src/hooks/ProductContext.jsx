@@ -20,16 +20,15 @@ export const ProductProvider = ({ children }) => {
     } catch (err) {
       console.error('Error loading products:', err);
       setError(err.message);
-      // No lanzar error, solo mostrar en consola
+      // No lanzar error, solo mostrar en consola y continuar
       setInitialized(true);
     } finally {
       setLoading(false);
     }
   };
 
-  // Solo cargar productos cuando se llame explícitamente
+  // No cargar productos automáticamente para evitar errores de conexión
   useEffect(() => {
-    // No cargar automáticamente para evitar errores de conexión
     setInitialized(true);
   }, []);
 
