@@ -9,5 +9,7 @@ export const Categoria = sequelize.define("Categoria", {
   nombre: DataTypes.STRING(100),
   descripcion: DataTypes.TEXT
 }, {
-  freezeTableName: true
+  tableName: 'categoria',     // nombre exacto de tu tabla en la BD
+  freezeTableName: true,
+  timestamps: false           // si no tienes createdAt/updatedAt
 });
