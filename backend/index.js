@@ -11,14 +11,16 @@ import { Pago } from './models/Pago.js';
 import { Carrito } from './models/Carrito.js';
 import { DetalleCategoria } from './models/DetalleCategoria.js';
 import { DataTypes } from 'sequelize';
+import categoriaRoutes from './routes/categoriaRoues.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-
+app.use('/categorias', categoriaRoutes);
 app.get('/health', (req, res) => res.send('OK'));
+app.get('/',        (req, res) => res.send('Hola desde el backend'));
 
 sequelize.authenticate()
   .then(() => {
@@ -35,12 +37,7 @@ app.get('/', (req, res) => {
   res.send('Hola desde el backend');
 });
 
-sequelize.define('Categoria', {
-  nombre: DataTypes.STRING
-}, {
-  tableName: 'categoria',
-  freezeTableName: true
-});
+
 async function verifyAndSyncDatabase() {
     try {
       await sequelize.authenticate();
@@ -57,6 +54,9 @@ async function verifyAndSyncDatabase() {
   } catch (error) {
       console.error('Error al conectar a la base de datos:', error);
   }
+
+
+
 // ---------------------- PRODUCTOS ----------------------
 // GET - Obtener todos los productos
 app.get("/productos", async (req, res) => {
@@ -133,58 +133,7 @@ app.delete("/productos/:id", async (req, res) => {
     }
 });
 
-// ---------------------- CATEGORIAS ----------------------
-app.get('/categorias', async (req, res) => {
-  try {
-    const categorias = await Categoria.findAll();
-    res.json(categorias);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener categorías' });
-  }
-});
 
-app.get('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    res.json(cat);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar categoría' });
-  }
-});
-
-app.post('/categorias', async (req, res) => {
-  try {
-    const { nombre, descripcion } = req.body;
-    const nuevaCategoria = await Categoria.create({ nombre, descripcion });
-    res.status(201).json(nuevaCategoria);
-  } catch (error) {
-    res.status(400).json({ error: 'Error al crear categoría', detalles: error.message });
-  }
-});
-
-app.put('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    const { nombre, descripcion } = req.body;
-    await cat.update({ nombre, descripcion });
-    res.json({ mensaje: 'Categoría actualizada', cat });
-  } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar categoría', detalles: error.message });
-  }
-});
-
-app.delete('/categorias/:id', async (req, res) => {
-  try {
-    const cat = await Categoria.findByPk(req.params.id);
-    if (!cat) return res.status(404).json({ error: 'Categoría no encontrada' });
-    await cat.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar categoría' });
-  }
-});
 
 // ---------------------- USUARIOS ----------------------
 app.get('/usuarios', async (req, res) => {
