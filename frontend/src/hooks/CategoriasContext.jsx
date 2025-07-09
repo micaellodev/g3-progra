@@ -8,7 +8,7 @@ import {
 } from '../services/CategoriaService';
 
 const CategoriasContext = createContext();
-export const useCategoriasContext = () => useContext(CategoriasContext);
+export const useCategorias = () => useContext(CategoriasContext);
 
 export const CategoriasProvider = ({ children }) => {
   const [categorias, setCategorias] = useState([]);
