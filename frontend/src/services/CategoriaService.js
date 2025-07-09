@@ -1,7 +1,3 @@
-// apuntamos al endpoint donde corren tus rutas de Express:
-// src/services/CategoriaService.js
-
-// La URL base de tu API, definida en .env como VITE_API_URL=http://localhost:3000/categorias
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getCategorias() {
