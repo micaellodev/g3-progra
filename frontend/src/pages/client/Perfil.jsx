@@ -15,16 +15,23 @@ function Perfil() {
     console.log('Current user:', currentUser);
   }, [currentUser]);
 
-  const handleGuardar = async (data) => {
-    try {
-      await updateUser(data);
-      setEditando(false);
-      alert('Datos actualizados correctamente');
-    } catch (error) {
-      console.error('Error updating user:', error);
-      alert('Error al actualizar los datos');
-    }
-  };
+ const handleGuardar = async (data) => {
+  try {
+    const datosParaBackend = {
+      nombre: data.nombre,
+      apellido: data.apellido,
+      correo: data.correo || data.email,  // usa email si no viene correo
+      pais: data.pais
+    };
+
+    await updateUser(datosParaBackend);  // llama al hook
+    setEditando(false);
+    alert('Datos actualizados correctamente');
+  } catch (error) {
+    console.error('Error updating user:', error);
+    alert('Error al actualizar los datos');
+  }
+};
 
   const handleCambiarContrasena = () => {
     navigate('/cambiocontra');

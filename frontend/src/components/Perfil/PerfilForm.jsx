@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import GuardarBoton from './GuardarBoton';
 import styles from '../../styles/Perfil.module.css';
 
-function PerfilForm({ usuario, onGuardar }) {
+function PerfilForm({ usuario, onGuardar, onCancelar }) {
   const [formData, setFormData] = useState({
     nombre: usuario.nombre || '',
     apellido: usuario.apellido || '',
-    email: usuario.email || '',
+    correo: usuario.correo || '',
     pais: usuario.pais || '',
   });
 
@@ -21,51 +21,21 @@ function PerfilForm({ usuario, onGuardar }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.formGroup}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <label>Nombre:</label>
-      <input
-        className={styles.input}
-        type="text"
-        name="nombre"
-        value={formData.nombre}
-        onChange={handleChange}
-        placeholder="Nombre"
-      />
+      <input name="nombre" value={formData.nombre} onChange={handleChange} />
 
       <label>Apellido:</label>
-      <input
-        className={styles.input}
-        type="text"
-        name="apellido"
-        value={formData.apellido}
-        onChange={handleChange}
-        placeholder="Apellido"
-      />
+      <input name="apellido" value={formData.apellido} onChange={handleChange} />
 
       <label>Correo:</label>
-      <input
-        className={styles.input}
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Correo"
-        disabled
-      />
+      <input name="correo" value={formData.correo} onChange={handleChange} />
 
       <label>País:</label>
-      <input
-        className={styles.input}
-        type="text"
-        name="pais"
-        value={formData.pais}
-        onChange={handleChange}
-        placeholder="País"
-      />
+      <input name="pais" value={formData.pais} onChange={handleChange} />
 
       <GuardarBoton />
+      <button type="button" onClick={onCancelar} className={styles.cancelar}>Cancelar</button>
     </form>
   );
 }
-
-export default PerfilForm;

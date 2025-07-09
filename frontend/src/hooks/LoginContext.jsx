@@ -1,6 +1,7 @@
 // hooks/LoginContext.jsx
 // hooks/LoginContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
+import { actualizarUsuario } from '../services/usarioServices.js';
 
 const LoginContext = createContext();
 
@@ -54,26 +55,26 @@ export const LoginProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
-  const updateUser = (newData) => {
-    setCurrentUser((prevUser) => {
-      if (!prevUser) {
-        console.error('No hay usuario para actualizar');
-        return null;
-      }
+ const updateUser = async (newData) => {
+  if (!currentUser || !currentUser.id) {
+    console.error('No hay usuario logueado para actualizar');
+    throw new Error('Usuario no autenticado');
+  }
 
-      const updatedUser = { ...prevUser, ...newData };
-      console.log('Actualizando usuario:', updatedUser);
-      
-      try {
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-        return updatedUser;
-      } catch (error) {
-        console.error('Error al actualizar usuario:', error);
-        return prevUser;
-      }
-    });
-  };
+  try {
+    const response = await actualizarUsuario(currentUser.id, newData);
 
+    // En algunos backends, viene como { usuario: {...} }
+    const updated = response.usuario || response;
+
+    localStorage.setItem('currentUser', JSON.stringify(updated));
+    setCurrentUser(updated);
+    return true;
+  } catch (error) {
+    console.error('Error al actualizar usuario en el backend:', error);
+    throw error;
+  }
+};
   const value = {
     currentUser,
     login,

@@ -13,17 +13,9 @@ function PerfilContenido({
   return (
     <>
       {editando ? (
-        <PerfilForm 
-          usuario={currentUser} 
-          onGuardar={onGuardar}
-          onCancelar={() => setEditando(false)}  // Agregado cancelar
-        />
+        <PerfilForm usuario={currentUser} onGuardar={onGuardar} onCancelar={() => setEditando(false)} />
       ) : (
-        <PerfilView 
-          usuario={currentUser} 
-          onEditar={onEditar}
-          onCambiarContrasena={onCambiarContrasena}
-        />
+        <PerfilView usuario={currentUser} onEditar={onEditar} onCambiarContrasena={onCambiarContrasena} />
       )}
     </>
   );
