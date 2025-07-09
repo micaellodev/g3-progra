@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
 import BuscadorUsuario from '../../components/Lista/BuscadorUsuario';
 import UsuariosTable from '../../components/Table/UsuariosTable';
-import { getListaUsuarios } from '../../services/listaUsuariosService';
+import { obtenerUsuarios } from '../../services/listaUsuariosService';
 
 const ListaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -10,7 +10,7 @@ const ListaUsuarios = () => {
 
   useEffect(() => {
     const fetchUsuarios = async () => {
-      const data = await getListaUsuarios();
+      const data = await obtenerUsuarios();
       setUsuarios(data);
       setUsuariosFiltrados(data);
     };
