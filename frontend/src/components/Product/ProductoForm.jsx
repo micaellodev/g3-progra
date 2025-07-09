@@ -70,13 +70,25 @@ export const ProductoForm = ({
 
                 <div className={styles.rightSection}>
                     <LabeledInput
-                        label="URL de la imagen"
-                        placeholder="https://ejemplo.com/imagen.jpg"
+                        label="Nombre de la imagen (.jpg en /public)"
+                        placeholder="ejemplo.jpg"
                         name="imagen"
-                        type="url"
+                        type="text"
                         value={producto.imagen || ''}
                         onChange={handleChange}
                     />
+
+                    {producto.imagen && (
+                        <div style={{ margin: '10px 0' }}>
+                            <label>Vista previa:</label>
+                            <img
+                                src={`/${producto.imagen}`}
+                                alt="Vista previa"
+                                style={{ maxWidth: '150px', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '8px' }}
+                                onError={e => { e.target.style.display = 'none'; }}
+                            />
+                        </div>
+                    )}
 
                     <label>Stock</label>
                     <div className={styles.stockGroup}>

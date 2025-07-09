@@ -47,7 +47,7 @@ export async function createProducto(productoData) {
         presentacion: productoData.presentacion,
         descripcion: productoData.descripcion,
         stock: productoData.stock,
-        precio: productoData.precio || 0,
+        precio: Number(productoData.precio),
         imagen: productoData.imagen || null,
         id_categoria: Number(productoData.id_categoria)
       }),
