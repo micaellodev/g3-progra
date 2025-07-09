@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 import { Categoria } from "./Categoria.js";
-import { useNavigate } from 'react-router-dom';
 
 export const Producto = sequelize.define("Producto", {
   id_producto: {
@@ -45,7 +44,6 @@ export const Producto = sequelize.define("Producto", {
 Producto.belongsTo(Categoria, { foreignKey: "id_categoria" });
 Categoria.hasMany(Producto, { foreignKey: "id_categoria" });
 
-const navigate = useNavigate();
 
 const handleCrearProducto = async (datos) => {
   try {

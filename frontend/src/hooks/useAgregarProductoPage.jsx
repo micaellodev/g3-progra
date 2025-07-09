@@ -3,6 +3,7 @@ import { useCategorias } from '../hooks/CategoriasContext.jsx';
 import { useProductoForm } from './useProductoForm.jsx';
 import { useProductContext } from './ProductContext.jsx';
 import { uploadImageToSupabase } from '../services/uploadImage';
+import { useNavigate } from 'react-router-dom';
 
 export const useAgregarProductoPage = () => {
   const [busqueda, setBusqueda] = useState('');
@@ -12,6 +13,7 @@ export const useAgregarProductoPage = () => {
   const { categorias, agregarCategoria } = useCategorias();
   const { producto, setProducto, handleChange, handleStockChange, resetForm } = useProductoForm();
   const { addProduct, error: productError } = useProductContext();
+  const navigate = useNavigate();
 
   const handleSearch = e => {
     e.preventDefault();
@@ -74,6 +76,8 @@ export const useAgregarProductoPage = () => {
       // Resetear el formulario
       resetForm();
       alert('Producto creado exitosamente');
+      // Redirigir a la lista de productos
+      navigate('/listaproducto');
     } catch (error) {
       alert('Error al crear producto: ' + error.message);
     } finally {
