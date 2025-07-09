@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCategorias } from '../hooks/CategoriasContext.jsx';
 import { useProductoForm } from './useProductoForm.jsx';
 import { useProductContext } from './ProductContext.jsx';
+import { uploadImageToSupabase } from '../services/uploadImage';
 
 export const useAgregarProductoPage = () => {
   const [busqueda, setBusqueda] = useState('');
@@ -18,35 +19,23 @@ export const useAgregarProductoPage = () => {
   };
 
   const handleCrearProducto = async () => {
-    const { nombre, presentacion, categoria, descripcion, imagen, stock } = producto;
-    
-    // Validaciones
-    if (!nombre || !presentacion || !descripcion) {
-      alert('Por favor completa todos los campos requeridos.');
-      return;
-    }
-    
-    if (stock < 1) {
-      alert('El stock mínimo es 1.');
-      return;
-    }
-
-    // Agregar precio por defecto si no existe
-    const productoConPrecio = {
-      ...producto,
-      precio: producto.precio || 0
-    };
-
     try {
-      setIsSubmitting(true);
-      await addProduct(productoConPrecio);
+      let imageUrl = '';
+      if (producto.imagenFile) {
+        imageUrl = await uploadImageToSupabase(producto.imagenFile);
+      }
+
+      const nuevoProducto = {
+        ...producto,
+        imagen: imageUrl,
+      };
+      delete nuevoProducto.imagenFile;
+
+      await addProduct(nuevoProducto);
+
       alert('Producto creado exitosamente');
-      resetForm();
     } catch (error) {
-      console.error('Error al crear producto:', error);
-      alert(`Error al crear producto: ${error.message}`);
-    } finally {
-      setIsSubmitting(false);
+      alert('Error al crear producto: ' + error.message);
     }
   };
 

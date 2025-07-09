@@ -73,14 +73,16 @@ export const ProductoForm = ({
                     <input
                         type="file"
                         accept=".jpg,.jpeg"
-                        style={{ margin: '10px 0' }}
                         onChange={e => {
                             if (e.target.files && e.target.files[0]) {
-                                const fileName = e.target.files[0].name;
-                                handleChange({ target: { name: 'imagen', value: fileName } });
+                            setProducto(prev => ({
+                                ...prev,
+                                imagenFile: e.target.files[0], // Guarda el archivo real
+                                imagen: e.target.files[0].name // Solo para mostrar el nombre
+                            }));
                             }
                         }}
-                    />
+                        />
                     {producto.imagen && (
                         <div style={{ margin: '10px 0' }}>
                             <label>Archivo seleccionado:</label>
