@@ -6,6 +6,14 @@ export const DetalleCategoria = sequelize.define("DetalleCategoria", {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
+  },
+  id_producto: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  id_categoria: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   freezeTableName: true
