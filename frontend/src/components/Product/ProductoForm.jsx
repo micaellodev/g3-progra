@@ -70,12 +70,25 @@ export const ProductoForm = ({
 
                 <div className={styles.rightSection}>
                     <LabeledInput
-                        label="Nombre de la imagen (.jpg en /public)"
+                        label="Nombre de la imagen"
                         placeholder="ejemplo.jpg"
                         name="imagen"
                         type="text"
                         value={producto.imagen || ''}
                         onChange={handleChange}
+                    />
+
+                    <input
+                        type="file"
+                        accept=".jpg,.jpeg"
+                        style={{ margin: '10px 0' }}
+                        onChange={e => {
+                            if (e.target.files && e.target.files[0]) {
+                                const fileName = e.target.files[0].name;
+                                // Solo guarda el nombre del archivo
+                                handleChange({ target: { name: 'imagen', value: fileName } });
+                            }
+                        }}
                     />
 
                     {producto.imagen && (
