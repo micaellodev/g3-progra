@@ -51,7 +51,7 @@ export const ProductoForm = ({
                     />
 
                     <CategoriaSelector
-                        value={producto.categoria}
+                        value={producto.id_categoria}
                         onChange={handleChange}
                         categorias={categorias}
                         onAgregarCategoria={handleAgregarCategoria}

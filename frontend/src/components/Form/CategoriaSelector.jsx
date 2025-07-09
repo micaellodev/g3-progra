@@ -16,8 +16,8 @@ const CategoriaSelector = ({ value, onChange, categorias, onAgregarCategoria }) 
             <option value="">Selecciona la categoría del producto</option>
           ) : (
             categorias.map((cat, index) => (
-              <option key={index} value={cat.nombre}>
-                {cat.nombre} — {cat.descripcion}
+              <option key={index} value={cat.id_categoria}>
+                {cat.nombre}
               </option>
             ))
           )}

@@ -48,7 +48,8 @@ export async function createProducto(productoData) {
         descripcion: productoData.descripcion,
         stock: productoData.stock,
         precio: productoData.precio || 0,
-        imagen: productoData.imagen || null
+        imagen: productoData.imagen || null,
+        id_categoria: Number(productoData.categoria)
       }),
     });
 

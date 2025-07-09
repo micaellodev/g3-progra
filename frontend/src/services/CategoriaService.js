@@ -8,8 +8,9 @@ export async function getCategorias() {
   return res.json();
 }
 
+
 export async function postCategoria(categoria) {
-  const res = await fetch(API_URL, {
+  const res = await fetch(`${API_URL}/categorias`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(categoria),
@@ -21,7 +22,7 @@ export async function postCategoria(categoria) {
 }
 
 export async function deleteCategoria(id) {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${API_URL}/categorias/${id}`, {
     method: 'DELETE'
   });
   if (!res.ok) {
@@ -31,7 +32,7 @@ export async function deleteCategoria(id) {
 }
 
 export async function putCategoria(id, categoria) {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${API_URL}/categorias/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(categoria),
