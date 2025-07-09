@@ -1,4 +1,12 @@
-import { Usuario } from './models/Usuario.js';
+import express from 'express';
+import cors from 'cors';
+
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+import { Usuario } from "../models/Usuario.js";
 app.get('/usuarios', async (req, res) => {
   try {
     const usuarios = await Usuario.findAll();
