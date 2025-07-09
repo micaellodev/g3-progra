@@ -12,7 +12,6 @@ export const ProductoForm = ({
     handleAgregarCategoria,
     isSubmitting = false,
     error = null,
-    handleImagenChange
 }) => {
     return (
         <div className={styles.container}>
