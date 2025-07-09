@@ -14,6 +14,7 @@ import { DataTypes } from 'sequelize';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import carritoRoutes from './routes/carritoRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import usuarioRoutes from './routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,6 +30,7 @@ app.use('/categorias', categoriaRoutes);
 app.use('/carrito', carritoRoutes);
 app.get('/health', (req, res) => res.send('OK'));
 app.get('/',        (req, res) => res.send('Hola desde el backend'));
+app.get('/usuario', usuarioRoutes);
 
 sequelize.authenticate()
   .then(() => {
