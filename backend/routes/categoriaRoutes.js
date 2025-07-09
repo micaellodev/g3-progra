@@ -9,6 +9,7 @@ import {
     putCategoria,
     deleteCategoria
   } from '../controllers/CategoriaController.js';
+router.get('/', getCategorias);
 router.get('/:id', getCategoriaById);
 router.post('/', postCategoria);
 router.put('/:id', putCategoria);

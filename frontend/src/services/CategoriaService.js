@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getCategorias() {
-  const res = await fetch(API_URL);
+  const res = await fetch(`${API_URL}/categorias`);
   if (!res.ok) {
     throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
