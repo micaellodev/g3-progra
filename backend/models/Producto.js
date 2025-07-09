@@ -34,6 +34,7 @@ export const Producto = sequelize.define("Producto", {
     allowNull: true
   }
 }, {
+  tableName:"producto",
   freezeTableName: true,
   timestamps: true
 });

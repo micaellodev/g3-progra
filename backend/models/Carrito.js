@@ -11,7 +11,9 @@ export const Carrito = sequelize.define("Carrito", {
   },
   cantidad: DataTypes.INTEGER
 }, {
-  freezeTableName: true
+  tableName: "carrito",
+  freezeTableName: true,
+  timestamps:      false
 });
 
 // Relaciones

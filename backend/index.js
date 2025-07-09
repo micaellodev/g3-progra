@@ -12,6 +12,7 @@ import { Carrito } from './models/Carrito.js';
 import { DetalleCategoria } from './models/DetalleCategoria.js';
 import { DataTypes } from 'sequelize';
 import categoriaRoutes from './routes/categoriaRoutes.js';
+import carritoRoutes from './routes/carritoRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use('/categorias', categoriaRoutes);
+app.use('/carrito', carritoRoutes);
 app.get('/health', (req, res) => res.send('OK'));
 app.get('/',        (req, res) => res.send('Hola desde el backend'));
 
