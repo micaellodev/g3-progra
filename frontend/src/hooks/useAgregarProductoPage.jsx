@@ -10,12 +10,22 @@ export const useAgregarProductoPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { categorias, agregarCategoria } = useCategorias();
-  const { producto, setProducto, handleChange, handleStockChange, resetForm, handleImagenChange } = useProductoForm();
+  const { producto, setProducto, handleChange, handleStockChange, resetForm } = useProductoForm();
   const { addProduct, error: productError } = useProductContext();
 
   const handleSearch = e => {
     e.preventDefault();
     console.log('Buscando:', busqueda);
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProducto(prev => ({
+        ...prev,
+        imagenFile: e.target.files[0],
+        imagen: e.target.files[0].name
+      }));
+    }
   };
 
   const handleCrearProducto = async () => {
@@ -58,7 +68,6 @@ export const useAgregarProductoPage = () => {
       producto,
       handleChange,
       handleStockChange,
-      handleImagenChange,
     },
     categorias,
     modalVisible,
@@ -70,6 +79,7 @@ export const useAgregarProductoPage = () => {
       handleAgregarCategoria,
       handleCrearCategoria,
       closeModal,
+      handleFileChange,
     },
   };
 };

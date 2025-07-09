@@ -22,17 +22,14 @@ export const useProductoForm = () => {
     setProducto((prev) => ({ ...prev, stock: parseInt(e.target.value) }));
   };
 
-  const handleImagenChange = (file) => {
-    // Libera la URL anterior si existe
-    if (producto.imagenPreview) {
-      URL.revokeObjectURL(producto.imagenPreview);
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProducto(prev => ({
+        ...prev,
+        imagenFile: e.target.files[0],
+        imagen: e.target.files[0].name
+      }));
     }
-    setProducto(prev => ({
-      ...prev,
-      imagenFile: file,
-      imagen: file.name,
-      imagenPreview: URL.createObjectURL(file)
-    }));
   };
 
   const resetForm = () => {
@@ -57,7 +54,7 @@ export const useProductoForm = () => {
     setProducto,
     handleChange,
     handleStockChange,
-    handleImagenChange,
+    handleFileChange,
     resetForm,
   };
 };
