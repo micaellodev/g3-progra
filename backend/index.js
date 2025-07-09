@@ -445,4 +445,19 @@ app.delete('/metodos-pago/:id', async (req, res) => {
     }
   });
   
-  
+app.post('/AgregarProducto', async (req, res) => {
+  const { nombre, descripcion, precio, imagen_url } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('productos')
+      .insert([{ nombre, descripcion, precio, imagen_url }]);
+
+    if (error) throw error;
+
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('Error al agregar producto:', error);
+    res.status(500).json({ error: 'Error al agregar producto' });
+  }
+});
