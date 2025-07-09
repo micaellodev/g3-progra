@@ -1,18 +1,38 @@
+// URL del backend desde variables de entorno
 const api = import.meta.env.VITE_API_URL;
+
+console.log('API URL:', api); // Para debug
 
 export async function fetchProductos() {
   try {
+    console.log('Intentando obtener productos desde:', `${api}/productos`);
     const response = await fetch(`${api}/productos`);
-    if (!response.ok) throw new Error('Error al obtener productos');
-    return await response.json();
+    
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`Error al obtener productos: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('Productos obtenidos:', data);
+    return data;
   } catch (error) {
     console.error('fetchProductos error:', error);
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('No se puede conectar al servidor. Verifica que el backend esté ejecutándose.');
+    }
     throw error;
   }
 }
 
 export async function createProducto(productoData) {
   try {
+    console.log('Intentando crear producto:', productoData);
+    
     const response = await fetch(`${api}/productos`, {
       method: 'POST',
       headers: {
@@ -28,12 +48,16 @@ export async function createProducto(productoData) {
       }),
     });
 
+    console.log('Create response status:', response.status);
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error || 'Error al crear producto');
     }
 
-    return await response.json();
+    const result = await response.json();
+    console.log('Producto creado:', result);
+    return result;
   } catch (error) {
     console.error('createProducto error:', error);
     throw error;

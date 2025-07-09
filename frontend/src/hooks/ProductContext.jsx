@@ -7,6 +7,7 @@ export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   // Cargar productos desde la base de datos
   const loadProducts = async () => {
@@ -15,16 +16,21 @@ export const ProductProvider = ({ children }) => {
       setError(null);
       const productos = await fetchProductos();
       setProducts(productos);
+      setInitialized(true);
     } catch (err) {
-      setError(err.message);
       console.error('Error loading products:', err);
+      setError(err.message);
+      // No lanzar error, solo mostrar en consola
+      setInitialized(true);
     } finally {
       setLoading(false);
     }
   };
 
+  // Solo cargar productos cuando se llame explícitamente
   useEffect(() => {
-    loadProducts();
+    // No cargar automáticamente para evitar errores de conexión
+    setInitialized(true);
   }, []);
 
   const addProduct = async (product) => {
@@ -83,6 +89,7 @@ export const ProductProvider = ({ children }) => {
       products,
       loading,
       error,
+      initialized,
       addProduct,
       updateProduct,
       deleteProduct: removeProduct,

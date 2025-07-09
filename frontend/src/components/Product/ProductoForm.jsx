@@ -21,7 +21,11 @@ export const ProductoForm = ({
                     
                     {error && (
                         <div className={styles.errorMessage}>
-                            Error: {error}
+                            <strong>Error:</strong> {error}
+                            <br />
+                            <small>
+                                Si el error persiste, verifica que el backend esté ejecutándose en http://localhost:3000
+                            </small>
                         </div>
                     )}
                     
