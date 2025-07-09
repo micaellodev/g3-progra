@@ -20,6 +20,7 @@ export const AgregarProducto = () => {
       handleAgregarCategoria,
       handleCrearCategoria,
       closeModal,
+      handleFileChange,
     },
   } = useAgregarProductoPage();
 

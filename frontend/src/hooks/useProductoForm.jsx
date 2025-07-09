@@ -42,7 +42,7 @@ export const useProductoForm = () => {
       id_categoria: '',
       descripcion: '',
       stock: 1,
-      precio: 0,
+      precio: '',
       imagen: '',
       imagenFile: null,
       imagenPreview: null,
