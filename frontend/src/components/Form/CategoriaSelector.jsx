@@ -7,7 +7,7 @@ const CategoriaSelector = ({ value, onChange, categorias, onAgregarCategoria }) 
       <label>Categoría</label>
       <div className={styles.categoriaRow}>
         <select
-          name="categoria"
+          name="id_categoria"
           value={value}
           onChange={onChange}
           className={styles.select}

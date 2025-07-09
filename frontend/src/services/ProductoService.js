@@ -49,7 +49,7 @@ export async function createProducto(productoData) {
         stock: productoData.stock,
         precio: productoData.precio || 0,
         imagen: productoData.imagen || null,
-        id_categoria: Number(productoData.categoria)
+        id_categoria: Number(productoData.id_categoria)
       }),
     });
 

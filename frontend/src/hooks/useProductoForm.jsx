@@ -4,7 +4,7 @@ export const useProductoForm = () => {
   const [producto, setProducto] = useState({
     nombre: '',
     presentacion: '',
-    categoria: '',
+    id_categoria: '',
     descripcion: '',
     stock: 1,
     precio: '',
@@ -28,7 +28,7 @@ export const useProductoForm = () => {
     setProducto({
       nombre: '',
       presentacion: '',
-      categoria: '',
+      id_categoria: '',
       descripcion: '',
       stock: 1,
       precio: '',
