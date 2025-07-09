@@ -11,7 +11,7 @@ import { Pago } from './models/Pago.js';
 import { Carrito } from './models/Carrito.js';
 import { DetalleCategoria } from './models/DetalleCategoria.js';
 import { DataTypes } from 'sequelize';
-import categoriaRoutes from './routes/categoriaRoues.js';
+import categoriaRoutes from './routes/categoriaRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
