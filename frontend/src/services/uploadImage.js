@@ -7,7 +7,7 @@ export async function uploadImageToSupabase(file) {
 
   // Sube la imagen al bucket (ajusta el nombre del bucket si es diferente)
   let { error } = await supabase.storage
-    .from('imagenes-productos')
+    .from('imagenes')
     .upload(filePath, file);
 
   if (error) throw error;
@@ -15,7 +15,7 @@ export async function uploadImageToSupabase(file) {
   // Obtén la URL pública
   const { data } = supabase
     .storage
-    .from('imagenes-productos')
+    .from('imagenes')
     .getPublicUrl(filePath);
 
   return data.publicUrl; // Esta URL la puedes guardar en tu base de datos
