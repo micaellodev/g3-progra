@@ -1,7 +1,5 @@
 const API_URL = "http://localhost:3000/usuarios";
 
-
-
 // Obtener todos los usuarios
 export async function obtenerUsuarios() {
   const res = await fetch(API_URL);
@@ -23,18 +21,28 @@ export async function crearUsuario(datos) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos),
   });
-  if (!res.ok) throw new Error('Error al crear usuario');
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Error al crear usuario');
+  }
+  
   return res.json();
 }
 
 // Iniciar sesión
-export async function loginUsuario(datos) {
+export async function loginUsuario({ correo, contrasena }) {
   const res = await fetch(`${API_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(datos),
+    body: JSON.stringify({ correo, contrasena }),
   });
-  if (!res.ok) throw new Error('Error en el login');
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Error en el login');
+  }
+  
   return res.json();
 }
 
@@ -45,7 +53,12 @@ export async function actualizarUsuario(id, datos) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos),
   });
-  if (!res.ok) throw new Error('Error al actualizar usuario');
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Error al actualizar usuario');
+  }
+  
   return res.json();
 }
 
@@ -56,7 +69,12 @@ export async function cambiarContrasena(id, datos) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos),
   });
-  if (!res.ok) throw new Error('Error al cambiar la contraseña');
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Error al cambiar la contraseña');
+  }
+  
   return res.json();
 }
 
@@ -65,5 +83,9 @@ export async function eliminarUsuario(id) {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
-  if (!res.ok) throw new Error('Error al eliminar usuario');
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Error al eliminar usuario');
+  }
 }
