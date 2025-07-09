@@ -73,26 +73,20 @@ export const ProductoForm = ({
                     <input
                         type="file"
                         accept=".jpg,.jpeg"
+                        style={{ margin: '10px 0' }}
                         onChange={e => {
                             if (e.target.files && e.target.files[0]) {
-                            setProducto(prev => ({
-                                ...prev,
-                                imagenFile: e.target.files[0], // Guarda el archivo real
-                                imagen: e.target.files[0].name // Solo para mostrar el nombre
-                            }));
+                                handleImagenChange(e.target.files[0]);
                             }
                         }}
-                        />
-                    {producto.imagen && (
+                    />
+                    {producto.imagenPreview && (
                         <div style={{ margin: '10px 0' }}>
-                            <label>Archivo seleccionado:</label>
-                            <div style={{ fontWeight: 'bold' }}>{producto.imagen}</div>
                             <label>Vista previa:</label>
                             <img
-                                src={`/${producto.imagen}`}
+                                src={producto.imagenPreview}
                                 alt="Vista previa"
                                 style={{ maxWidth: '150px', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '8px' }}
-                                onError={e => { e.target.style.display = 'none'; }}
                             />
                         </div>
                     )}
