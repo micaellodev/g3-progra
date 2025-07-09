@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/LoginContext';
 import RegisterFormContent from '../../components/Register/RegisterFormContent';
 import Footer from '../../components/Footer/Footer';
-import { crearUsuario } from '../../services/usuarioService'; // Importar el servicio
+import { crearUsuario } from '../../services/usarioServices'; // Importar el servicio
 import styles from '../../styles/RegisterForm.module.css';
 
 function RegisterForm() {
