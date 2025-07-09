@@ -46,9 +46,9 @@ export async function createProducto(productoData) {
         nombre: productoData.nombre,
         presentacion: productoData.presentacion,
         descripcion: productoData.descripcion,
-        stock: productoData.stock,
+        stock: Number(productoData.stock),
         precio: Number(productoData.precio),
-        imagen: productoData.imagen || null,
+        imagen: productoData.imagen,
         id_categoria: Number(productoData.id_categoria)
       }),
     });

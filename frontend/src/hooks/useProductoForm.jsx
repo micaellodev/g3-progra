@@ -31,7 +31,7 @@ export const useProductoForm = () => {
       id_categoria: '',
       descripcion: '',
       stock: 1,
-      precio: '',
+      precio: 0,
       imagen: '',
     });
   };
