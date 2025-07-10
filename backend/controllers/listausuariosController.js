@@ -5,19 +5,20 @@ import { Orden } from '../models/Orden.js';
 // GET - todos los usuarios
 export const getAllUsers = async (req, res) => {
   try {
-    const usuarios = await Usuario.findAll({ order: [['createdAt', 'DESC']] });
+    const usuarios = await Usuario.findAll(); // sin ordenar por createdAt
 
-    // Mapear para adaptar a { id, nombre, estado, foto, ... }
+    // Adaptar salida: agregar campos "estado" y "foto" por defecto
     const usuariosFormateados = usuarios.map(u => ({
       id: u.id_usuario,
-      nombre: u.nombre,
-      estado: u.estado,
+      nombre: `${u.nombre} ${u.apellido}`,
       correo: u.correo,
-      foto: u.foto,
+      estado: 'Activo', // valor por defecto
+      foto: null         // sin imagen real
     }));
 
     res.json(usuariosFormateados);
   } catch (error) {
+    console.error('Error getAllUsers:', error.message);
     res.status(500).json({ error: 'Error al obtener usuarios', detalles: error.message });
   }
 };
@@ -25,7 +26,8 @@ export const getAllUsers = async (req, res) => {
 // GET - usuario por ID con órdenes
 export const getUserById = async (req, res) => {
   try {
-    const usuario = await Usuario.findByPk(req.params.id_usuario);
+    const id = req.params.id;
+    const usuario = await Usuario.findByPk(id); // usamos `id` directo
 
     if (!usuario) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -33,18 +35,19 @@ export const getUserById = async (req, res) => {
 
     const ordenes = await Orden.findAll({
       where: { id_usuario: usuario.id_usuario },
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'DESC']], // solo si tu modelo Orden tiene createdAt
     });
 
     res.json({
       id: usuario.id_usuario,
-      nombre: usuario.nombre,
-      estado: usuario.estado,
+      nombre: `${usuario.nombre} ${usuario.apellido}`,
       correo: usuario.correo,
-      foto: usuario.foto,
+      estado: 'Activo', // default
+      foto: null,       // default
       ordenes,
     });
   } catch (error) {
+    console.error('Error getUserById:', error.message);
     res.status(500).json({ error: 'Error al obtener el usuario', detalles: error.message });
   }
 };
