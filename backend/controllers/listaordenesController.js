@@ -1,55 +1,60 @@
-import Orden from '../models/Orden.js';
-import Usuario from '../models/Usuario.js';
+// controllers/listaordenesController.js
+import { Orden } from '../models/Orden.js';
+import { Usuario } from '../models/Usuario.js';
 
-// Obtener todas las órdenes (para ListaOrdenes)
+// GET - todas las órdenes
 export const getAllOrders = async (req, res) => {
   try {
-    const ordenes = await Orden.find()
-      .populate('usuario', 'nombre') // trae nombre del cliente
-      .sort({ createdAt: -1 });
+    const ordenes = await Orden.findAll({
+      include: {
+        model: Usuario,
+        attributes: ['nombre', 'apellido']
+      },
+      order: [['id_orden', 'DESC']] // Puedes cambiar esto por createdAt si tienes timestamps
+    });
 
-    const resultado = ordenes.map((orden) => ({
-      id: orden._id,
-      usuario: orden.usuario?.nombre || 'Sin nombre',
-      fecha: orden.createdAt.toISOString().split('T')[0],
-      total: orden.total,
+    const resultado = ordenes.map(orden => ({
+      id: orden.id_orden,
+      usuario: `${orden.Usuario?.nombre || 'Sin'} ${orden.Usuario?.apellido || 'nombre'}`,
+      fecha: orden.fecha,
+      total: parseFloat(orden.total),
       estado: orden.estado,
-      productos: orden.productos,
     }));
 
-    res.status(200).json(resultado);
+    res.json(resultado);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener órdenes', error });
+    console.error('Error getAllOrders:', error.message);
+    res.status(500).json({ error: 'Error al obtener órdenes', detalles: error.message });
   }
 };
 
-// Obtener detalle de una orden
+// GET - detalle de orden por ID
 export const getOrderById = async (req, res) => {
   try {
-    const orden = await Orden.findById(req.params.id)
-      .populate('usuario', 'nombre email')
-      .populate('productos.producto');
+    const orden = await Orden.findOne({
+      where: { id_orden: req.params.id },
+      include: {
+        model: Usuario,
+        attributes: ['nombre', 'apellido', 'correo']
+      }
+    });
 
     if (!orden) {
-      return res.status(404).json({ message: 'Orden no encontrada' });
+      return res.status(404).json({ error: 'Orden no encontrada' });
     }
 
     const detalle = {
-      id: orden._id,
+      id: orden.id_orden,
       estado: orden.estado,
-      total: orden.total,
-      usuario: orden.usuario?.nombre || 'Usuario desconocido',
-      productos: orden.productos.map((p) => ({
-        id: p.producto._id,
-        nombre: p.producto.nombre,
-        categoria: p.producto.categoria, // si está embebido
-        cantidad: p.cantidad,
-        precio: p.precioUnitario,
-      })),
+      total: parseFloat(orden.total),
+      usuario: `${orden.Usuario?.nombre || 'Usuario'} ${orden.Usuario?.apellido || ''}`,
+      correo: orden.Usuario?.correo || 'Sin correo',
+      productos: [], // Aquí podrías incluir productos si están relacionados
     };
 
-    res.status(200).json(detalle);
+    res.json(detalle);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener la orden', error });
+    console.error('Error getOrderById:', error.message);
+    res.status(500).json({ error: 'Error al obtener la orden', detalles: error.message });
   }
 };

@@ -1,60 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styles from './ListaOrdenes.module.css';
 import { useNavigate } from 'react-router-dom';
-import styles from './ListaOrden.module.css';
 
 const OrdenesTable = ({ ordenes = [] }) => {
   const navigate = useNavigate();
-  const [busqueda, setBusqueda] = useState('');
 
-  const ordenesFiltradas = ordenes.filter((orden) =>
-    orden.usuario.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  const handleVerDetalle = (id) => {
+    navigate(`/admin/ordenes/${id}`);
+  };
 
   return (
-    <>
-      {/* Tabla de órdenes */}
-      <div className={styles.tableWrapper}>
-        <table className={styles.ordenesTable}>
-          <thead>
-            <tr>
-              <th>#ORDEN</th>
-              <th>Usuario</th>
-              <th>Fecha Orden</th>
-              <th>Total</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ordenesFiltradas.map((orden) => (
-              <tr key={orden.id}>
-                <td>{orden.id.toString().padStart(4, '0')}</td>
-                <td>{orden.usuario}</td>
-                <td>{orden.fecha}</td>
-                <td>S/ {orden.total.toFixed(2)}</td>
-                <td
-                  className={
-                    orden.estado === 'Entregado'
-                      ? styles.estadoEntregado
-                      : styles.estadoPorEntregar
-                  }
+    <div className={styles.tableWrapper}>
+      <table className={styles.ordenesTable}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ordenes.map((orden) => (
+            <tr key={orden.id}>
+              <td>{orden.id}</td>
+              <td>{orden.usuario}</td> {/* Corregido: era "cliente" */}
+              <td>{new Date(orden.fecha).toLocaleDateString('es-PE')}</td>
+              <td>S/ {parseFloat(orden.total).toFixed(2)}</td>
+              <td>{orden.estado}</td>
+              <td>
+                <button
+                  className={styles.verBtn}
+                  onClick={() => handleVerDetalle(orden.id)}
                 >
-                  {orden.estado}
-                </td>
-                <td>
-                  <button
-                    className={styles.verDetalleBtn}
-                    onClick={() => navigate(`/admin/ordenes/${orden.id}`)}
-                  >
-                    Ver Detalle
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+                  Ver Detalle
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
