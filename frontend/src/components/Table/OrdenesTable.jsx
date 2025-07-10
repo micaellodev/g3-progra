@@ -7,7 +7,7 @@ const OrdenesTable = ({ ordenes = [] }) => {
   const [busqueda, setBusqueda] = useState('');
 
   const ordenesFiltradas = ordenes.filter((orden) =>
-    orden.usuario.toLowerCase().includes(busqueda.toLowerCase())
+    (orden.usuario || '').toLowerCase().includes(busqueda.toLowerCase())
   );
 
   return (

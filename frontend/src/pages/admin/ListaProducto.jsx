@@ -72,7 +72,7 @@ export const ListaProducto = () => {
   };
 
   const productosFiltrados = productos.filter(prod =>
-    prod.nombre.toLowerCase().includes(busquedaTabla.toLowerCase())
+    (prod.nombre || '').toLowerCase().includes(busquedaTabla.toLowerCase())
   );
 
   const getCategoriaNombre = (id_categoria) => {

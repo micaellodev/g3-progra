@@ -23,7 +23,7 @@ const ListaUsuarios = () => {
 
   const handleSearch = (termino) => {
     const resultado = usuarios.filter((u) =>
-      u.nombre?.toLowerCase().includes(termino.toLowerCase())
+      (u.nombre || '').toLowerCase().includes(termino.toLowerCase())
     );
     setUsuariosFiltrados(resultado);
   };
