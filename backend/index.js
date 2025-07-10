@@ -42,7 +42,7 @@ sequelize.authenticate()
     
     // Sincronizar modelos con la base de datos (crear tablas si no existen)
     try {
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ force: false });
       console.log('✅ Tablas sincronizadas correctamente');
     } catch (error) {
       console.log('⚠️ Error al sincronizar tablas:', error.message);
