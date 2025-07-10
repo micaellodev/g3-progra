@@ -1,31 +1,25 @@
 // URL del backend desde variables de entorno
-const api = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-console.log('=== DEBUG INFO ===');
-console.log('import.meta.env:', import.meta.env);
-console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
-console.log('API URL final:', api);
-console.log('==================');
-
-export async function fetchProductos() {
+// Obtener todos los productos
+export async function fetchProductos(searchTerm = '') {
   try {
-    console.log('Intentando obtener productos desde:', `${api}/productos`);
-    const response = await fetch(`${api}/productos`);
-    
-    console.log('Response status:', response.status);
-    console.log('Response ok:', response.ok);
+    const url = searchTerm 
+      ? `${API_URL}/api/productos?q=${encodeURIComponent(searchTerm)}`
+      : `${API_URL}/api/productos`;
+      
+    const response = await fetch(url, {
+      credentials: 'include'
+    });
     
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Error response:', errorText);
-      throw new Error(`Error al obtener productos: ${response.status} ${response.statusText}`);
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
     }
     
-    const data = await response.json();
-    console.log('Productos obtenidos:', data);
-    return data;
+    return await response.json();
   } catch (error) {
-    console.error('fetchProductos error:', error);
+    console.error('Error al obtener productos:', error);
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
       throw new Error('No se puede conectar al servidor. Verifica que el backend esté ejecutándose.');
     }
@@ -33,11 +27,10 @@ export async function fetchProductos() {
   }
 }
 
+// Crear un nuevo producto
 export async function createProducto(productoData) {
   try {
-    console.log('Intentando crear producto:', productoData);
-    
-    const response = await fetch(`${api}/productos`, {
+    const response = await fetch(`${API_URL}/api/productos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,58 +44,80 @@ export async function createProducto(productoData) {
         imagen: productoData.imagen,
         id_categoria: Number(productoData.id_categoria)
       }),
+      credentials: 'include'
     });
 
-    console.log('Create response status:', response.status);
-
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Error al crear producto');
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
     }
 
-    const result = await response.json();
-    console.log('Producto creado:', result);
-    return result;
+    return await response.json();
   } catch (error) {
-    console.error('createProducto error:', error);
+    console.error('Error al crear producto:', error);
     throw error;
   }
 }
 
+// Actualizar un producto existente
 export async function updateProducto(id, productoData) {
   try {
-    const response = await fetch(`${api}/productos/${id}`, {
+    const response = await fetch(`${API_URL}/api/productos/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(productoData),
+      credentials: 'include'
     });
 
-    if (!response.ok) throw new Error('Error al actualizar producto');
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
+    }
+
     return await response.json();
   } catch (error) {
-    console.error('updateProducto error:', error);
+    console.error('Error al actualizar producto:', error);
     throw error;
   }
 }
 
+// Eliminar un producto
 export async function deleteProducto(id) {
   try {
-    const response = await fetch(`${api}/productos/${id}`, {
+    const response = await fetch(`${API_URL}/api/productos/${id}`, {
       method: 'DELETE',
+      credentials: 'include'
     });
 
-    if (!response.ok) throw new Error('Error al eliminar producto');
-    return await response.json();
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
+    }
+    
+    return true;
   } catch (error) {
-    console.error('deleteProducto error:', error);
+    console.error('Error al eliminar producto:', error);
     throw error;
   }
 }
 
+// Obtener todas las categorías
 export async function fetchCategorias() {
-  const response = await fetch(`${api}/categorias`);
-  if (!response.ok) throw new Error('Error al obtener categorías');
-  return await response.json();
+  try {
+    const response = await fetch(`${API_URL}/api/categorias`, {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error al obtener categorías:', error);
+    throw error;
+  }
 }

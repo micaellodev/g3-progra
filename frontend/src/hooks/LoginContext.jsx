@@ -2,6 +2,7 @@
 // hooks/LoginContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import { actualizarUsuario } from '../services/usarioServices.js';
+import { fetchProductos } from '../services/ProductoService';
 
 const LoginContext = createContext();
 
@@ -55,32 +56,48 @@ export const LoginProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
- const updateUser = async (newData) => {
-  if (!currentUser || !currentUser.id) {
-    console.error('No hay usuario logueado para actualizar');
-    throw new Error('Usuario no autenticado');
-  }
+  const updateUser = async (newData) => {
+    if (!currentUser || !currentUser.id) {
+      console.error('No hay usuario logueado para actualizar');
+      throw new Error('Usuario no autenticado');
+    }
 
-  try {
-    const response = await actualizarUsuario(currentUser.id, newData);
+    try {
+      const response = await actualizarUsuario(currentUser.id, newData);
 
-    // En algunos backends, viene como { usuario: {...} }
-    const updated = response.usuario || response;
+      // En algunos backends, viene como { usuario: {...} }
+      const updated = response.usuario || response;
 
-    localStorage.setItem('currentUser', JSON.stringify(updated));
-    setCurrentUser(updated);
-    return true;
-  } catch (error) {
-    console.error('Error al actualizar usuario en el backend:', error);
-    throw error;
-  }
-};
+      localStorage.setItem('currentUser', JSON.stringify(updated));
+      setCurrentUser(updated);
+      return true;
+    } catch (error) {
+      console.error('Error al actualizar usuario en el backend:', error);
+      throw error;
+    }
+  };
+
+  // Función para buscar productos
+  const searchProducts = async (query) => {
+    try {
+      const response = await fetch(`http://localhost:3000/productos?q=${encodeURIComponent(query)}`);
+      if (!response.ok) {
+        throw new Error('Error al buscar productos');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en la búsqueda:', error);
+      throw error;
+    }
+  };
+
   const value = {
     currentUser,
     login,
     logout,
     updateUser,
-    isLoading
+    isLoading,
+    searchProducts
   };
 
   return (

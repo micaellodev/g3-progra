@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
@@ -8,7 +8,12 @@ export default defineConfig({
     port: 5173,
     cors: true,
     hmr: {
-      clientPort: 443
+      overlay: true
+    }
+  },
+  css: {
+    modules: {
+      localsConvention: 'camelCase'
     }
   }
-})
+});

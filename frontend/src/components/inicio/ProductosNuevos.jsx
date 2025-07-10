@@ -1,13 +1,27 @@
 import React from 'react';
 import '../../styles/productos-nuevos.css';
-import { juegos } from '../../constantes/Consts';
 import { useCarrito } from '../../hooks/CartContext';
 import { Link } from 'react-router-dom';
-
-const productosNuevos = juegos.slice(-4);
+import { useEffect, useState } from 'react';
+import { fetchProductos } from '../../services/ProductoService';
 
 const ProductosNuevos = () => {
   const { addToCart } = useCarrito();
+  const [productosNuevos, setProductosNuevos] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const todos = await fetchProductos();
+        // Ordenar por createdAt descendente
+        const ordenados = [...todos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setProductosNuevos(ordenados.slice(0, 4));
+      } catch (err) {
+        console.error('Error cargando productos nuevos:', err);
+      }
+    })();
+  }, []);
+
 
   return (
     <section className="categorias-section">

@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/CategoriasDestacadas.css';
-import { categorias } from '../../constantes/Consts';
-
-const categoriasDestacadas = categorias.slice(0, 3);
+import { getCategorias } from '../../services/CategoriaService';
 
 const CategoriasDestacadas = () => {
+  const [categoriasDestacadas, setCategoriasDestacadas] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const todas = await getCategorias();
+        setCategoriasDestacadas(todas.slice(0, 3));
+      } catch (err) {
+        console.error('Error cargando categorías destacadas:', err);
+      }
+    })();
+  }, []);
   return (
     <section className="categorias-section">
       <h2 className="categorias-titulo">Categorías Destacadas</h2>
