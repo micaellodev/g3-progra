@@ -1,45 +1,50 @@
+// controllers/listausuariosController.js
 import { Usuario } from '../models/Usuario.js';
 import { Orden } from '../models/Orden.js';
 
-// Obtener todos los usuarios
+// GET - todos los usuarios
 export const getAllUsers = async (req, res) => {
   try {
-    const usuarios = await Usuario.findAll({
-      order: [['createdAt', 'DESC']],
-    });
+    const usuarios = await Usuario.findAll({ order: [['createdAt', 'DESC']] });
 
-    const usuariosFormateados = usuarios.map((u) => ({
-      ...u.dataValues,
-      id: u.id_usuario, // importante para que el frontend siga usando "id"
+    // Mapear para adaptar a { id, nombre, estado, foto, ... }
+    const usuariosFormateados = usuarios.map(u => ({
+      id: u.id_usuario,
+      nombre: u.nombre,
+      estado: u.estado,
+      correo: u.correo,
+      foto: u.foto,
     }));
 
-    res.status(200).json(usuariosFormateados);
+    res.json(usuariosFormateados);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener usuarios', error });
+    res.status(500).json({ error: 'Error al obtener usuarios', detalles: error.message });
   }
 };
 
-// Obtener detalle de un usuario por ID (incluye órdenes)
+// GET - usuario por ID con órdenes
 export const getUserById = async (req, res) => {
   try {
-    const usuario = await Usuario.findOne({ where: { id_usuario: req.params.id } });
+    const usuario = await Usuario.findByPk(req.params.id_usuario);
+
     if (!usuario) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     const ordenes = await Orden.findAll({
-      where: { id_usuario: req.params.id },
+      where: { id_usuario: usuario.id_usuario },
       order: [['createdAt', 'DESC']],
     });
 
-    const usuarioConOrdenes = {
-      ...usuario.dataValues,
-      id: usuario.id_usuario, // igual que arriba
+    res.json({
+      id: usuario.id_usuario,
+      nombre: usuario.nombre,
+      estado: usuario.estado,
+      correo: usuario.correo,
+      foto: usuario.foto,
       ordenes,
-    };
-
-    res.status(200).json(usuarioConOrdenes);
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener el usuario', error });
+    res.status(500).json({ error: 'Error al obtener el usuario', detalles: error.message });
   }
 };
