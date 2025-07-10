@@ -5,7 +5,14 @@ import Orden from '../models/Orden.js';
 export const getAllUsers = async (req, res) => {
   try {
     const usuarios = await Usuario.find().sort({ createdAt: -1 });
-    res.status(200).json(usuarios);
+
+    // Mapea los usuarios y reemplaza _id por id
+    const usuariosFormateados = usuarios.map((u) => ({
+      ...u.toObject(),
+      id: u._id,
+    }));
+
+    res.status(200).json(usuariosFormateados);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener usuarios', error });
   }
@@ -21,9 +28,10 @@ export const getUserById = async (req, res) => {
 
     const ordenes = await Orden.find({ usuario: usuario._id }).sort({ createdAt: -1 });
 
-    // Convertimos a objeto plano y agregamos ordenes
+    // Devuelve el usuario como objeto plano, con id y órdenes
     const usuarioConOrdenes = {
       ...usuario.toObject(),
+      id: usuario._id,
       ordenes,
     };
 

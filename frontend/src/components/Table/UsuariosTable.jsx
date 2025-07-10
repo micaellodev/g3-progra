@@ -1,4 +1,3 @@
-// UsuariosTable.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './ListaUsuario.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -8,25 +7,33 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const [usuariosEstado, setUsuariosEstado] = useState([]);
 
   useEffect(() => {
-    setUsuariosEstado(usuarios);
+    // Asegurarse de clonar el array y no referenciar directamente
+    const copiaUsuarios = usuarios.map((u) => ({ ...u }));
+    setUsuariosEstado(copiaUsuarios);
   }, [usuarios]);
 
   const handleDesactivar = (id) => {
-    setUsuariosEstado(prevUsuarios =>
-      prevUsuarios.map(u =>
-        u.id === id ? { ...u, estado: 'Inactivo' } : u
-      )
+    const actualizados = usuariosEstado.map((u) =>
+      u.id === id ? { ...u, estado: 'Inactivo' } : u
     );
+    setUsuariosEstado(actualizados);
     alert(`Usuario con ID ${id} desactivado`);
   };
 
   const handleActivar = (id) => {
-    setUsuariosEstado(prevUsuarios =>
-      prevUsuarios.map(u =>
-        u.id === id ? { ...u, estado: 'Activo' } : u
-      )
+    const actualizados = usuariosEstado.map((u) =>
+      u.id === id ? { ...u, estado: 'Activo' } : u
     );
+    setUsuariosEstado(actualizados);
     alert(`Usuario con ID ${id} activado`);
+  };
+
+  const handleVerDetalle = (id) => {
+    if (id) {
+      navigate(`/admin/usuarios/${id}`);
+    } else {
+      console.error('ID de usuario inválido');
+    }
   };
 
   return (
@@ -48,11 +55,19 @@ const UsuariosTable = ({ usuarios = [] }) => {
                   {usuario.nombre}
                 </div>
               </td>
-              <td className={usuario.estado === 'Activo' ? styles.estadoActivo : styles.estadoInactivo}>{usuario.estado}</td>
+              <td
+                className={
+                  usuario.estado === 'Activo'
+                    ? styles.estadoActivo
+                    : styles.estadoInactivo
+                }
+              >
+                {usuario.estado}
+              </td>
               <td>
                 <button
                   className={styles.verBtn}
-                  onClick={() => navigate(`/admin/usuarios/${usuario.id}`)}
+                  onClick={() => handleVerDetalle(usuario.id)}
                 >
                   Ver Detalle
                 </button>

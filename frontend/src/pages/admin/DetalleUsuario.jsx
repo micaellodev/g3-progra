@@ -1,4 +1,3 @@
-// DetalleUsuario.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
@@ -19,7 +18,7 @@ const DetalleUsuario = () => {
         console.error('Error al obtener usuario', err);
       }
     };
-    fetchUsuario();
+    if (id) fetchUsuario();
   }, [id]);
 
   const handleSearch = (e) => {
@@ -27,7 +26,7 @@ const DetalleUsuario = () => {
   };
 
   if (!usuario) {
-    return <p>Usuario no encontrado</p>;
+    return <p style={{ margin: '30px' }}>Usuario no encontrado</p>;
   }
 
   return (
