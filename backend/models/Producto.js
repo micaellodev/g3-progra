@@ -43,14 +43,3 @@ export const Producto = sequelize.define("Producto", {
 // Definir la relación con Categoria
 Producto.belongsTo(Categoria, { foreignKey: "id_categoria" });
 Categoria.hasMany(Producto, { foreignKey: "id_categoria" });
-
-
-const handleCrearProducto = async (datos) => {
-  try {
-    await createProducto(datos);
-    // Redirige a la lista de productos
-    navigate('/listaproducto');
-  } catch (error) {
-    // Manejo de error
-  }
-};

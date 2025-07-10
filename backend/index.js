@@ -35,8 +35,17 @@ app.get('/health', (req, res) => res.send('OK'));
 app.get('/',        (req, res) => res.send('Hola desde el backend'));
 
 sequelize.authenticate()
-  .then(() => {
+  .then(async () => {
     console.log('✅ Conexión exitosa a Supabase');
+    
+    // Sincronizar modelos con la base de datos (crear tablas si no existen)
+    try {
+      await sequelize.sync({ alter: true });
+      console.log('✅ Tablas sincronizadas correctamente');
+    } catch (error) {
+      console.log('⚠️ Error al sincronizar tablas:', error.message);
+    }
+    
     app.listen(port, () => {
       console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
     });
@@ -234,8 +243,8 @@ app.get('/metodos-pago/:id', async (req, res) => {
 
 app.post('/metodos-pago', async (req, res) => {
   try {
-    const { nombre } = req.body;
-    const nuevoMp = await MetodoPago.create({ nombre });
+    const { nombre_metodo } = req.body;
+    const nuevoMp = await MetodoPago.create({ nombre_metodo });
     res.status(201).json(nuevoMp);
   } catch (error) {
     res.status(400).json({ error: 'Error al crear método', detalles: error.message });
@@ -246,8 +255,8 @@ app.put('/metodos-pago/:id', async (req, res) => {
   try {
     const mp = await MetodoPago.findByPk(req.params.id);
     if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
-    const { nombre } = req.body;
-    await mp.update({ nombre });
+    const { nombre_metodo } = req.body;
+    await mp.update({ nombre_metodo });
     res.json({ mensaje: 'Método actualizado', mp });
   } catch (error) {
     res.status(400).json({ error: 'Error al actualizar método', detalles: error.message });
@@ -265,6 +274,37 @@ app.delete('/metodos-pago/:id', async (req, res) => {
     }
   });
   
+// Endpoint para inicializar métodos de pago básicos
+app.post('/inicializar-metodos-pago', async (req, res) => {
+  try {
+    // Verificar si ya existen métodos de pago
+    const metodosExistentes = await MetodoPago.findAll();
+    
+    if (metodosExistentes.length === 0) {
+      // Crear métodos de pago básicos
+      const metodosBasicos = [
+        { nombre_metodo: 'Tarjeta de Crédito/Débito' },
+        { nombre_metodo: 'Yape (QR)' },
+        { nombre_metodo: 'Transferencia Bancaria' }
+      ];
+      
+      const metodosCreados = await MetodoPago.bulkCreate(metodosBasicos);
+      res.status(201).json({ 
+        mensaje: 'Métodos de pago inicializados', 
+        metodos: metodosCreados 
+      });
+    } else {
+      res.json({ 
+        mensaje: 'Los métodos de pago ya existen', 
+        metodos: metodosExistentes 
+      });
+    }
+  } catch (error) {
+    console.error('Error al inicializar métodos de pago:', error);
+    res.status(500).json({ error: 'Error al inicializar métodos de pago' });
+  }
+});
+
 app.post('/AgregarProducto', async (req, res) => {
   const { nombre, descripcion, precio, imagen_url } = req.body;
 
