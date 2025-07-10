@@ -5,6 +5,7 @@ import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/CambioContra.module.css';
 import Footer from '../../components/Footer/Footer';
 import { useLogin } from '../../hooks/LoginContext';
+import { cambiarContrasena } from '../../services/usarioServices';
 
 function CambioContra() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -39,7 +40,6 @@ function CambioContra() {
       return;
     }
 
-    // Usar id_usuario o id según lo que tenga el objeto
     const userId = currentUser.id_usuario || currentUser.id;
     if (!userId) {
       alert('Error: No se encontró el ID del usuario.');
@@ -47,25 +47,14 @@ function CambioContra() {
     }
 
     try {
-      const response = await fetch(`/api/usuarios/${userId}/cambiar-contrasena`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contrasenaActual: currentPassword,
-          nuevaContrasena: newPassword,
-        }),
+      await cambiarContrasena(userId, {
+        contrasenaActual: currentPassword,
+        nuevaContrasena: newPassword,
       });
-      const data = await response.json();
-      if (response.ok) {
-        alert('✅ Contraseña cambiada exitosamente. ¡Ahora puedes iniciar sesión con tu nueva contraseña!');
-        navigate('/login');
-      } else {
-        alert(data.error || 'Error al cambiar la contraseña.');
-      }
+      alert('✅ Contraseña cambiada exitosamente. ¡Ahora puedes iniciar sesión con tu nueva contraseña!');
+      navigate('/login');
     } catch (error) {
-      alert('Error de red al intentar cambiar la contraseña.');
+      alert(error.message || 'Error al cambiar la contraseña.');
     }
   };
 
