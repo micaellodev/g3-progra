@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './DetalleUsuarioCard.module.css';
+import styles from './UsuariosDetalleCard.module.css';
 
 const UsuariosDetalleCard = ({ usuario }) => {
   if (!usuario) return <p>No se encontró información del usuario.</p>;
