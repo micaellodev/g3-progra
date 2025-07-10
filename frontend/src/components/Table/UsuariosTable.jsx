@@ -7,25 +7,25 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const [usuariosEstado, setUsuariosEstado] = useState([]);
 
   useEffect(() => {
-    // Asegurarse de clonar el array y no referenciar directamente
+    // Clona los usuarios para manipular localmente su estado
     const copiaUsuarios = usuarios.map((u) => ({ ...u }));
     setUsuariosEstado(copiaUsuarios);
   }, [usuarios]);
 
   const handleDesactivar = (id) => {
-    const actualizados = usuariosEstado.map((u) =>
-      u.id === id ? { ...u, estado: 'Inactivo' } : u
+    setUsuariosEstado(prev =>
+      prev.map((u) =>
+        u.id === id ? { ...u, estado: 'Inactivo' } : u
+      )
     );
-    setUsuariosEstado(actualizados);
-    alert(`Usuario con ID ${id} desactivado`);
   };
 
   const handleActivar = (id) => {
-    const actualizados = usuariosEstado.map((u) =>
-      u.id === id ? { ...u, estado: 'Activo' } : u
+    setUsuariosEstado(prev =>
+      prev.map((u) =>
+        u.id === id ? { ...u, estado: 'Activo' } : u
+      )
     );
-    setUsuariosEstado(actualizados);
-    alert(`Usuario con ID ${id} activado`);
   };
 
   const handleVerDetalle = (id) => {
@@ -51,7 +51,11 @@ const UsuariosTable = ({ usuarios = [] }) => {
             <tr key={usuario.id}>
               <td className={styles.nombreCelda}>
                 <div className={styles.nombreContenido}>
-                  <img src={usuario.foto} alt="Foto" className={styles.usuarioFoto} />
+                  <img
+                    src={usuario.foto}
+                    alt="Foto"
+                    className={styles.usuarioFoto}
+                  />
                   {usuario.nombre}
                 </div>
               </td>

@@ -15,10 +15,10 @@ const DetalleUsuario = () => {
         const data = await obtenerUsuarioPorId(id);
         setUsuario(data);
       } catch (err) {
-        console.error('Error al obtener usuario', err);
+        console.error('Error al obtener usuario:', err);
       }
     };
-    if (id) fetchUsuario();
+    fetchUsuario();
   }, [id]);
 
   const handleSearch = (e) => {
@@ -26,7 +26,7 @@ const DetalleUsuario = () => {
   };
 
   if (!usuario) {
-    return <p style={{ margin: '30px' }}>Usuario no encontrado</p>;
+    return <p>Usuario no encontrado</p>;
   }
 
   return (
