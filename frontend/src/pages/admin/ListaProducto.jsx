@@ -40,6 +40,10 @@ export const ListaProducto = () => {
 
   // Eliminar producto
   const eliminar = async (id) => {
+    if (id === undefined || id === null) {
+      alert('ID de producto inválido. No se puede eliminar.');
+      return;
+    }
     if (!window.confirm('¿Estás seguro de eliminar este producto?')) return;
     try {
       await deleteProducto(id);
@@ -72,7 +76,7 @@ export const ListaProducto = () => {
   };
 
   const productosFiltrados = productos.filter(prod =>
-    prod.nombre.toLowerCase().includes(busquedaTabla.toLowerCase())
+    (prod.nombre || '').toLowerCase().includes(busquedaTabla.toLowerCase())
   );
 
   const getCategoriaNombre = (id_categoria) => {
@@ -125,7 +129,9 @@ export const ListaProducto = () => {
                 </td>
               </tr>
             ) : (
-              productosFiltrados.map(prod => (
+              productosFiltrados
+                .filter(prod => prod.id_producto !== undefined && prod.id_producto !== null)
+                .map(prod => (
                 <tr key={prod.id_producto}>
                   <td>#{String(prod.id_producto).padStart(4, '0')}</td>
                   <td>

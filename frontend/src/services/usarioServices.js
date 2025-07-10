@@ -89,3 +89,19 @@ export async function eliminarUsuario(id) {
     throw new Error(errorData.error || 'Error al eliminar usuario');
   }
 }
+
+export async function updateDireccionUsuario(id_usuario, direccion) {
+  const res = await fetch(`${api}/usuarios/${id_usuario}/direccion`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(direccion)
+  });
+  if (!res.ok) throw new Error('No se pudo actualizar la dirección');
+  return await res.json();
+}
+
+export async function getDireccionUsuario(id_usuario) {
+  const res = await fetch(`${api}/usuarios/${id_usuario}/direccion`);
+  if (!res.ok) throw new Error('No se pudo obtener la dirección');
+  return await res.json();
+}

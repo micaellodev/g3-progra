@@ -21,7 +21,7 @@ const Resultados = () => {
       navigate('/categoria');
     } else {
       const filtrados = juegos.filter(juego =>
-        juego.nombre.toLowerCase().includes(busquedaActual.toLowerCase())
+        (juego.nombre || '').toLowerCase().includes(busquedaActual.toLowerCase())
       );
       setProductosFiltrados(filtrados);
     }
