@@ -79,25 +79,7 @@ async function verifyAndSyncDatabase() {
   } catch (error) {
       console.error('Error al conectar a la base de datos:', error);
   }
-///////////////////////////
 
-app.get("/buscar", async (req, res) => {
-  try {
-    const { q = '', ordenar } = req.query;
-
-    let productos = await Producto.findAll({
-      where: {
-        nombre: sequelize.literal(`LOWER(nombre) LIKE LOWER('%${q}%')`)
-      },
-      order: ordenar === 'precio' ? [['precio', 'ASC']] : []
-    });
-
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar productos' });
-  }
-});
-//////////////////////////
 
 
 // ---------------------- PRODUCTOS ----------------------
