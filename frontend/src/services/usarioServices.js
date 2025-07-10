@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/usuarios";
+const api = import.meta.env.VITE_API_URL;
 
 // Obtener todos los usuarios
 export async function obtenerUsuarios() {
