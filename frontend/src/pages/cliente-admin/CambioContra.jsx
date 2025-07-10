@@ -4,22 +4,23 @@ import { useNavigate, Link } from 'react-router-dom';
 import TextInput from '../../components/Text/TextInput';
 import styles from '../../styles/CambioContra.module.css';
 import Footer from '../../components/Footer/Footer';
+import { useLogin } from '../../hooks/LoginContext';
 
 function CambioContra() {
+  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const { currentUser } = useLogin();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const emailRecuperacion = localStorage.getItem('emailRecuperacion');
-    if (!emailRecuperacion) {
-      alert('Debes pasar por el proceso de verificación de seguridad primero.');
-      localStorage.removeItem('emailRecuperacion');
-      navigate('/recuperarcontra');
+    if (!currentUser) {
+      alert('Debes iniciar sesión para cambiar la contraseña.');
+      navigate('/login');
     }
-  }, [navigate]);
+  }, [currentUser, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (newPassword !== confirmNewPassword) {
@@ -32,65 +33,53 @@ function CambioContra() {
       return;
     }
 
-    const emailRecuperacion = localStorage.getItem('emailRecuperacion');
-    if (!emailRecuperacion) {
-      alert('Error: No se encontró el correo de recuperación. Vuelve a iniciar el proceso.');
-      navigate('/recuperarcontra');
+    if (!currentUser) {
+      alert('Error: No se encontró el usuario autenticado.');
+      navigate('/login');
       return;
     }
 
-    let userUpdated = false;
-
-   
-    const usersString = localStorage.getItem('users');
-    if (usersString) {
-      try {
-        const users = JSON.parse(usersString);
-        const userIndex = users.findIndex(user => user.email === emailRecuperacion);
-        
-        if (userIndex !== -1) {
-          users[userIndex].password = newPassword;
-          localStorage.setItem('users', JSON.stringify(users));
-          userUpdated = true;
-        }
-      } catch (error) {
-        console.error("Error al parsear users:", error);
-      }
+    // Usar id_usuario o id según lo que tenga el objeto
+    const userId = currentUser.id_usuario || currentUser.id;
+    if (!userId) {
+      alert('Error: No se encontró el ID del usuario.');
+      return;
     }
 
-    
-    const registeredUserString = localStorage.getItem('registeredUser');
-    if (registeredUserString) {
-      try {
-        const registeredUser = JSON.parse(registeredUserString);
-        if (registeredUser.email === emailRecuperacion) {
-          const updatedUser = {
-            ...registeredUser,
-            password: newPassword,
-          };
-          localStorage.setItem('registeredUser', JSON.stringify(updatedUser));
-          userUpdated = true;
-        }
-      } catch (error) {
-        console.error("Error al parsear registeredUser:", error);
+    try {
+      const response = await fetch(`/api/usuarios/${userId}/cambiar-contrasena`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contrasenaActual: currentPassword,
+          nuevaContrasena: newPassword,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('✅ Contraseña cambiada exitosamente. ¡Ahora puedes iniciar sesión con tu nueva contraseña!');
+        navigate('/login');
+      } else {
+        alert(data.error || 'Error al cambiar la contraseña.');
       }
-    }
-
-
-    localStorage.removeItem('emailRecuperacion');
-
-    if (userUpdated) {
-      alert('✅ Contraseña cambiada exitosamente. ¡Ahora puedes iniciar sesión con tu nueva contraseña!');
-      navigate('/login');
-    } else {
-      alert('Error: No se pudo encontrar el usuario para cambiar la contraseña.');
-      navigate('/recuperarcontra');
+    } catch (error) {
+      alert('Error de red al intentar cambiar la contraseña.');
     }
   };
 
   return (
       <form onSubmit={handleSubmit} className={styles.form}>
         <h2>Cambiar Contraseña</h2>
+
+        <TextInput
+          type="password"
+          placeholder="Contraseña Actual"
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          required
+        />
 
         <TextInput
           type="password"
@@ -112,8 +101,7 @@ function CambioContra() {
           <button type="submit" className={styles.button}>Cambiar</button>
           <Link to="/login" className={styles.link}>Cancelar</Link>
         </div>
-        
-        <Footer /> 
+        <Footer />
       </form>
   );
 }
