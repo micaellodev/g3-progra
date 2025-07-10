@@ -86,21 +86,3 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 } 
-////////////////////////////////////////////////////
-export const BuscarProductos = async (req, res) => {
-  try {
-    const { q = '', ordenar } = req.query;
-
-    const productos = await Producto.findAll({
-      where: {
-        nombre: sequelize.literal(`LOWER(nombre) LIKE LOWER('%${q}%')`)
-      },
-      order: ordenar === 'precio' ? [['precio', 'ASC']] : []
-    });
-
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar productos' });
-  }
-}
-////////////////////////////////////////////////////
