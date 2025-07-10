@@ -14,7 +14,7 @@ const UsuariosDetalleCard = ({ usuario }) => {
         />
         <div className={styles.detalles}>
           <h2>{usuario.nombre}</h2>
-          <p><strong>ID:</strong> {usuario.id_usuario}</p>
+          <p><strong>ID:</strong> {usuario.id}</p> {/* <- CAMBIO */}
           <p><strong>Correo:</strong> {usuario.correo}</p>
           <p><strong>Estado:</strong> {usuario.estado}</p>
         </div>
