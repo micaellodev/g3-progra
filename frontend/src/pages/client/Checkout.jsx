@@ -7,7 +7,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import Footer from '../../components/Footer/Footer';
 import styles from '../../styles/Carrito.module.css';
 import { CartContext } from '../../hooks/CartContext';
-import { getDireccionUsuario, updateDireccionUsuario } from '../../services/userService';
+import { getDireccionUsuario, updateDireccionUsuario } from '../../services/usarioServices';
 import { useLogin } from '../../hooks/LoginContext';
 
 // Formulario simple para agregar/editar dirección
