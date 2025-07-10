@@ -92,11 +92,14 @@ export async function deleteProducto(id) {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
+      // Intenta extraer el mensaje de error que envía el backend, si existe
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || errorData.message || `Error ${response.status}: ${response.statusText}`);
     }
-    
-    return true;
+
+    // En la mayoría de los casos el backend devolverá un objeto con un mensaje de confirmación.
+    // Si no hay cuerpo, devolvemos `true` para indicar que la operación fue exitosa.
+    return await response.json().catch(() => true);
   } catch (error) {
     console.error('Error al eliminar producto:', error);
     throw error;

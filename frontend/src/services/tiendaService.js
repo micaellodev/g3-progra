@@ -214,3 +214,25 @@ export const LimpiarCarrito = async (usuarioId) => {
         console.error(error);
     }
 }   
+
+export const crearOrden = async (ordenData) => {
+    try {
+        const response = await fetch(`${API_URL}/ordenes`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(ordenData),
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Error al crear la orden");
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error("Error al crear orden:", error);
+        throw error;
+    }
+};   

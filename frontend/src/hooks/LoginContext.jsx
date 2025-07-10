@@ -57,13 +57,13 @@ export const LoginProvider = ({ children }) => {
   };
 
   const updateUser = async (newData) => {
-    if (!currentUser || !currentUser.id) {
+    if (!currentUser || !currentUser.id_usuario) {
       console.error('No hay usuario logueado para actualizar');
       throw new Error('Usuario no autenticado');
     }
 
     try {
-      const response = await actualizarUsuario(currentUser.id, newData);
+      const response = await actualizarUsuario(currentUser.id_usuario, newData);
 
       // En algunos backends, viene como { usuario: {...} }
       const updated = response.usuario || response;

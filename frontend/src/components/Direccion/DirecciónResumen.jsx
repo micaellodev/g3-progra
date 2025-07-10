@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
-import { DireccionContext } from '../../hooks/DireccionContext';
+import React from 'react';
 import styles from '../../styles/Carrito.module.css';
 
-const DireccionResumen = () => {
-  const { direccionEnvio } = useContext(DireccionContext);
-
-  if (!direccionEnvio) return <p>No hay dirección registrada.</p>;
+const DireccionResumen = ({ direccion }) => {
+  if (!direccion) return <p>No hay dirección registrada.</p>;
 
   return (
     <div className={styles.resumenBox}>
       <h2>Dirección de Envío</h2>
-      <p><strong>Nombre:</strong> {direccionEnvio.nombre}</p>
-      <p><strong>Dirección:</strong> {direccionEnvio.direccion}</p>
-      <p><strong>Teléfono:</strong> {direccionEnvio.telefono}</p>
+      <p><strong>Nombre:</strong> {direccion.nombre} {direccion.apellido}</p>
+      <p><strong>Departamento:</strong> {direccion.departamento}</p>
+      <p><strong>Ciudad:</strong> {direccion.ciudad}</p>
+      <p><strong>Dirección:</strong> {direccion.direccion}</p>
+      <p><strong>Código Postal:</strong> {direccion.codigoPostal}</p>
+      <p><strong>Teléfono:</strong> {direccion.telefono}</p>
     </div>
   );
 };

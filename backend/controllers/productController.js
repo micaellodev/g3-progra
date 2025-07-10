@@ -1,5 +1,6 @@
 import { Producto } from '../models/Producto.js';
 import { Categoria } from '../models/Categoria.js';
+import { DetalleCategoria } from '../models/DetalleCategoria.js';
 
 export const createProduct = async (req, res) => {
   try {
@@ -70,6 +71,9 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    // Eliminar dependencias en DetalleCategoria
+    await DetalleCategoria.destroy({ where: { id_producto: id } });
+    // Ahora sí eliminar el producto
     const deleted = await Producto.destroy({
       where: { id_producto: id }
     });

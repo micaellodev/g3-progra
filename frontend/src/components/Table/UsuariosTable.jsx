@@ -1,4 +1,3 @@
-// UsuariosTable.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './ListaUsuario.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -8,25 +7,32 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const [usuariosEstado, setUsuariosEstado] = useState([]);
 
   useEffect(() => {
-    setUsuariosEstado(usuarios);
+    const copiaUsuarios = usuarios.map((u) => ({ ...u }));
+    setUsuariosEstado(copiaUsuarios);
   }, [usuarios]);
 
   const handleDesactivar = (id) => {
-    setUsuariosEstado(prevUsuarios =>
-      prevUsuarios.map(u =>
+    setUsuariosEstado(prev =>
+      prev.map((u) =>
         u.id === id ? { ...u, estado: 'Inactivo' } : u
       )
     );
-    alert(`Usuario con ID ${id} desactivado`);
   };
 
   const handleActivar = (id) => {
-    setUsuariosEstado(prevUsuarios =>
-      prevUsuarios.map(u =>
+    setUsuariosEstado(prev =>
+      prev.map((u) =>
         u.id === id ? { ...u, estado: 'Activo' } : u
       )
     );
-    alert(`Usuario con ID ${id} activado`);
+  };
+
+  const handleVerDetalle = (id) => {
+    if (id) {
+      navigate(`/admin/usuarios/${id}`);
+    } else {
+      console.error('ID de usuario inválido');
+    }
   };
 
   return (
@@ -35,7 +41,6 @@ const UsuariosTable = ({ usuarios = [] }) => {
         <thead>
           <tr>
             <th>Nombre Completo</th>
-            <th>Fecha Registro</th>
             <th>Estado</th>
             <th>Acciones</th>
           </tr>
@@ -45,16 +50,27 @@ const UsuariosTable = ({ usuarios = [] }) => {
             <tr key={usuario.id}>
               <td className={styles.nombreCelda}>
                 <div className={styles.nombreContenido}>
-                  <img src={usuario.foto} alt="Foto" className={styles.usuarioFoto} />
+                  <img
+                    src={usuario.foto}
+                    alt="Foto"
+                    className={styles.usuarioFoto}
+                  />
                   {usuario.nombre}
                 </div>
               </td>
-              <td>{usuario.fechaRegistro}</td>
-              <td className={usuario.estado === 'Activo' ? styles.estadoActivo : styles.estadoInactivo}>{usuario.estado}</td>
+              <td
+                className={
+                  usuario.estado === 'Activo'
+                    ? styles.estadoActivo
+                    : styles.estadoInactivo
+                }
+              >
+                {usuario.estado}
+              </td>
               <td>
                 <button
                   className={styles.verBtn}
-                  onClick={() => navigate(`/admin/usuarios/${usuario.id}`)}
+                  onClick={() => handleVerDetalle(usuario.id)}
                 >
                   Ver Detalle
                 </button>

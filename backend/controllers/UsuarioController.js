@@ -1,91 +1,104 @@
-// controllers/ProductController.js
+import { Usuario } from '../models/Usuario.js';
 
-import { Producto } from '../models/Producto.js';
-import { Categoria } from '../models/Categoria.js';
-
-// Crear un nuevo producto
-export const crearProducto = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
-    const { nombre, descripcion, precio, stock, imagen, idCategoria } = req.body;
-    const nuevoProducto = await Producto.create({
+    const usuarios = await Usuario.findAll();
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener usuarios' });
+  }
+};
+
+export const getUserDetail = async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar usuario' });
+  }
+};
+
+export const createUser = async (req, res) => {
+  try {
+    const { nombre, apellido, correo, pais, clinica, contrasena } = req.body;
+    if (!nombre || !apellido || !correo || !pais || !clinica || !contrasena) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+    const existe = await Usuario.findOne({ where: { correo } });
+    if (existe) {
+      return res.status(400).json({ error: 'El correo ya está registrado' });
+    }
+    const nuevoUsuario = await Usuario.create({
       nombre,
-      descripcion,
-      precio,
-      stock,
-      imagen,
-      categoryId: idCategoria
+      apellido,
+      correo,
+      pais,
+      clinica,
+      contrasena
     });
-    res.status(201).json(nuevoProducto);
+    res.status(201).json(nuevoUsuario);
   } catch (error) {
-    console.error('Error al crear producto:', error);
-    res.status(500).json({ error: 'Error al crear el producto' });
+    res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
   }
 };
 
-// Listar todos los productos (con su categoría)
-export const obtenerProductos = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
-    const productos = await Producto.findAll({
-      include: [{ model: Categoria, as: 'category' }]
-    });
-    res.status(200).json(productos);
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const { nombre, apellido, correo, pais } = req.body;
+    await usuario.update({ nombre, apellido, correo, pais });
+    res.json({ mensaje: 'Perfil actualizado', usuario });
   } catch (error) {
-    console.error('Error al obtener productos:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(400).json({ error: 'Error al actualizar usuario', detalles: error.message });
   }
 };
 
-// Obtener un producto por su ID
-export const obtenerProductoPorId = async (req, res) => {
+export const changePassword = async (req, res) => {
   try {
-    const producto = await Producto.findByPk(req.params.id, {
-      include: [{ model: Categoria, as: 'category' }]
-    });
-    if (!producto) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
+    const { contrasenaActual, nuevaContrasena } = req.body;
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    if (usuario.contrasena !== contrasenaActual) {
+      return res.status(400).json({ error: 'La contraseña actual es incorrecta' });
     }
-    res.status(200).json(producto);
+    await usuario.update({ contrasena: nuevaContrasena });
+    res.json({ mensaje: 'Contraseña actualizada correctamente' });
   } catch (error) {
-    console.error('Error al obtener producto:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: 'Error al cambiar la contraseña', detalles: error.message });
   }
 };
 
-// Actualizar un producto existente
-export const actualizarProducto = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
-    const [filasActualizadas] = await Producto.update(req.body, {
-      where: { id: req.params.id }
-    });
-
-    if (!filasActualizadas) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    const productoActualizado = await Producto.findByPk(req.params.id, {
-      include: [{ model: Categoria, as: 'category' }]
-    });
-    res.status(200).json(productoActualizado);
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    await usuario.destroy();
+    res.status(204).send();
   } catch (error) {
-    console.error('Error al actualizar producto:', error);
-    res.status(500).json({ error: 'Error al actualizar el producto' });
+    res.status(500).json({ error: 'Error al eliminar usuario' });
   }
 };
 
-// Eliminar un producto
-export const eliminarProducto = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
-    const filasEliminadas = await Producto.destroy({
-      where: { id: req.params.id }
-    });
-
-    if (!filasEliminadas) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
+    const { correo, contrasena } = req.body;
+    if (!correo || !contrasena) {
+      return res.status(400).json({ error: 'Correo y contraseña son obligatorios' });
     }
-
-    res.status(204).send(); // Sin contenido
+    const usuario = await Usuario.findOne({ where: { correo } });
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    if (usuario.contrasena !== contrasena) {
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
+    }
+    res.json({ mensaje: 'Login exitoso', usuario });
   } catch (error) {
-    console.error('Error al eliminar producto:', error);
-    res.status(500).json({ error: 'Error al eliminar el producto' });
+    res.status(500).json({ error: 'Error en el login', detalles: error.message });
   }
 };
+
+
+

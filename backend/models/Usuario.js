@@ -34,10 +34,30 @@ export const Usuario = sequelize.define("Usuario", {
   contrasena: {
     type: DataTypes.STRING(100),
     allowNull: false
+  },
+  departamento: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  ciudad: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  direccion: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  codigoPostal: {
+    type: DataTypes.STRING(20),
+    allowNull: true
+  },
+  telefono: {
+    type: DataTypes.STRING(20),
+    allowNull: true
   }
 }, {
   freezeTableName: true,
-  tableName: 'Usuario',
+  tableName: 'usuario',
   timestamps: false
 });
 export default Usuario;

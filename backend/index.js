@@ -6,10 +6,6 @@ import { sequelize } from './config/database.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import carritoRoutes from './routes/carritoRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-import usuarioRoutes from './routes/usuarioRoutes.js';
-import ordenRoutes from './routes/ordenRoutes.js';
-import detalleOrdenRoutes from './routes/detalleOrdenRoutes.js';
-import metodoPagoRoutes from './routes/metodoPagoRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,32 +17,25 @@ const corsOptions = {
   // Permitir cualquier origen en desarrollo, reflejando el encabezado Origin
   origin: ['https://lemon-bush-0e12a871e.2.azurestaticapps.net', 'http://localhost:5173', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-
-// Manejar solicitudes OPTIONS (preflight)
-// Manejar solicitudes OPTIONS (preflight) para todos los endpoints
-app.options(/.*/, cors(corsOptions));
-
-// Rutas API
-app.use('/api/categorias', categoriaRoutes);
-app.use('/api/carrito', carritoRoutes);
-app.use('/api/productos', productRoutes);
-app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/ordenes', ordenRoutes);
-app.use('/api/detalle-ordenes', detalleOrdenRoutes);
-app.use('/api/metodos-pago', metodoPagoRoutes);
-
-// Rutas de salud y raíz
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.use('/categorias', categoriaRoutes);
+app.use('/carrito', carritoRoutes);
 app.get('/health', (req, res) => res.send('OK'));
 app.get('/', (req, res) => res.send('Hola desde el backend'));
 
 sequelize.authenticate()
-  .then(() => {
+  .then(async () => {
     console.log('✅ Conexión exitosa a Supabase');
+    
+    // Sincronizar modelos con la base de datos (crear tablas si no existen)
+    try {
+      await sequelize.sync({ alter: true });
+      console.log('✅ Tablas sincronizadas correctamente');
+    } catch (error) {
+      console.log('⚠️ Error al sincronizar tablas:', error.message);
+    }
+    
     app.listen(port, () => {
       console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
     });
@@ -80,6 +69,8 @@ async function verifyAndSyncDatabase() {
 
 
 // ---------------------- PRODUCTOS ----------------------
+
+
 // GET - Obtener todos los productos
 app.get("/productos", async (req, res) => {
     try {
@@ -155,16 +146,282 @@ app.delete("/productos/:id", async (req, res) => {
     }
 });
 
-// Ruta de salud y raíz
-app.get('/health', (req, res) => res.send('OK'));
-app.get('/', (req, res) => res.send('Hola desde el backend'));
 
-// Manejador de errores global
-app.use((err, req, res, next) => {
-  console.error('Error no manejado:', err);
-  res.status(500).json({ 
-    error: 'Error interno del servidor',
-    mensaje: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-  });
+
+// ---------------------- USUARIOS ----------------------
+app.get('/usuarios', async (req, res) => {
+  try {
+    const usuarios = await Usuario.findAll();
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener usuarios' });
+  }
 });
+
+// Obtener un usuario por ID
+app.get('/usuarios/:id', async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar usuario' });
+  }
+});
+
+// Crear un nuevo usuario
+app.post('/usuarios', async (req, res) => {
+  try {
+    const { nombre, apellido, correo, pais, clinica, contrasena } = req.body;
+
+    // Validar campos requeridos
+    if (!nombre || !apellido || !correo || !pais || !clinica || !contrasena) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+
+    // Verificar si el correo ya está registrado
+    const existe = await Usuario.findOne({ where: { correo } });
+    if (existe) {
+      return res.status(400).json({ error: 'El correo ya está registrado' });
+    }
+
+    const nuevoUsuario = await Usuario.create({
+      nombre,
+      apellido,
+      correo,
+      pais,
+      clinica,
+      contrasena
+    });
+
+    res.status(201).json(nuevoUsuario);
+  } catch (error) {
+    res.status(400).json({ error: 'Error al crear usuario', detalles: error.message });
+  }
+});
+
+// Actualizar nombre, apellido y correo
+app.put('/usuarios/:id', async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    const { nombre, apellido, correo, pais } = req.body;
+    await usuario.update({ nombre, apellido, correo, pais });
+
+    res.json({ mensaje: 'Perfil actualizado', usuario });
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar usuario', detalles: error.message });
+  }
+});
+
+// Cambiar contraseña
+app.put('/usuarios/:id/cambiar-contrasena', async (req, res) => {
+  try {
+    const { contrasenaActual, nuevaContrasena } = req.body;
+
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    if (usuario.contrasena !== contrasenaActual) {
+      return res.status(400).json({ error: 'La contraseña actual es incorrecta' });
+    }
+
+    await usuario.update({ contrasena: nuevaContrasena });
+
+    res.json({ mensaje: 'Contraseña actualizada correctamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al cambiar la contraseña', detalles: error.message });
+  }
+});
+
+// Eliminar usuario
+app.delete('/usuarios/:id', async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    await usuario.destroy();
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar usuario' });
+  }
+});
+
+// ---------------------- ORDENES ----------------------
+app.get('/ordenes', async (req, res) => {
+  try {
+    const ordenes = await Orden.findAll();
+    res.json(ordenes);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener órdenes' });
+  }
+});
+
+app.get('/ordenes/:id', async (req, res) => {
+  try {
+    const ord = await Orden.findByPk(req.params.id);
+    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
+    res.json(ord);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar orden' });
+  }
+});
+
+app.post('/ordenes', async (req, res) => {
+  try {
+    const { usuarioId, total } = req.body;
+    const nuevaOrden = await Orden.create({ usuarioId, total });
+    res.status(201).json(nuevaOrden);
+  } catch (error) {
+    res.status(400).json({ error: 'Error al crear orden', detalles: error.message });
+  }
+});
+
+app.put('/ordenes/:id', async (req, res) => {
+  try {
+    const ord = await Orden.findByPk(req.params.id);
+    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
+    const { usuarioId, total } = req.body;
+    await ord.update({ usuarioId, total });
+    res.json({ mensaje: 'Orden actualizada', ord });
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar orden', detalles: error.message });
+  }
+});
+
+app.delete('/ordenes/:id', async (req, res) => {
+  try {
+    const ord = await Orden.findByPk(req.params.id);
+    if (!ord) return res.status(404).json({ error: 'Orden no encontrada' });
+    await ord.destroy();
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar orden' });
+  }
+});
+
+// ---------------------- DETALLE ORDEN ----------------------
+app.get('/detalle-ordenes', async (req, res) => {
+  try {
+    const detalles = await DetalleOrden.findAll();
+    res.json(detalles);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener detalles' });
+  }
+});
+
+app.get('/detalle-ordenes/:id', async (req, res) => {
+  try {
+    const det = await DetalleOrden.findByPk(req.params.id);
+    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
+    res.json(det);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar detalle' });
+  }
+});
+
+app.post('/detalle-ordenes', async (req, res) => {
+  try {
+    const { ordenId, productoId, cantidad, precio } = req.body;
+    const nuevoDetalle = await DetalleOrden.create({ ordenId, productoId, cantidad, precio });
+    res.status(201).json(nuevoDetalle);
+  } catch (error) {
+    res.status(400).json({ error: 'Error al crear detalle', detalles: error.message });
+  }
+});
+
+app.put('/detalle-ordenes/:id', async (req, res) => {
+  try {
+    const det = await DetalleOrden.findByPk(req.params.id);
+    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
+    const { ordenId, productoId, cantidad, precio } = req.body;
+    await det.update({ ordenId, productoId, cantidad, precio });
+    res.json({ mensaje: 'Detalle actualizado', det });
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar detalle', detalles: error.message });
+  }
+});
+
+app.delete('/detalle-ordenes/:id', async (req, res) => {
+  try {
+    const det = await DetalleOrden.findByPk(req.params.id);
+    if (!det) return res.status(404).json({ error: 'Detalle no encontrado' });
+    await det.destroy();
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar detallet'})
+  }
+});
+
+// ---------------------- METODOS DE PAGO ----------------------
+app.get('/metodos-pago', async (req, res) => {
+  try {
+    const mps = await MetodoPago.findAll();
+    res.json(mps);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener métodos de pago' });
+  }
+});
+
+app.get('/metodos-pago/:id', async (req, res) => {
+  try {
+    const mp = await MetodoPago.findByPk(req.params.id);
+    if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
+    res.json(mp);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar método' });
+  }
+});
+
+app.post('/metodos-pago', async (req, res) => {
+  try {
+    const { nombre } = req.body;
+    const nuevoMp = await MetodoPago.create({ nombre });
+    res.status(201).json(nuevoMp);
+  } catch (error) {
+    res.status(400).json({ error: 'Error al crear método', detalles: error.message });
+  }
+});
+
+app.put('/metodos-pago/:id', async (req, res) => {
+  try {
+    const mp = await MetodoPago.findByPk(req.params.id);
+    if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
+    const { nombre } = req.body;
+    await mp.update({ nombre });
+    res.json({ mensaje: 'Método actualizado', mp });
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar método', detalles: error.message });
+  }
+});
+
+app.delete('/metodos-pago/:id', async (req, res) => {
+    try {
+      const mp = await MetodoPago.findByPk(req.params.id);
+      if (!mp) return res.status(404).json({ error: 'Método no encontrado' });
+      await mp.destroy();
+      res.sendStatus(204); // ó res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: 'Error al eliminar método' });
+    }
+  });
+  
+app.post('/AgregarProducto', async (req, res) => {
+  const { nombre, descripcion, precio, imagen_url } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('productos')
+      .insert([{ nombre, descripcion, precio, imagen_url }]);
+
+    if (error) throw error;
+
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('Error al agregar producto:', error);
+    res.status(500).json({ error: 'Error al agregar producto' });
+  }
+});
+
+

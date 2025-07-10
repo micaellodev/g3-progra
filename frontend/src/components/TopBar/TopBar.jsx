@@ -141,3 +141,4 @@ const TopBar = ({ busqueda, setBusqueda }) => {
 };
 
 export default TopBar;
+
