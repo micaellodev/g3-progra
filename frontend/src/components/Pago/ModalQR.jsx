@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { CartContext } from '../../hooks/CartContext';
 import { DireccionContext } from '../../hooks/DireccionContext';
-import { LoginContext } from '../../hooks/LoginContext';
+import { useLogin } from '../../hooks/LoginContext';
 import { crearOrden } from '../../services/tiendaService';
 import styles from './ModalPagos.module.css';
 import yapeLogo from './yape-logo.png';
@@ -15,7 +15,7 @@ const ModalQR = ({ visible, onClose }) => {
   const navigate = useNavigate();
   const { cart, selectedIds, clearCart } = useContext(CartContext);
   const { direccionEnvio } = useContext(DireccionContext);
-  const { currentUser } = useContext(LoginContext);
+  const { currentUser } = useContext();
 
   if (!visible) return null;
 
@@ -26,6 +26,16 @@ const ModalQR = ({ visible, onClose }) => {
     setError('');
 
     try {
+      // Validar que el usuario esté logueado
+      if (!currentUser || !currentUser.id_usuario) {
+        throw new Error('Debes iniciar sesión para realizar una compra');
+      }
+
+      // Validar que haya dirección de envío
+      if (!direccionEnvio) {
+        throw new Error('Debes completar la dirección de envío');
+      }
+
       // Obtener productos seleccionados
       const productosSeleccionados = cart.filter(producto => selectedIds.includes(producto.id));
       

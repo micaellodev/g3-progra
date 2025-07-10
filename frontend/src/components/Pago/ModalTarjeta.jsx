@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { CartContext } from '../../hooks/CartContext';
 import { DireccionContext } from '../../hooks/DireccionContext';
-import { LoginContext } from '../../hooks/LoginContext';
+import { useLogin } from '../../hooks/LoginContext';
 import { crearOrden } from '../../services/tiendaService';
 import styles from './ModalPagos.module.css';
 
@@ -26,7 +26,7 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
   const navigate = useNavigate();
   const { cart, selectedIds, clearCart } = useContext(CartContext);
   const { direccionEnvio } = useContext(DireccionContext);
-  const { currentUser } = useContext(LoginContext);
+  const { currentUser } = useLogin();
 
   if (!visible) return null;
 
