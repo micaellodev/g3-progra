@@ -1,3 +1,4 @@
+// UsuariosTable.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './ListaUsuario.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -34,61 +35,45 @@ const UsuariosTable = ({ usuarios = [] }) => {
         <thead>
           <tr>
             <th>Nombre Completo</th>
-            <th>Fecha Registro</th>
             <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {usuariosEstado.map((usuario) => {
-            const fechaMostrada = usuario.fechaRegistro || new Date().toLocaleDateString();
-
-            if (!usuario.id) {
-              console.warn('Usuario sin ID:', usuario);
-              return null; // No renderiza si no hay ID
-            }
-
-            return (
-              <tr key={usuario.id}>
-                <td className={styles.nombreCelda}>
-                  <div className={styles.nombreContenido}>
-                    <img src={usuario.foto} alt="Foto" className={styles.usuarioFoto} />
-                    {usuario.nombre}
-                  </div>
-                </td>
-                <td>{fechaMostrada}</td>
-                <td className={usuario.estado === 'Activo' ? styles.estadoActivo : styles.estadoInactivo}>
-                  {usuario.estado}
-                </td>
-                <td>
+          {usuariosEstado.map((usuario) => (
+            <tr key={usuario.id}>
+              <td className={styles.nombreCelda}>
+                <div className={styles.nombreContenido}>
+                  <img src={usuario.foto} alt="Foto" className={styles.usuarioFoto} />
+                  {usuario.nombre}
+                </div>
+              </td>
+              <td className={usuario.estado === 'Activo' ? styles.estadoActivo : styles.estadoInactivo}>{usuario.estado}</td>
+              <td>
+                <button
+                  className={styles.verBtn}
+                  onClick={() => navigate(`/admin/usuarios/${usuario.id}`)}
+                >
+                  Ver Detalle
+                </button>
+                {usuario.estado === 'Activo' ? (
                   <button
-                    className={styles.verBtn}
-                    onClick={() => {
-                      console.log('Ver detalle usuario:', usuario.id);
-                      navigate(`/admin/usuarios/${usuario.id}`);
-                    }}
+                    className={styles.desactivarBtn}
+                    onClick={() => handleDesactivar(usuario.id)}
                   >
-                    Ver Detalle
+                    Desactivar
                   </button>
-                  {usuario.estado === 'Activo' ? (
-                    <button
-                      className={styles.desactivarBtn}
-                      onClick={() => handleDesactivar(usuario.id)}
-                    >
-                      Desactivar
-                    </button>
-                  ) : (
-                    <button
-                      className={styles.activarBtn}
-                      onClick={() => handleActivar(usuario.id)}
-                    >
-                      Activar
-                    </button>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
+                ) : (
+                  <button
+                    className={styles.activarBtn}
+                    onClick={() => handleActivar(usuario.id)}
+                  >
+                    Activar
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -12,7 +12,7 @@ const UsuariosDetalleCard = ({ usuario }) => {
           <h2>{usuario.nombre}</h2>
           <hr />
           <p><strong>Correo:</strong> {usuario.correo || 'No disponible'}</p>
-          <p><strong>Fecha de registro:</strong> {usuario.fechaRegistro}</p>
+          {/* Se eliminó la línea de fechaRegistro */}
           <p><strong>Estado:</strong> {usuario.estado}</p>
         </div>
         {usuario.foto && (

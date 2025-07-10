@@ -1,3 +1,4 @@
+// DetalleUsuario.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
@@ -13,11 +14,7 @@ const DetalleUsuario = () => {
     const fetchUsuario = async () => {
       try {
         const data = await obtenerUsuarioPorId(id);
-        const usuarioConFecha = {
-          ...data,
-          fechaRegistro: new Date().toLocaleDateString('es-PE'),
-        };
-        setUsuario(usuarioConFecha);
+        setUsuario(data);
       } catch (err) {
         console.error('Error al obtener usuario', err);
       }
