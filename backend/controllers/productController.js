@@ -1,6 +1,8 @@
 import { Producto } from '../models/Producto.js';
 import { Categoria } from '../models/Categoria.js';
 import { DetalleCategoria } from '../models/DetalleCategoria.js';
+import { Producto } from '../models/Producto.js';
+import { sequelize } from '../config/database.js';
 
 export const createProduct = async (req, res) => {
   try {
@@ -84,3 +86,21 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 } 
+////////////////////////////////////////////////////
+export const BuscarProductos = async (req, res) => {
+  try {
+    const { q = '', ordenar } = req.query;
+
+    const productos = await Producto.findAll({
+      where: {
+        nombre: sequelize.literal(`LOWER(nombre) LIKE LOWER('%${q}%')`)
+      },
+      order: ordenar === 'precio' ? [['precio', 'ASC']] : []
+    });
+
+    res.json(productos);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar productos' });
+  }
+}
+////////////////////////////////////////////////////
