@@ -11,8 +11,14 @@ const ListaUsuarios = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       const data = await obtenerUsuarios();
-      setUsuarios(data);
-      setUsuariosFiltrados(data);
+
+      const usuariosConFecha = data.map(u => ({
+        ...u,
+        fechaRegistro: new Date().toLocaleDateString('es-PE'),
+      }));
+
+      setUsuarios(usuariosConFecha);
+      setUsuariosFiltrados(usuariosConFecha);
     };
     fetchUsuarios();
   }, []);

@@ -11,8 +11,16 @@ const DetalleUsuario = () => {
 
   useEffect(() => {
     const fetchUsuario = async () => {
-      const data = await getUsuarioById(id);
-      setUsuario(data);
+      try {
+        const data = await obtenerUsuarioPorId(id);
+        const usuarioConFecha = {
+          ...data,
+          fechaRegistro: new Date().toLocaleDateString('es-PE'),
+        };
+        setUsuario(usuarioConFecha);
+      } catch (err) {
+        console.error('Error al obtener usuario', err);
+      }
     };
     fetchUsuario();
   }, [id]);
@@ -27,7 +35,7 @@ const DetalleUsuario = () => {
 
   return (
     <>
-      <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} />
+      <TopBarAdmin busqueda={busqueda} setBusqueda={setBusqueda} handleSearch={handleSearch} />
       <h1 style={{ margin: '20px 30px' }}>Detalle del Usuario</h1>
       <UsuariosDetalleCard usuario={usuario} />
     </>
