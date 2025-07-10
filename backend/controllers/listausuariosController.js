@@ -8,25 +8,37 @@ export const getAllUsers = async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
-    // Sequelize ya devuelve con id
-    res.status(200).json(usuarios);
+    const usuariosFormateados = usuarios.map((u) => ({
+      ...u.dataValues,
+      id: u.id_usuario, // importante para que el frontend siga usando "id"
+    }));
+
+    res.status(200).json(usuariosFormateados);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener usuarios', error });
   }
 };
 
-// Obtener detalle de un usuario por ID, incluyendo sus órdenes
+// Obtener detalle de un usuario por ID (incluye órdenes)
 export const getUserById = async (req, res) => {
   try {
-    const usuario = await Usuario.findByPk(req.params.id, {
-      include: [{ model: Orden }],
-    });
-
+    const usuario = await Usuario.findOne({ where: { id_usuario: req.params.id } });
     if (!usuario) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    res.status(200).json(usuario);
+    const ordenes = await Orden.findAll({
+      where: { id_usuario: req.params.id },
+      order: [['createdAt', 'DESC']],
+    });
+
+    const usuarioConOrdenes = {
+      ...usuario.dataValues,
+      id: usuario.id_usuario, // igual que arriba
+      ordenes,
+    };
+
+    res.status(200).json(usuarioConOrdenes);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener el usuario', error });
   }

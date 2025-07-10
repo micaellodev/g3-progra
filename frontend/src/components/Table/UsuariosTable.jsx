@@ -7,7 +7,6 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const [usuariosEstado, setUsuariosEstado] = useState([]);
 
   useEffect(() => {
-    // Clona los usuarios para manipular localmente su estado
     const copiaUsuarios = usuarios.map((u) => ({ ...u }));
     setUsuariosEstado(copiaUsuarios);
   }, [usuarios]);
@@ -15,7 +14,7 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const handleDesactivar = (id) => {
     setUsuariosEstado(prev =>
       prev.map((u) =>
-        u.id === id ? { ...u, estado: 'Inactivo' } : u
+        u.id_usuario === id ? { ...u, estado: 'Inactivo' } : u
       )
     );
   };
@@ -23,7 +22,7 @@ const UsuariosTable = ({ usuarios = [] }) => {
   const handleActivar = (id) => {
     setUsuariosEstado(prev =>
       prev.map((u) =>
-        u.id === id ? { ...u, estado: 'Activo' } : u
+        u.id_usuario === id ? { ...u, estado: 'Activo' } : u
       )
     );
   };
@@ -48,7 +47,7 @@ const UsuariosTable = ({ usuarios = [] }) => {
         </thead>
         <tbody>
           {usuariosEstado.map((usuario) => (
-            <tr key={usuario.id}>
+            <tr key={usuario.id_usuario}>
               <td className={styles.nombreCelda}>
                 <div className={styles.nombreContenido}>
                   <img
@@ -71,21 +70,21 @@ const UsuariosTable = ({ usuarios = [] }) => {
               <td>
                 <button
                   className={styles.verBtn}
-                  onClick={() => handleVerDetalle(usuario.id)}
+                  onClick={() => handleVerDetalle(usuario.id_usuario)}
                 >
                   Ver Detalle
                 </button>
                 {usuario.estado === 'Activo' ? (
                   <button
                     className={styles.desactivarBtn}
-                    onClick={() => handleDesactivar(usuario.id)}
+                    onClick={() => handleDesactivar(usuario.id_usuario)}
                   >
                     Desactivar
                   </button>
                 ) : (
                   <button
                     className={styles.activarBtn}
-                    onClick={() => handleActivar(usuario.id)}
+                    onClick={() => handleActivar(usuario.id_usuario)}
                   >
                     Activar
                   </button>
