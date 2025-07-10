@@ -16,6 +16,8 @@ import carritoRoutes from './routes/carritoRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import usuarioRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import listaUsuariosRoutes from './routes/listausuariosRoutes.js';
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,6 +33,7 @@ app.use('/categorias', categoriaRoutes);
 app.use('/carrito', carritoRoutes);
 app.use('/usuarios', usuarioRoutes);
 app.use('/ordenes', orderRoutes);
+app.use('/listausuarios', listaUsuariosRoutes);
 app.get('/health', (req, res) => res.send('OK'));
 app.get('/',        (req, res) => res.send('Hola desde el backend'));
 

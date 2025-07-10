@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './UsuariosDetalleCard.module.css';
-//
 
 const UsuariosDetalleCard = ({ usuario }) => {
   if (!usuario) return <p>No se encontró información del usuario.</p>;
@@ -26,8 +25,8 @@ const UsuariosDetalleCard = ({ usuario }) => {
         {usuario.ordenes && usuario.ordenes.length > 0 ? (
           <ul>
             {usuario.ordenes.map((orden) => (
-              <li key={orden._id}>
-                <p><strong>Orden ID:</strong> {orden._id}</p>
+              <li key={orden.id}>
+                <p><strong>Orden ID:</strong> {orden.id}</p>
                 <p><strong>Fecha:</strong> {new Date(orden.createdAt).toLocaleDateString('es-PE')}</p>
                 <p><strong>Total:</strong> S/ {orden.total}</p>
               </li>
