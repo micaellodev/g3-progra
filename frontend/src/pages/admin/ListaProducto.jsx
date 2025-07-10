@@ -7,6 +7,7 @@ import {
   deleteProducto
 } from '../../services/ProductoService';
 import { fetchCategorias } from '../../services/ProductoService';
+import styles from '../../components/Table/ListaUsuario.module.css';
 
 export const ListaProducto = () => {
   const [busquedaTopbar, setBusquedaTopbar] = useState('');
@@ -102,12 +103,8 @@ export const ListaProducto = () => {
         />
       </div>
 
-      <div style={{ overflowX: 'auto' }}>
-        <table
-          border="1"
-          cellPadding="10"
-          style={{ width: '100%', borderCollapse: 'collapse' }}
-        >
+      <div className={styles.tableWrapper}>
+        <table className={styles.usuarioTable}>
           <thead style={{ backgroundColor: '#f2f2f2' }}>
             <tr>
               <th>Id</th>

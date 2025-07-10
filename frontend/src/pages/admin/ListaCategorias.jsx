@@ -7,6 +7,7 @@ import {
 } from '../../services/CategoriaService';
 import AgregarCategoria from './AgregarCategorias';
 import TopBarAdmin from '../../components/TopBar/TopBarAdmin';
+import styles from '../../components/Table/ListaUsuario.module.css';
 
 function ListaCategorias() {
   const [busqueda, setBusqueda] = useState('');
@@ -102,76 +103,74 @@ function ListaCategorias() {
         </div>
       )}
 
-      <table
-        border="1"
-        cellPadding="10"
-        style={{ width: '100%', borderCollapse: 'collapse' }}
-      >
-        <thead style={{ backgroundColor: '#f2f2f2' }}>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categoriasLista
-            .filter(cat =>
-              cat.nombre.toLowerCase().includes(busqueda.toLowerCase())
-            )
-            .map(cat => (
-              <tr key={cat.id_categoria}>
-                <td>#{String(cat.id_categoria).padStart(4, '0')}</td>
-                <td>
-                  {modoEdicion === cat.id_categoria ? (
-                    <input
-                      value={nombreEditado}
-                      onChange={e => setNombreEditado(e.target.value)}
-                    />
-                  ) : (
-                    cat.nombre
-                  )}
-                </td>
-                <td>
-                  {modoEdicion === cat.id_categoria ? (
-                    <input
-                      value={descripcionEditada}
-                      onChange={e => setDescripcionEditada(e.target.value)}
-                    />
-                  ) : (
-                    cat.descripcion
-                  )}
-                </td>
-                <td>
-                  {modoEdicion === cat.id_categoria ? (
+      <div className={styles.tableWrapper}>
+        <table className={styles.usuarioTable}>
+          <thead style={{ backgroundColor: '#f2f2f2' }}>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categoriasLista
+              .filter(cat =>
+                cat.nombre.toLowerCase().includes(busqueda.toLowerCase())
+              )
+              .map(cat => (
+                <tr key={cat.id_categoria}>
+                  <td>#{String(cat.id_categoria).padStart(4, '0')}</td>
+                  <td>
+                    {modoEdicion === cat.id_categoria ? (
+                      <input
+                        value={nombreEditado}
+                        onChange={e => setNombreEditado(e.target.value)}
+                      />
+                    ) : (
+                      cat.nombre
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === cat.id_categoria ? (
+                      <input
+                        value={descripcionEditada}
+                        onChange={e => setDescripcionEditada(e.target.value)}
+                      />
+                    ) : (
+                      cat.descripcion
+                    )}
+                  </td>
+                  <td>
+                    {modoEdicion === cat.id_categoria ? (
+                      <button
+                        onClick={() => guardarEdicion(cat.id_categoria)}
+                        title="Guardar"
+                        style={{ marginRight: '8px' }}
+                      >
+                        💾
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => iniciarEdicion(cat)}
+                        title="Editar"
+                        style={{ marginRight: '8px' }}
+                      >
+                        🖉
+                      </button>
+                    )}
                     <button
-                      onClick={() => guardarEdicion(cat.id_categoria)}
-                      title="Guardar"
-                      style={{ marginRight: '8px' }}
+                      onClick={() => eliminar(cat.id_categoria)}
+                      title="Eliminar"
                     >
-                      💾
+                      🗑️
                     </button>
-                  ) : (
-                    <button
-                      onClick={() => iniciarEdicion(cat)}
-                      title="Editar"
-                      style={{ marginRight: '8px' }}
-                    >
-                      🖉
-                    </button>
-                  )}
-                  <button
-                    onClick={() => eliminar(cat.id_categoria)}
-                    title="Eliminar"
-                  >
-                    🗑️
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
