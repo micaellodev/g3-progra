@@ -42,7 +42,7 @@ sequelize.authenticate()
     
     // Sincronizar modelos con la base de datos (crear tablas si no existen)
     try {
-      await sequelize.sync({ force: false });
+      await sequelize.sync({ alter: true });
       console.log('✅ Tablas sincronizadas correctamente');
     } catch (error) {
       console.log('⚠️ Error al sincronizar tablas:', error.message);
@@ -77,28 +77,12 @@ async function verifyAndSyncDatabase() {
   } catch (error) {
       console.error('Error al conectar a la base de datos:', error);
   }
-///////////////////////////
 
-app.get("/buscar", async (req, res) => {
-  try {
-    const { q = '', ordenar } = req.query;
-
-    let productos = await Producto.findAll({
-      where: {
-        nombre: sequelize.literal(`LOWER(nombre) LIKE LOWER('%${q}%')`)
-      },
-      order: ordenar === 'precio' ? [['precio', 'ASC']] : []
-    });
-
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al buscar productos' });
-  }
-});
-//////////////////////////
 
 
 // ---------------------- PRODUCTOS ----------------------
+
+
 // GET - Obtener todos los productos
 app.get("/productos", async (req, res) => {
     try {
@@ -325,6 +309,8 @@ app.post('/inicializar-metodos-pago', async (req, res) => {
   }
 });
 
+
+
 app.post('/AgregarProducto', async (req, res) => {
   const { nombre, descripcion, precio, imagen_url } = req.body;
 
@@ -341,3 +327,5 @@ app.post('/AgregarProducto', async (req, res) => {
     res.status(500).json({ error: 'Error al agregar producto' });
   }
 });
+
+

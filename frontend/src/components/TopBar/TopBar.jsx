@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { useLogin } from '../../hooks/LoginContext';
 import { CartContext } from '../../hooks/CartContext';
+import { juegos } from '../../constantes/Consts';
 import styles from './TopBar.module.css';
 
 const TopBar = ({ busqueda, setBusqueda }) => {
@@ -11,37 +12,41 @@ const TopBar = ({ busqueda, setBusqueda }) => {
   const [mensajeError, setMensajeError] = useState('');
   const [resultados, setResultados] = useState([]);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     const valor = busqueda.trim();
 
     if (valor === '') {
       setMensajeError('Por favor, ingrese al menos un carácter para buscar.');
-      navigate('/categoria');
+      navigate('/categoria'); // Redirige a Categorías
     } else {
       setMensajeError('');
-      navigate(`/resultados?busqueda=${encodeURIComponent(valor)}`);
+
+      // Buscar si hay un juego que coincida con la búsqueda
+      const juegoEncontrado = juegos.find(juego => juego.nombre.toLowerCase() === valor.toLowerCase());
+
+      if (juegoEncontrado) {
+        // Si el juego es encontrado, redirigir al detalle del producto
+        navigate(`/detalleproducto/${juegoEncontrado.id}`);
+      } else {
+        // Si no se encuentra el juego, redirigir a resultados de búsqueda
+        navigate(`/resultados?busqueda=${encodeURIComponent(valor)}`);
+      }
     }
   };
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const valor = e.target.value;
     setBusqueda(valor);
-    setMensajeError('');
+    setMensajeError(''); // Ocultar mensaje si el usuario empieza a escribir
 
     if (valor.trim() === '') {
       setResultados([]);
     } else {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/productos/buscar?q=${encodeURIComponent(valor)}`
-        );
-        const data = await response.json();
-        setResultados(data);
-      } catch (error) {
-        console.error('Error al buscar productos:', error);
-        setResultados([]);
-      }
+      const filtrados = juegos.filter(j =>
+        j.nombre.toLowerCase().includes(valor.toLowerCase())
+      );
+      setResultados(filtrados);
     }
   };
 
@@ -97,7 +102,7 @@ const TopBar = ({ busqueda, setBusqueda }) => {
         {resultados.length > 0 && (
           <ul className={styles.resultados}>
             {resultados.map(producto => (
-              <li key={producto.id_producto} className={styles.resultadoItem}>
+              <li key={producto.id} className={styles.resultadoItem}>
                 <img src={producto.imagen} alt={producto.nombre} className={styles.resultadoImagen} />
                 <div className={styles.resultadoInfo}>
                   <h4>{producto.nombre}</h4>
@@ -136,3 +141,4 @@ const TopBar = ({ busqueda, setBusqueda }) => {
 };
 
 export default TopBar;
+
