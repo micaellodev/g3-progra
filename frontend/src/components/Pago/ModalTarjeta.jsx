@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import { CartContext } from '../../hooks/CartContext';
+import { DireccionContext } from '../../hooks/DireccionContext';
+import { LoginContext } from '../../hooks/LoginContext';
+import { crearOrden } from '../../services/tiendaService';
 import styles from './ModalPagos.module.css';
 
 // Iconos tarjetas
@@ -16,8 +20,13 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
     anio: '',
     cvv: ''
   });
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState('');
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { cart, selectedIds, clearCart } = useContext(CartContext);
+  const { direccionEnvio } = useContext(DireccionContext);
+  const { currentUser } = useContext(LoginContext);
 
   if (!visible) return null;
 
@@ -26,15 +35,53 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
     setForm({ ...form, [name]: value });
   };
 
-  
-  // Redirige a la página de orden completada
-  const handleSubmit = (e) => {
+  // Procesar la orden real
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreate({
-      ...form,
-      vencimiento: form.mes && form.anio ? `${form.mes}/${form.anio.slice(-2)}` : ''
-    });
-    navigate('/ordencompletada');
+    setIsProcessing(true);
+    setError('');
+
+    try {
+      // Obtener productos seleccionados
+      const productosSeleccionados = cart.filter(producto => selectedIds.includes(producto.id));
+      
+      if (productosSeleccionados.length === 0) {
+        throw new Error('No hay productos seleccionados');
+      }
+
+      // Calcular total
+      const total = productosSeleccionados.reduce(
+        (sum, producto) => sum + (producto.precio * producto.quantity), 0
+      );
+
+      // Preparar datos de la orden
+      const ordenData = {
+        id_usuario: currentUser.id_usuario,
+        productos: productosSeleccionados.map(producto => ({
+          id_producto: producto.id,
+          cantidad: producto.quantity,
+          precio: producto.precio
+        })),
+        direccion: direccionEnvio,
+        metodo_pago: 1, // ID del método de pago por tarjeta
+        total: total
+      };
+
+      // Enviar orden al backend
+      const resultado = await crearOrden(ordenData);
+      
+      // Limpiar carrito después de orden exitosa
+      clearCart();
+      
+      // Redirigir a orden completada
+      navigate('/ordencompletada');
+      
+    } catch (error) {
+      console.error('Error al procesar la orden:', error);
+      setError(error.message || 'Error al procesar la orden');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const meses = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -128,9 +175,27 @@ const ModalTarjeta = ({ visible, onClose, onCreate }) => {
               inputMode="numeric"
             />
           </div>
+          {error && (
+            <div className={styles.errorMessage} style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
+              {error}
+            </div>
+          )}
           <div className={styles.modalActions}>
-            <button type="submit" className={styles.botonContinuar}>Continuar</button>
-            <button type="button" onClick={onClose} className={styles.botonCerrar}>Cerrar</button>
+            <button 
+              type="submit" 
+              className={styles.botonContinuar}
+              disabled={isProcessing}
+            >
+              {isProcessing ? 'Procesando...' : 'Continuar'}
+            </button>
+            <button 
+              type="button" 
+              onClick={onClose} 
+              className={styles.botonCerrar}
+              disabled={isProcessing}
+            >
+              Cerrar
+            </button>
           </div>
         </form>
       </div>

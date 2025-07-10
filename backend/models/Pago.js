@@ -9,8 +9,15 @@ export const Pago = sequelize.define("Pago", {
     primaryKey: true,
     autoIncrement: true
   },
-  fecha_pago: DataTypes.DATEONLY,
-  monto: DataTypes.DECIMAL(10, 2)
+  fecha_pago: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  monto: DataTypes.DECIMAL(10, 2),
+  estado: {
+    type: DataTypes.STRING(50),
+    defaultValue: 'pendiente'
+  }
 }, {
   freezeTableName: true
 });
@@ -19,5 +26,5 @@ export const Pago = sequelize.define("Pago", {
 Pago.belongsTo(Orden, { foreignKey: "id_orden" });
 Orden.hasMany(Pago, { foreignKey: "id_orden" });
 
-Pago.belongsTo(MetodoPago, { foreignKey: "id_metodo" });
-MetodoPago.hasMany(Pago, { foreignKey: "id_metodo" });
+Pago.belongsTo(MetodoPago, { foreignKey: "id_metodo_pago" });
+MetodoPago.hasMany(Pago, { foreignKey: "id_metodo_pago" });
