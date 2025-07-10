@@ -63,12 +63,10 @@ export const ListaProducto = () => {
   // Guardar edición
   const guardarEdicion = async (id) => {
     try {
-      const actualizado = await updateProducto(id, productoEditado);
-      setProductos(prev =>
-        prev.map(prod =>
-          prod.id_producto === id ? actualizado : prod
-        )
-      );
+      await updateProducto(id, productoEditado);
+      // Recargar productos desde el backend para mantener sincronizado el estado
+      const data = await fetchProductos();
+      setProductos(data);
       setModoEdicion(null);
       setProductoEditado({});
     } catch (error) {
