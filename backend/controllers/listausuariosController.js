@@ -6,10 +6,10 @@ export const getAllUsers = async (req, res) => {
   try {
     const usuarios = await Usuario.find().sort({ createdAt: -1 });
 
-    // Mapea los usuarios y reemplaza _id por id
+    // Mapea los usuarios y reemplaza _id por id (sin modificar el modelo)
     const usuariosFormateados = usuarios.map((u) => ({
       ...u.toObject(),
-      id: u._id,
+      id: u._id.toString(), // asegura que sea string
     }));
 
     res.status(200).json(usuariosFormateados);
@@ -28,10 +28,9 @@ export const getUserById = async (req, res) => {
 
     const ordenes = await Orden.find({ usuario: usuario._id }).sort({ createdAt: -1 });
 
-    // Devuelve el usuario como objeto plano, con id y órdenes
     const usuarioConOrdenes = {
       ...usuario.toObject(),
-      id: usuario._id,
+      id: usuario._id.toString(), // mismo patrón: usar id como string
       ordenes,
     };
 
