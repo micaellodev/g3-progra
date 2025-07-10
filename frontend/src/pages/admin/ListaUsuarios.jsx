@@ -10,22 +10,20 @@ const ListaUsuarios = () => {
 
   useEffect(() => {
     const fetchUsuarios = async () => {
-      const data = await obtenerUsuarios();
-
-      const usuariosConFecha = data.map(u => ({
-        ...u,
-        fechaRegistro: new Date().toLocaleDateString('es-PE'),
-      }));
-
-      setUsuarios(usuariosConFecha);
-      setUsuariosFiltrados(usuariosConFecha);
+      try {
+        const data = await obtenerUsuarios();
+        setUsuarios(data);
+        setUsuariosFiltrados(data);
+      } catch (error) {
+        console.error('Error al cargar usuarios', error);
+      }
     };
     fetchUsuarios();
   }, []);
 
   const handleSearch = (termino) => {
     const resultado = usuarios.filter((u) =>
-      u.nombre.toLowerCase().includes(termino.toLowerCase())
+      u.nombre?.toLowerCase().includes(termino.toLowerCase())
     );
     setUsuariosFiltrados(resultado);
   };
